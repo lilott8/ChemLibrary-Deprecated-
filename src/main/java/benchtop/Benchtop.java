@@ -2,8 +2,6 @@ package benchtop;
 
 import executable.Executable;
 import executable.Experiment;
-import executable.instructions.Instruction;
-import org.apache.commons.lang3.StringUtils;
 import variables.Variable;
 
 import java.util.ArrayList;
@@ -28,7 +26,7 @@ public enum Benchtop {
 	private int id = -1;
 
 	public void setName(String n) {
-		if(StringUtils.isEmpty(this.name)) {
+		if(this.name.isEmpty()) {
 			this.name = n;
 		}
 	}

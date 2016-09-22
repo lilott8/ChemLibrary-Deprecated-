@@ -8,8 +8,6 @@ import executable.Executable;
 import executable.Experiment;
 import executable.Subroutine;
 import executable.instructions.*;
-import org.apache.commons.lang3.NotImplementedException;
-import org.apache.commons.lang3.StringUtils;
 import variables.Chemical;
 import variables.Compound;
 import variables.Variable;
@@ -166,22 +164,22 @@ public class Parser {
 			String classification = jsonObject.get("classification").getAsString();
 			String name = jsonObject.get("name").getAsString();
 			int id = jsonObject.get("id").getAsInt();
-			if(StringUtils.equalsIgnoreCase(classification, "mix")) {
+			if(classification.toLowerCase().equals("mix")) {
 				instruction = new Combine(id, name);
-			} else if(StringUtils.equalsIgnoreCase(classification, "split")) {
+			} else if(classification.toLowerCase().equals("split")) {
 				instruction = new Split(id, name);
-			} else if(StringUtils.equalsIgnoreCase(classification, "detect")) {
+			} else if(classification.toLowerCase().equals("detect")) {
 				instruction = new Detect(id, name);
-			} else if(StringUtils.equalsIgnoreCase(classification, "heat")) {
+			} else if(classification.toLowerCase().equals("heat")) {
 				instruction = new Heat(id, name);
-			} else if(StringUtils.equalsIgnoreCase(classification, "output")) {
+			} else if(classification.toLowerCase().equals("output")) {
 				instruction = new Output(id, name);
-			} else if(StringUtils.equalsIgnoreCase(classification, "store")) {
+			} else if(classification.toLowerCase().equals("store")) {
 				instruction = new Store(id, name);
-			} else if(StringUtils.equalsIgnoreCase(classification, "dispense")) {
+			} else if(classification.toLowerCase().equals("dispense")) {
 				instruction = new Dispense(id, name);
 			} else {
-				throw new NotImplementedException("No other instructions have been created");
+				throw new UnsupportedOperationException("No other instructions have been created");
 			}
 
 			if (jsonObject.has("inputs")) {
