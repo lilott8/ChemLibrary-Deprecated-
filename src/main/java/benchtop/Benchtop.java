@@ -1,3 +1,5 @@
+package benchtop;
+
 import executable.Executable;
 import executable.Experiment;
 import executable.instructions.Instruction;
@@ -24,12 +26,12 @@ public enum Benchtop {
 	private String name = "";
 	private int id = -1;
 
-	public void addInstruction(Instruction instruction) {
+	public void addInstruction(Executable instruction) {
 		this.executables.add(instruction);
 	}
 
-	public void addInstructions(List<Instruction> instructions) {
-		for(Instruction i : instructions) {
+	public void addInstructions(List<Executable> instructions) {
+		for(Executable i : instructions) {
 			this.addInstruction(i);
 		}
 	}
