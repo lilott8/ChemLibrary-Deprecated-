@@ -18,16 +18,15 @@ public class Compound implements Variable {
 	private Property volume = null;
 	private Map<String, Variable> chemicals = new HashMap<String, Variable>();
 
-	// todo: compounds need a property!
 	public Compound(String name, Property property) {
 		this.name = name;
 		this.volume = property;
-		this.generateProperty();
 	}
 
-	public Compound(String name) {
+	public Compound(int id, String name, Property property) {
+		this.id = id;
 		this.name = name;
-		this.generateProperty();
+		this.volume = property;
 	}
 
 	public String getName() {
@@ -46,26 +45,16 @@ public class Compound implements Variable {
 		this.chemicals.putAll(chems);
 	}
 
-	/**
-	 * Compounds don't have explicit properties, so we must generate it
-	 * after the chemicals have been added
-	 * todo: add unit testing for this method
-	 */
-	public void generateProperty() {
-		if(this.chemicals.size() > 0) {
-			/*common.Units.Volume unit = this.chemicals.get(0).getProperty().getUnit();
-			float amount = 0;
-			for(Variable c : this.chemicals) {
-				c = (Chemical) c;
-				if(c.getProperty().getUnit() == unit) {
-					amount += c.getProperty().getQuantity();
-				} else {
-					// normalize the units to the base unit
+	public Map<String, Variable> getVariables() {
+		return this.chemicals;
+	}
 
-				}
-			}*/
-			this.volume = new Property<Units.Volume>(100, Units.Volume.L);
-		}
+	public Property getVariableProperty() {
+		return this.volume;
+	}
+
+	public List<Property> getVariablesProperties() {
+		return null;
 	}
 
 	public String toString() {
