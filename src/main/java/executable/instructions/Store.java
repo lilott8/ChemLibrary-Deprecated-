@@ -9,10 +9,18 @@ import java.util.Map;
  */
 public class Store extends Instruction {
 
-	public Store(String name, Class classification, int id) {
-		super(name, classification, id);
+	public Store(int id, String name) {
+		super(id, name, Store.class);
 	}
 
+	public Store(int id) {
+		super(id, Store.class);
+	}
+
+	public Store(String name) {
+		super(name, Store.class);
+	}
+	
 	public String toString() {
 		StringBuilder sb = new StringBuilder(super.toString());
 		return sb.toString();
@@ -24,9 +32,5 @@ public class Store extends Instruction {
 
 	public void execute(Variable... variables) {
 
-	}
-
-	public Map<Integer, Variable> getInputs() {
-		return null;
 	}
 }

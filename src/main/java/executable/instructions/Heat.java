@@ -9,8 +9,16 @@ import java.util.Map;
  */
 public class Heat extends Instruction {
 
-	public Heat(String name, Class classification, int id) {
-		super(name, classification, id);
+	public Heat(int id, String name) {
+		super(id, name, Heat.class);
+	}
+
+	public Heat(int id) {
+		super(id, Heat.class);
+	}
+
+	public Heat(String name) {
+		super(name, Heat.class);
 	}
 
 	public String toString() {
@@ -24,9 +32,5 @@ public class Heat extends Instruction {
 
 	public void execute(Variable... variables) {
 
-	}
-
-	public Map<Integer, Variable> getInputs() {
-		return null;
 	}
 }

@@ -12,19 +12,43 @@ import java.util.Map;
  */
 public class Subroutine implements Executable {
 
-	private String name;
+	private String name = "";
 	private int id = -1;
-	private Map<Integer, Variable> inputs = new HashMap<Integer, Variable>();
+	private Map<String, Variable> inputs = new HashMap<String, Variable>();
 	private List<Executable> instructions = new ArrayList<Executable>();
-	private Map<Integer, Variable> outputs = new HashMap<Integer, Variable>();
+	private Map<String, Variable> outputs = new HashMap<String, Variable>();
 
 	public Subroutine(String name) {
 		this.name = name;
 	}
 
-	public Subroutine(String name, int id) {
+	public Subroutine(int id, String name) {
 		this.name = name;
 		this.id = id;
+	}
+
+	public Subroutine(int id) {
+		this.id = id;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public void addInputs(Map<String, Variable> inputs) {
+		this.inputs.putAll(inputs);
+	}
+
+	public void addInput(Variable input) {
+		this.inputs.put(input.getName(), input);
+	}
+
+	public void addOutputs(Map<String, Variable> output) {
+		this.outputs.putAll(output);
 	}
 
 	public void addInstruction(Executable instruction) {
@@ -37,22 +61,12 @@ public class Subroutine implements Executable {
 		}
 	}
 
-	public void addInputs(List<Variable> inputs) {
-		for(Variable v : inputs) {
-			this.addInput(v);
-		}
+	public Map<String, Variable> getOutputs() {
+		return this.outputs;
 	}
 
-	public void addInput(Variable input) {
-		this.inputs.put(input.getId(), input);
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public String getName() {
-		return this.name;
+	public Map<String, Variable> getInputs() {
+		return this.inputs;
 	}
 
 	public void execute() {
@@ -63,13 +77,5 @@ public class Subroutine implements Executable {
 
 	public void execute(Variable... variables) {
 		this.execute();
-	}
-
-	public Map<Integer, Variable> getOutputs() {
-		return this.outputs;
-	}
-
-	public Map<Integer, Variable> getInputs() {
-		return null;
 	}
 }
