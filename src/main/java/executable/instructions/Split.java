@@ -9,19 +9,23 @@ import java.util.Map;
  */
 public class Split extends Instruction {
 
-	public Split(String name, Class classification, int id) {
-		super(name, classification, id);
+	public Split(int id, String name) {
+		super(id, name, Split.class);
+	}
+
+	public Split(int id) {
+		super(id, Split.class);
+	}
+
+	public Split(String name) {
+		super(name, Split.class);
 	}
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder(super.toString());
 		return sb.toString();
 	}
-
-	public Map<Integer, Variable> getInputs() {
-		return null;
-	}
-
+	
 	public void execute() {
 	}
 

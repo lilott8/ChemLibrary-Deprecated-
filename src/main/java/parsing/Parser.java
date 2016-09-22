@@ -7,9 +7,7 @@ import common.Units;
 import executable.Executable;
 import executable.Experiment;
 import executable.Subroutine;
-import executable.instructions.Combine;
-import executable.instructions.Instruction;
-import executable.instructions.Split;
+import executable.instructions.*;
 import org.apache.commons.lang3.NotImplementedException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -21,9 +19,7 @@ import variables.Variable;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Created by jason on 2016/09/22.
@@ -118,9 +114,9 @@ public class Parser {
 			if(jsonObject.has("instructions")) {
 				e.addInstructions(addOperation(jsonObject.getAsJsonArray("instructions")));
 			}
-			/*if(jsonObject.has("output")) {
+			if(jsonObject.has("output")) {
 				e.addOutputs(addVariable(jsonObject.getAsJsonArray("output")));
-			}*/
+			}
 			if(jsonObject.has("subroutines")) {
 				e.addInstructions(addSubroutine(jsonObject.getAsJsonArray("subroutine")));
 			}
@@ -149,9 +145,9 @@ public class Parser {
 			if(jsonObject.has("instructions")) {
 				subroutine.addInstructions(addOperation(jsonObject.get("instructions").getAsJsonArray()));
 			}
-			/*if(jsonObject.has("outputs")) {
+			if(jsonObject.has("outputs")) {
 				subroutine.addOutputs(addVariable(jsonObject.get("outputs").getAsJsonArray()));
-			}*/
+			}
 			results.add(subroutine);
 		}
 
@@ -176,18 +172,27 @@ public class Parser {
 			String name = jsonObject.get("name").getAsString();
 			int id = jsonObject.get("id").getAsInt();
 			if(StringUtils.equalsIgnoreCase(classification, "mix")) {
-				instruction = new Combine(name, Combine.class, id);
-				if(jsonObject.has("inputs")) {
-					instruction.addInputs(addVariable(jsonObject.get("inputs").getAsJsonArray()));
-				}
+				instruction = new Combine(id, name);
 			} else if(StringUtils.equalsIgnoreCase(classification, "split")) {
-				instruction = new Split(name, Split.class, id);
-				if(jsonObject.has("inputs")) {
-					instruction.addInputs(addVariable(jsonObject.get("inputs").getAsJsonArray()));
-				}
+				instruction = new Split(id, name);
+			} else if(StringUtils.equalsIgnoreCase(classification, "detect")) {
+				instruction = new Detect(id, name);
+			} else if(StringUtils.equalsIgnoreCase(classification, "heat")) {
+				instruction = new Heat(id, name);
+			} else if(StringUtils.equalsIgnoreCase(classification, "output")) {
+				instruction = new Output(id, name);
+			} else if(StringUtils.equalsIgnoreCase(classification, "store")) {
+				instruction = new Store(id, name);
+			} else if(StringUtils.equalsIgnoreCase(classification, "dispense")) {
+				instruction = new Dispense(id, name);
 			} else {
 				throw new NotImplementedException("No other instructions have been created");
 			}
+
+			if (jsonObject.has("inputs")) {
+				instruction.addInputs(addVariable(jsonObject.get("inputs").getAsJsonArray()));
+			}
+
 			results.add(instruction);
 		}
 		return results;
@@ -203,23 +208,29 @@ public class Parser {
 	 * @param jsonArray
 	 * @return list of created variables
 	 */
-	public static List<Variable> addVariable(JsonArray jsonArray) {
-		List<Variable> results = new ArrayList<Variable>();
+	public static Map<String, Variable> addVariable(JsonArray jsonArray) {
+		Map<String, Variable> results = new HashMap<String, Variable>();
 
+		Chemical chemical;
+		Sensor sensor;
 		for(JsonElement elem : jsonArray) {
 			JsonObject jsonObject = elem.getAsJsonObject();
 			String name;
+			int id;
 			if(jsonObject.has("chemical")) {
 				jsonObject = jsonObject.get("chemical").getAsJsonObject();
 				name = jsonObject.get("name").getAsString();
 				float value = jsonObject.get("volume").getAsJsonObject().get("value").getAsFloat();
 				Units.Volume vol = Units.Volume.valueOf(jsonObject.get("volume")
 				                                                  .getAsJsonObject().get("units").getAsString());
-				results.add(new Chemical(name, new Property<Units.Volume>(value, vol)));
+				chemical = new Chemical(name, new Property<Units.Volume>(value, vol));
+				results.put(chemical.getName(), chemical);
 			} else if(jsonObject.has("sensor")) {
 				jsonObject = jsonObject.get("sensor").getAsJsonObject();
 				name = jsonObject.get("name").getAsString();
-				results.add(new Sensor(name));
+				id = jsonObject.get("id").getAsInt();
+				sensor = new Sensor(name, id);
+				results.put(sensor.getName(), sensor);
 			} else if(jsonObject.has("compound")) {
 				jsonObject = jsonObject.get("compound").getAsJsonObject();
 				Compound compound = new Compound(jsonObject.get("name").getAsString());
@@ -227,7 +238,7 @@ public class Parser {
 					compound.addChemicals(addVariable(jsonObject.get("chemical_list").getAsJsonArray()));
 				}
 				compound.generateProperty();
-				results.add(compound);
+				results.put(compound.getName(), compound);
 
 				// throw new NotImplementedException("Compound not implemented yet");
 			} else {
@@ -243,7 +254,7 @@ public class Parser {
 	 * @param json
 	 * @return
 	 */
-	public static List<Variable> addVariable(String json) {
+	public static Map<String, Variable> addVariable(String json) {
 		return addVariable(new JsonParser().parse(json).getAsJsonArray());
 	}
 

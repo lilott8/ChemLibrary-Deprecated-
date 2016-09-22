@@ -9,12 +9,15 @@ import java.util.Map;
  * Created by jason on 2016/09/21.
  */
 public interface Executable {
-	void execute();
-	void execute(Variable... variables);
-	Map<Integer, Variable> getOutputs();
+	int getId();
+	String getName();
+
+	Map<String, Variable> getInputs();
+	Map<String, Variable> getOutputs();
+
 	void addInstruction(Executable exec);
 	void addInstructions(List<Executable> execs);
-	String getName();
-	int getId();
-	Map<Integer, Variable> getInputs();
+
+	void execute(Variable... variables);
+	void execute();
 }

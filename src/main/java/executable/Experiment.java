@@ -12,31 +12,44 @@ import java.util.Map;
  */
 public class Experiment implements Executable {
 
-	private String name;
-	private int id;
-	private Map<Integer, Variable> inputs = new HashMap<Integer, Variable>();
+	private String name = "";
+	private int id = -1;
+	private Map<String, Variable> inputs = new HashMap<String, Variable>();
 	private List<Executable> instructions = new ArrayList<Executable>();
-	private Map<Integer, Variable> outputs = new HashMap<Integer, Variable>();
+	private Map<String, Variable> outputs = new HashMap<String, Variable>();
 
+	public Experiment(int id) {
+		this.id = id;
+	}
 
 	public Experiment(String name) {
 		this.name = name;
 		this.id = -1;
 	}
 
-	public Experiment(String name, int id) {
+	public Experiment(int id, String name) {
 		this.name = name;
 		this.id = id;
 	}
 
-	public void addInputs(List<Variable> inputs) {
-		for(Variable v : inputs) {
-			this.addInput(v);
-		}
+	public int getId() {
+		return id;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public void addInputs(Map<String, Variable> inputs) {
+		this.inputs.putAll(inputs);
 	}
 
 	public void addInput(Variable v) {
-		this.inputs.put(v.getId(), v);
+		this.inputs.put(v.getName(), v);
+	}
+
+	public void addOutputs(Map<String, Variable> v) {
+		this.outputs.putAll(v);
 	}
 
 	public void addInstructions(List<Executable> instructions) {
@@ -49,29 +62,21 @@ public class Experiment implements Executable {
 		this.instructions.add(e);
 	}
 
-	public int getId() {
-		return id;
+	public Map<String, Variable> getInputs() {
+		return null;
 	}
 
-	public String getName() {
-		return this.name;
-	}
-
-	public void execute() {
-		for(Executable e : this.instructions) {
-			e.execute();
-		}
+	public Map<String, Variable> getOutputs() {
+		return this.outputs;
 	}
 
 	public void execute(Variable... variables) {
 		this.execute();
 	}
 
-	public Map<Integer, Variable> getInputs() {
-		return null;
-	}
-
-	public Map<Integer, Variable> getOutputs() {
-		return this.outputs;
+	public void execute() {
+		for(Executable e : this.instructions) {
+			e.execute();
+		}
 	}
 }

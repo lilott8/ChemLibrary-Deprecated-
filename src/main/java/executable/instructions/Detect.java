@@ -9,8 +9,16 @@ import java.util.Map;
  */
 public class Detect extends Instruction {
 
-	public Detect(String name, Class classification, int id) {
-		super(name, classification, id);
+	public Detect(int id, String name) {
+		super(id, name, Detect.class);
+	}
+
+	public Detect(int id) {
+		super(id, Detect.class);
+	}
+
+	public Detect(String name) {
+		super(name, Detect.class);
 	}
 
 	public String toString() {
@@ -24,9 +32,5 @@ public class Detect extends Instruction {
 
 	public void execute(Variable... variables) {
 
-	}
-
-	public Map<Integer, Variable> getInputs() {
-		return null;
 	}
 }

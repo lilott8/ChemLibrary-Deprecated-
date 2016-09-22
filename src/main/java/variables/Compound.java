@@ -4,7 +4,9 @@ import common.Property;
 import common.Units;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by jason on 2016/08/25.
@@ -14,7 +16,7 @@ public class Compound implements Variable {
 	private String name = "";
 	private int id = -1;
 	private Property volume = null;
-	private List<Variable> chemicals = new ArrayList<Variable>();
+	private Map<String, Variable> chemicals = new HashMap<String, Variable>();
 
 	// todo: compounds need a property!
 	public Compound(String name, Property property) {
@@ -37,13 +39,11 @@ public class Compound implements Variable {
 	}
 
 	public void addChemical(Variable v) {
-		this.chemicals.add(v);
+		this.chemicals.put(v.getName(), v);
 	}
 
-	public void addChemicals(List<Variable> variables) {
-		for(Variable v : variables) {
-			this.addChemical(v);
-		}
+	public void addChemicals(Map<String, Variable> chems) {
+		this.chemicals.putAll(chems);
 	}
 
 	/**
@@ -73,10 +73,9 @@ public class Compound implements Variable {
 
 		sb.append("Name: ").append(this.name).append("\n");
 		sb.append("Properties: ").append(this.volume.toString()).append("\n");
-		for(Variable v : this.chemicals) {
-			sb.append(v.toString());
+		for(Map.Entry<String, Variable> entry : this.chemicals.entrySet()) {
+			sb.append(entry.getValue().toString());
 		}
-
 		return sb.toString();
 	}
 

@@ -11,8 +11,16 @@ import java.util.Map;
  */
 public class Combine extends Instruction {
 
-	public Combine(String name, Class classification, int id) {
-		super(name, classification, id);
+	public Combine(int id, String name) {
+		super(id, name, Combine.class);
+	}
+
+	public Combine(int id) {
+		super(id, Combine.class);
+	}
+
+	public Combine(String name) {
+		super(name, Combine.class);
 	}
 
 	public void execute() {
@@ -39,10 +47,4 @@ public class Combine extends Instruction {
 		StringBuilder sb = new StringBuilder(super.toString());
 		return sb.toString();
 	}
-
-	public Map<Integer, Variable> getInputs() {
-		return null;
-	}
-
-
 }

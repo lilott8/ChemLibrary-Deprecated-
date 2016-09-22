@@ -9,8 +9,16 @@ import java.util.Map;
  */
 public class Dispense extends Instruction {
 
-	public Dispense(String name, Class classification, int id) {
-		super(name, classification, id);
+	public Dispense(int id, String name) {
+		super(id, name, Dispense.class);
+	}
+
+	public Dispense(int id) {
+		super(id, Dispense.class);
+	}
+
+	public Dispense(String name) {
+		super(name, Dispense.class);
 	}
 
 	public String toString() {
@@ -24,9 +32,5 @@ public class Dispense extends Instruction {
 
 	public void execute(Variable... variables) {
 
-	}
-
-	public Map<Integer, Variable> getInputs() {
-		return null;
 	}
 }

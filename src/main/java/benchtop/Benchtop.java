@@ -3,6 +3,7 @@ package benchtop;
 import executable.Executable;
 import executable.Experiment;
 import executable.instructions.Instruction;
+import org.apache.commons.lang3.StringUtils;
 import variables.Variable;
 
 import java.util.ArrayList;
@@ -19,12 +20,24 @@ public enum Benchtop {
 	// all the experiments on the benchtop
 	private Map<String, ArrayList<Experiment>> experiments = new HashMap<String, ArrayList<Experiment>>();
 	// inputs for the all experiments
-	private Map<Integer, Variable> inputs = new HashMap<Integer, Variable>();
-	private Map<Integer, Variable> outputs = new HashMap<Integer, Variable>();
+	private Map<String, Variable> inputs = new HashMap<String, Variable>();
+	private Map<String, Variable> outputs = new HashMap<String, Variable>();
 	private List<Executable> executables = new ArrayList<Executable>();
 
 	private String name = "";
 	private int id = -1;
+
+	public void setName(String n) {
+		if(StringUtils.isEmpty(this.name)) {
+			this.name = n;
+		}
+	}
+
+	public void setId(int i) {
+		if(this.id == -1) {
+			this.id = i;
+		}
+	}
 
 	public void addInstruction(Executable instruction) {
 		this.executables.add(instruction);
@@ -36,16 +49,12 @@ public enum Benchtop {
 		}
 	}
 
-	public void addInputs(List<Variable> inputs) {
-		if(inputs != null) {
-			for (Variable v : inputs) {
-				this.addInput(v);
-			}
-		}
+	public void addInputs(Map<String, Variable> inputs) {
+		this.inputs.putAll(inputs);
 	}
 
 	public void addInput(Variable input) {
-		this.inputs.put(input.getId(), input);
+		this.inputs.put(input.getName(), input);
 	}
 
 	public void addOutputs(List<Variable> outputs) {
@@ -57,7 +66,7 @@ public enum Benchtop {
 	}
 
 	public void addOutput(Variable variable) {
-		this.outputs.put(variable.getId(), variable);
+		this.outputs.put(variable.getName(), variable);
 	}
 
 	public void addExperiment(Experiment experiment) {
