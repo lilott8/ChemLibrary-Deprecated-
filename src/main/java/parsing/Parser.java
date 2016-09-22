@@ -29,7 +29,7 @@ import java.util.Scanner;
  * Created by jason on 2016/09/22.
  */
 public class Parser {
-	
+
 	public static final Logger logger = LogManager.getLogger(Parser.class);
 
 	/**
