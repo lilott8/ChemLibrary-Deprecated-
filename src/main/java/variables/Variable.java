@@ -12,5 +12,6 @@ public interface Variable<T> {
 	String getSmiles();
 	Map<String, Variable> getVariables();
 	Property getVariableProperty();
+	void setSmiles(String smiles);
 
 }

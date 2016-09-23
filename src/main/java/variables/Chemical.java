@@ -49,6 +49,10 @@ public class Chemical implements Variable {
 		return this.smiles;
 	}
 
+	public void setSmiles(String smiles) {
+		this.smiles = smiles;
+	}
+
 	public Property getVariableProperty() {
 		return this.volume;
 	}

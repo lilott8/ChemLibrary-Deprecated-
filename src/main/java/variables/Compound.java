@@ -58,6 +58,10 @@ public class Compound implements Variable {
 		return this.smiles;
 	}
 
+	public void setSmiles(String smiles) {
+		this.smiles = smiles;
+	}
+
 	public String toString() {
 		StringBuilder sb = new StringBuilder("Compound: ").append("\n");
 

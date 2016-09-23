@@ -216,11 +216,17 @@ public class Parser {
 				name = jsonObject.get("name").getAsString();
 				property = addProperty(jsonObject.get("volume").getAsJsonObject());
 				chemical = new Chemical(name, property);
+				if(jsonObject.has("smiles")) {
+					chemical.setSmiles(jsonObject.get("smiles").getAsString());
+				}
 				results.put(chemical.getName(), chemical);
 			} else if(jsonObject.has("compound")) {
 				jsonObject = jsonObject.get("compound").getAsJsonObject();
 				property = addProperty(jsonObject.get("volume").getAsJsonObject());
 				compound = new Compound(jsonObject.get("id").getAsInt(), jsonObject.get("name").getAsString(), property);
+				if(jsonObject.has("smiles")) {
+					compound.setSmiles(jsonObject.get("smiles").getAsString());
+				}
 				if(jsonObject.has("chemical_list")) {
 					compound.addChemicals(addVariable(jsonObject.get("chemical_list").getAsJsonArray()));
 				}
