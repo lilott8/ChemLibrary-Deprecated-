@@ -45,6 +45,10 @@ public class Chemical implements Variable {
 		return vars;
 	}
 
+	public String getSmiles() {
+		return this.smiles;
+	}
+
 	public Property getVariableProperty() {
 		return this.volume;
 	}

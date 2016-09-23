@@ -9,6 +9,7 @@ public interface Variable<T> {
 
 	String getName();
 	int getId();
+	String getSmiles();
 	Map<String, Variable> getVariables();
 	Property getVariableProperty();
 

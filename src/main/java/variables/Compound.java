@@ -13,6 +13,7 @@ public class Compound implements Variable {
 	private int id = -1;
 	private Property volume = null;
 	private Map<String, Variable> chemicals = new HashMap<String, Variable>();
+	private String smiles;
 
 	public Compound(String name, Property property) {
 		this.name = name;
@@ -51,6 +52,10 @@ public class Compound implements Variable {
 
 	public List<Property> getVariablesProperties() {
 		return null;
+	}
+
+	public String getSmiles() {
+		return this.smiles;
 	}
 
 	public String toString() {
