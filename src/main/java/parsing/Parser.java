@@ -30,6 +30,10 @@ public class Parser {
 		return addBenchtop(json);
 	}
 
+	public static boolean parse(JsonObject object) {
+		return addBenchtop(object);
+	}
+
 	/**
 	 * Parse an entire benchtop
 	 * @param json
@@ -47,6 +51,10 @@ public class Parser {
 		}
 		// our gson object to parse
 		JsonObject jsonObject = new JsonParser().parse(json).getAsJsonObject();
+		return addBenchtop(jsonObject);
+	}
+
+	public static boolean addBenchtop(JsonObject jsonObject) {
 		if(jsonObject.has("purpose")) {
 			System.out.println(jsonObject.get("purpose").getAsString());
 		}
