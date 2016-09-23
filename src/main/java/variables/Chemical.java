@@ -53,6 +53,10 @@ public class Chemical implements Variable {
 		this.smiles = smiles;
 	}
 
+	public boolean isChemical() {
+		return true;
+	}
+
 	public Property getVariableProperty() {
 		return this.volume;
 	}

@@ -62,6 +62,10 @@ public class Compound implements Variable {
 		this.smiles = smiles;
 	}
 
+	public boolean isChemical() {
+		return false;
+	}
+
 	public String toString() {
 		StringBuilder sb = new StringBuilder("Compound: ").append("\n");
 

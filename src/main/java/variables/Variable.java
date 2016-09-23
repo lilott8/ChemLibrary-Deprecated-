@@ -13,5 +13,6 @@ public interface Variable<T> {
 	Map<String, Variable> getVariables();
 	Property getVariableProperty();
 	void setSmiles(String smiles);
+	boolean isChemical();
 
 }
