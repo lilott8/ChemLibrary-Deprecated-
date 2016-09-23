@@ -1,6 +1,5 @@
 package executable.instructions;
 
-import errors.CompatabilityException;
 import variables.Chemical;
 import variables.Variable;
 
@@ -29,14 +28,6 @@ public class Combine extends Instruction {
 
 	public void execute(Variable... args) {
 
-	}
-
-	public boolean checkCompatibility(Chemical one, Chemical two) throws CompatabilityException {
-		return false;
-	}
-
-	public boolean checkCompatibility(Chemical... args) throws CompatabilityException {
-		return false;
 	}
 
 	public String getName() {

@@ -1,8 +1,5 @@
 package variables;
 
-import common.Property;
-
-import java.util.List;
 import java.util.Map;
 
 /**

@@ -2,8 +2,8 @@ package parsing;
 
 import benchtop.Benchtop;
 import com.google.gson.*;
-import common.Property;
-import common.Units;
+import variables.Property;
+import variables.Units;
 import executable.Executable;
 import executable.Experiment;
 import executable.Subroutine;
