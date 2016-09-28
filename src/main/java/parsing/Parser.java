@@ -2,19 +2,14 @@ package parsing;
 
 import benchtop.Benchtop;
 import com.google.gson.*;
-import common.Property;
-import common.Units;
+import variables.Property;
+import variables.Units;
 import executable.Executable;
 import executable.Experiment;
 import executable.Subroutine;
 import executable.instructions.*;
-import org.apache.commons.lang3.NotImplementedException;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import variables.Chemical;
 import variables.Compound;
-import variables.Sensor;
 import variables.Variable;
 
 import java.io.File;
@@ -26,8 +21,6 @@ import java.util.*;
  */
 public class Parser {
 
-	public static final Logger logger = LogManager.getLogger(Parser.class);
-
 	/**
 	 * Convenience wrapper for commonly named parser function
 	 * @param json
@@ -35,6 +28,10 @@ public class Parser {
 	 */
 	public static boolean parse(String json) {
 		return addBenchtop(json);
+	}
+
+	public static boolean parse(JsonObject object) {
+		return addBenchtop(object);
 	}
 
 	/**
@@ -47,15 +44,19 @@ public class Parser {
 			try {
 				json = getFile(json);
 			} catch(FileNotFoundException e) {
-				logger.error("Cannot parse the file: " + json);
-				logger.error(e.toString());
+				System.err.println("Cannot parse the file: " + json);
+				System.err.println(e.toString());
 				return false;
 			}
 		}
 		// our gson object to parse
 		JsonObject jsonObject = new JsonParser().parse(json).getAsJsonObject();
+		return addBenchtop(jsonObject);
+	}
+
+	public static boolean addBenchtop(JsonObject jsonObject) {
 		if(jsonObject.has("purpose")) {
-			logger.info(jsonObject.get("purpose").getAsString());
+			System.out.println(jsonObject.get("purpose").getAsString());
 		}
 
 		if(jsonObject.has("benchtop")) {
@@ -63,12 +64,12 @@ public class Parser {
 			if(jsonObject.has("inputs")) {
 				Benchtop.INSTANCE.addInputs(addVariable(jsonObject.get("inputs").getAsJsonArray()));
 			} else {
-				logger.warn("There are no benchtop inputs defined");
+				System.err.println("There are no benchtop inputs defined");
 			}
 			if(jsonObject.has("experiments")) {
 				Benchtop.INSTANCE.addExperiments(addExperiment(jsonObject.get("experiments").getAsJsonArray()));
 			} else {
-				logger.warn("there are no benchtop experiments to run");
+				System.err.println("there are no benchtop experiments to run");
 			}
 			if(jsonObject.has("instructions")) {
 				Benchtop.INSTANCE.addInstructions(addOperation(jsonObject.get("instructions").getAsJsonArray()));
@@ -77,7 +78,7 @@ public class Parser {
 				Benchtop.INSTANCE.addInstructions(addOperation(jsonObject.get("subroutines").getAsJsonArray()));
 			}
 		} else {
-			logger.fatal("There is no benchtop defined!");
+			System.err.println("There is no benchtop defined!");
 			return false;
 		}
 		return true;
@@ -171,22 +172,22 @@ public class Parser {
 			String classification = jsonObject.get("classification").getAsString();
 			String name = jsonObject.get("name").getAsString();
 			int id = jsonObject.get("id").getAsInt();
-			if(StringUtils.equalsIgnoreCase(classification, "mix")) {
+			if(classification.toLowerCase().equals("mix")) {
 				instruction = new Combine(id, name);
-			} else if(StringUtils.equalsIgnoreCase(classification, "split")) {
+			} else if(classification.toLowerCase().equals("split")) {
 				instruction = new Split(id, name);
-			} else if(StringUtils.equalsIgnoreCase(classification, "detect")) {
+			} else if(classification.toLowerCase().equals("detect")) {
 				instruction = new Detect(id, name);
-			} else if(StringUtils.equalsIgnoreCase(classification, "heat")) {
+			} else if(classification.toLowerCase().equals("heat")) {
 				instruction = new Heat(id, name);
-			} else if(StringUtils.equalsIgnoreCase(classification, "output")) {
+			} else if(classification.toLowerCase().equals("output")) {
 				instruction = new Output(id, name);
-			} else if(StringUtils.equalsIgnoreCase(classification, "store")) {
+			} else if(classification.toLowerCase().equals("store")) {
 				instruction = new Store(id, name);
-			} else if(StringUtils.equalsIgnoreCase(classification, "dispense")) {
+			} else if(classification.toLowerCase().equals("dispense")) {
 				instruction = new Dispense(id, name);
 			} else {
-				throw new NotImplementedException("No other instructions have been created");
+				throw new UnsupportedOperationException("No other instructions have been created");
 			}
 
 			if (jsonObject.has("inputs")) {
@@ -212,7 +213,8 @@ public class Parser {
 		Map<String, Variable> results = new HashMap<String, Variable>();
 
 		Chemical chemical;
-		Sensor sensor;
+		Compound compound;
+		Property property;
 		for(JsonElement elem : jsonArray) {
 			JsonObject jsonObject = elem.getAsJsonObject();
 			String name;
@@ -220,24 +222,22 @@ public class Parser {
 			if(jsonObject.has("chemical")) {
 				jsonObject = jsonObject.get("chemical").getAsJsonObject();
 				name = jsonObject.get("name").getAsString();
-				float value = jsonObject.get("volume").getAsJsonObject().get("value").getAsFloat();
-				Units.Volume vol = Units.Volume.valueOf(jsonObject.get("volume")
-				                                                  .getAsJsonObject().get("units").getAsString());
-				chemical = new Chemical(name, new Property<Units.Volume>(value, vol));
+				property = addProperty(jsonObject.get("volume").getAsJsonObject());
+				chemical = new Chemical(name, property);
+				if(jsonObject.has("smiles")) {
+					chemical.setSmiles(jsonObject.get("smiles").getAsString());
+				}
 				results.put(chemical.getName(), chemical);
-			} else if(jsonObject.has("sensor")) {
-				jsonObject = jsonObject.get("sensor").getAsJsonObject();
-				name = jsonObject.get("name").getAsString();
-				id = jsonObject.get("id").getAsInt();
-				sensor = new Sensor(name, id);
-				results.put(sensor.getName(), sensor);
 			} else if(jsonObject.has("compound")) {
 				jsonObject = jsonObject.get("compound").getAsJsonObject();
-				Compound compound = new Compound(jsonObject.get("name").getAsString());
+				property = addProperty(jsonObject.get("volume").getAsJsonObject());
+				compound = new Compound(jsonObject.get("id").getAsInt(), jsonObject.get("name").getAsString(), property);
+				if(jsonObject.has("smiles")) {
+					compound.setSmiles(jsonObject.get("smiles").getAsString());
+				}
 				if(jsonObject.has("chemical_list")) {
 					compound.addChemicals(addVariable(jsonObject.get("chemical_list").getAsJsonArray()));
 				}
-				compound.generateProperty();
 				results.put(compound.getName(), compound);
 
 				// throw new NotImplementedException("Compound not implemented yet");
@@ -247,6 +247,13 @@ public class Parser {
 		}
 
 		return results;
+	}
+
+	public static Property addProperty(JsonObject jsonObject) {
+		float value = jsonObject.get("volume").getAsJsonObject().get("value").getAsFloat();
+		Units.Volume vol = Units.Volume.valueOf(jsonObject.get("volume")
+		                                                  .getAsJsonObject().get("units").getAsString());
+		return new Property<Units.Volume>(value, vol);
 	}
 
 	/**

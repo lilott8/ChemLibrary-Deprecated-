@@ -1,6 +1,5 @@
-import common.Property;
-import common.Units;
-import executable.Executable;
+import variables.Property;
+import variables.Units;
 import executable.Experiment;
 import executable.instructions.Combine;
 import executable.instructions.Heat;

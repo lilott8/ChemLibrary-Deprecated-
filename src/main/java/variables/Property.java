@@ -1,4 +1,4 @@
-package common;
+package variables;
 
 /**
  * Created by jason on 2016/08/18.

@@ -1,6 +1,5 @@
 package executable.instructions;
 
-import errors.CompatabilityException;
 import executable.Executable;
 import variables.Chemical;
 import variables.Variable;
