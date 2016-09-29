@@ -1,9 +1,7 @@
-import variables.Property;
-import variables.Units;
-import executable.Experiment;
-import executable.instructions.Combine;
-import executable.instructions.Heat;
-import variables.Chemical;
+import com.google.gson.GsonBuilder;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by jason on 2016/09/21.
@@ -11,7 +9,7 @@ import variables.Chemical;
 public class Main {
 
 	public static void main(String... args) {
-		Experiment e = new Experiment(1, "test");
+		/*Experiment e = new Experiment(1, "test");
 		Chemical water = new Chemical("water", new Property<Units.Volume>(30, Units.Volume.mL));
 		Chemical oil = new Chemical("oil", new Property<Units.Volume>(30, Units.Volume.mL));
 		Combine c = new Combine(1, "mix");
@@ -32,8 +30,11 @@ public class Main {
 		e.execute();
 
 
-		e.addInstruction(h);
+		e.addInstruction(h);*/
 
+		//TypeSystem.parse("/Users/jason/Projects/IntelliJ/ChemTrails/src/main/resources/json_tests/typesystem_test.json");
+		GsonBuilder gson = new GsonBuilder();
+		
 
 	}
 }

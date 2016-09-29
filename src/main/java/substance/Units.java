@@ -1,4 +1,4 @@
-package variables;
+package substance;
 
 /**
  * Created by jason on 2016/08/18.

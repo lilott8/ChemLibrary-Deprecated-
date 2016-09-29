@@ -1,6 +1,6 @@
 package executable;
 
-import variables.Variable;
+import substance.Substance;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,9 +14,9 @@ public class Subroutine implements Executable {
 
 	private String name = "";
 	private int id = -1;
-	private Map<String, Variable> inputs = new HashMap<String, Variable>();
+	private Map<String, Substance> inputs = new HashMap<String, Substance>();
 	private List<Executable> instructions = new ArrayList<Executable>();
-	private Map<String, Variable> outputs = new HashMap<String, Variable>();
+	private Map<String, Substance> outputs = new HashMap<String, Substance>();
 
 	public Subroutine(String name) {
 		this.name = name;
@@ -39,15 +39,19 @@ public class Subroutine implements Executable {
 		return this.name;
 	}
 
-	public void addInputs(Map<String, Variable> inputs) {
+	public void addInputs(Map<String, Substance> inputs) {
 		this.inputs.putAll(inputs);
 	}
 
-	public void addInput(Variable input) {
+	public void addInput(Substance input) {
 		this.inputs.put(input.getName(), input);
 	}
 
-	public void addOutputs(Map<String, Variable> output) {
+	public void addOutput(Substance output) {
+		this.outputs.put(output.getName(), output);
+	}
+
+	public void addOutputs(Map<String, Substance> output) {
 		this.outputs.putAll(output);
 	}
 
@@ -61,11 +65,11 @@ public class Subroutine implements Executable {
 		}
 	}
 
-	public Map<String, Variable> getOutputs() {
+	public Map<String, Substance> getOutputs() {
 		return this.outputs;
 	}
 
-	public Map<String, Variable> getInputs() {
+	public Map<String, Substance> getInputs() {
 		return this.inputs;
 	}
 
@@ -75,7 +79,7 @@ public class Subroutine implements Executable {
 		}
 	}
 
-	public void execute(Variable... variables) {
+	public void execute(Substance... variables) {
 		this.execute();
 	}
 }

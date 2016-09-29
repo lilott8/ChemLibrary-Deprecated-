@@ -1,6 +1,6 @@
 package executable;
 
-import variables.Variable;
+import substance.Substance;
 
 import java.util.List;
 import java.util.Map;
@@ -12,12 +12,12 @@ public interface Executable {
 	int getId();
 	String getName();
 
-	Map<String, Variable> getInputs();
-	Map<String, Variable> getOutputs();
+	Map<String, Substance> getInputs();
+	Map<String, Substance> getOutputs();
 
 	void addInstruction(Executable exec);
 	void addInstructions(List<Executable> execs);
 
-	void execute(Variable... variables);
+	void execute(Substance... variables);
 	void execute();
 }

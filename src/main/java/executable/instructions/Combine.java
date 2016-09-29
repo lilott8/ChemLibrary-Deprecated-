@@ -1,9 +1,7 @@
 package executable.instructions;
 
-import variables.Chemical;
-import variables.Variable;
 
-import java.util.Map;
+import substance.Substance;
 
 /**
  * Created by jason on 2016/08/15.
@@ -26,7 +24,7 @@ public class Combine extends Instruction {
 
 	}
 
-	public void execute(Variable... args) {
+	public void execute(Substance... args) {
 
 	}
 

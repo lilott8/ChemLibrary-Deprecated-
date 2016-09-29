@@ -1,8 +1,7 @@
 package executable.instructions;
 
-import variables.Variable;
 
-import java.util.Map;
+import substance.Substance;
 
 /**
  * Created by jason on 2016/08/15.
@@ -29,7 +28,7 @@ public class Split extends Instruction {
 	public void execute() {
 	}
 
-	public void execute(Variable... variables) {
+	public void execute(Substance... variables) {
 
 	}
 }

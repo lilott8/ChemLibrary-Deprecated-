@@ -1,8 +1,7 @@
 package executable.instructions;
 
-import variables.Variable;
 
-import java.util.Map;
+import substance.Substance;
 
 /**
  * Created by jason on 2016/09/22.
@@ -30,7 +29,7 @@ public class Store extends Instruction {
 
 	}
 
-	public void execute(Variable... variables) {
+	public void execute(Substance... variables) {
 
 	}
 }
