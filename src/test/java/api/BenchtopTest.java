@@ -1,12 +1,10 @@
 package api;
 
-import benchtop.Benchtop;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.junit.Test;
-import parsing.Parser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -32,7 +30,6 @@ public class BenchtopTest {
 
 		JsonObject jsonObject = new JsonParser().parse(json).getAsJsonObject();
 
-		Parser.addBenchtop(jsonObject);
 	}
 
 	public String getJsonFromFile(String filename) throws FileNotFoundException {

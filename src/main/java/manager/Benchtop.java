@@ -1,8 +1,8 @@
-package benchtop;
+package manager;
 
 import executable.Executable;
 import executable.Experiment;
-import variables.Variable;
+import substance.Substance;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,11 +15,11 @@ import java.util.Map;
 public enum Benchtop {
 	INSTANCE;
 
-	// all the experiments on the benchtop
+	// all the experiments on the manager
 	private Map<String, ArrayList<Experiment>> experiments = new HashMap<String, ArrayList<Experiment>>();
 	// inputs for the all experiments
-	private Map<String, Variable> inputs = new HashMap<String, Variable>();
-	private Map<String, Variable> outputs = new HashMap<String, Variable>();
+	private Map<String, Substance> inputs = new HashMap<String, Substance>();
+	private Map<String, Substance> outputs = new HashMap<String, Substance>();
 	private List<Executable> executables = new ArrayList<Executable>();
 
 	private String name = "";
@@ -47,23 +47,23 @@ public enum Benchtop {
 		}
 	}
 
-	public void addInputs(Map<String, Variable> inputs) {
+	public void addInputs(Map<String, Substance> inputs) {
 		this.inputs.putAll(inputs);
 	}
 
-	public void addInput(Variable input) {
+	public void addInput(Substance input) {
 		this.inputs.put(input.getName(), input);
 	}
 
-	public void addOutputs(List<Variable> outputs) {
+	public void addOutputs(List<Substance> outputs) {
 		if(outputs != null) {
-			for (Variable v : outputs) {
+			for (Substance v : outputs) {
 				this.addOutput(v);
 			}
 		}
 	}
 
-	public void addOutput(Variable variable) {
+	public void addOutput(Substance variable) {
 		this.outputs.put(variable.getName(), variable);
 	}
 

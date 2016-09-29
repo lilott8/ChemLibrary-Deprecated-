@@ -1,10 +1,8 @@
 package executable.instructions;
 
 import executable.Executable;
-import variables.Chemical;
-import variables.Variable;
+import substance.Substance;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,8 +15,8 @@ public abstract class Instruction implements Executable {
 	protected String name = "";
 	protected Class classification = this.getClass();
 	protected int id = -1;
-	protected Map<String, Variable> inputs = new HashMap<String, Variable>();
-	private Map<String, Variable> outputs = new HashMap<String, Variable>();
+	protected Map<String, Substance> inputs = new HashMap<String, Substance>();
+	private Map<String, Substance> outputs = new HashMap<String, Substance>();
 
 	protected Instruction(int id, Class c) {
 		this.id = id;
@@ -45,27 +43,27 @@ public abstract class Instruction implements Executable {
 
 	public void addInstructions(List<Executable> instructions) {}
 
-	public void addInput(Variable input) {
+	public void addInput(Substance input) {
 		this.inputs.put(input.getName(), input);
 	}
 
-	public void addInputs(List<Variable> inputs) {
-		for(Variable v : inputs) {
+	public void addInputs(List<Substance> inputs) {
+		for(Substance v : inputs) {
 			this.addInput(v);
 		}
 	}
 
-	public void addInputs(Map<String, Variable> inputs) {
+	public void addInputs(Map<String, Substance> inputs) {
 		this.inputs.putAll(inputs);
 	}
 
-	public void addOutputs(List<Variable> outputs) {
-		for(Variable v : outputs) {
+	public void addOutputs(List<Substance> outputs) {
+		for(Substance v : outputs) {
 			this.addOutput(v);
 		}
 	}
 
-	public void addOutput(Variable variable) {
+	public void addOutput(Substance variable) {
 		this.outputs.put(variable.getName(), variable);
 	}
 
@@ -83,21 +81,21 @@ public abstract class Instruction implements Executable {
 		sb.append("Name: ").append(this.name).append("\n");
 		sb.append("Id: ").append(this.id).append("\n");
 		sb.append("Inputs: ").append("\n");
-		for(Map.Entry<String, Variable> entry : this.inputs.entrySet()) {
+		for(Map.Entry<String, Substance> entry : this.inputs.entrySet()) {
 			sb.append(entry.getValue().toString()).append("\n");
 		}
 		sb.append("Outputs: ").append("\n");
-		for(Map.Entry<String, Variable> entry : this.outputs.entrySet()) {
+		for(Map.Entry<String, Substance> entry : this.outputs.entrySet()) {
 			sb.append(entry.getValue().toString()).append("\n");
 		}
 		return sb.toString();
 	}
 
-	public Map<String, Variable> getOutputs() {
+	public Map<String, Substance> getOutputs() {
 		return this.outputs;
 	}
 
-	public Map<String, Variable> getInputs() {
+	public Map<String, Substance> getInputs() {
 		return this.inputs;
 	}
 }

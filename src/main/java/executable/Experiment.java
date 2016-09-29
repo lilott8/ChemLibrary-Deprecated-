@@ -1,6 +1,7 @@
 package executable;
 
-import variables.Variable;
+
+import substance.Substance;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,9 +15,9 @@ public class Experiment implements Executable {
 
 	private String name = "";
 	private int id = -1;
-	private Map<String, Variable> inputs = new HashMap<String, Variable>();
+	private Map<String, Substance> inputs = new HashMap<String, Substance>();
 	private List<Executable> instructions = new ArrayList<Executable>();
-	private Map<String, Variable> outputs = new HashMap<String, Variable>();
+	private Map<String, Substance> outputs = new HashMap<String, Substance>();
 
 	public Experiment(int id) {
 		this.id = id;
@@ -40,15 +41,15 @@ public class Experiment implements Executable {
 		return this.name;
 	}
 
-	public void addInputs(Map<String, Variable> inputs) {
+	public void addInputs(Map<String, Substance> inputs) {
 		this.inputs.putAll(inputs);
 	}
 
-	public void addInput(Variable v) {
+	public void addInput(Substance v) {
 		this.inputs.put(v.getName(), v);
 	}
 
-	public void addOutputs(Map<String, Variable> v) {
+	public void addOutputs(Map<String, Substance> v) {
 		this.outputs.putAll(v);
 	}
 
@@ -62,15 +63,15 @@ public class Experiment implements Executable {
 		this.instructions.add(e);
 	}
 
-	public Map<String, Variable> getInputs() {
+	public Map<String, Substance> getInputs() {
 		return null;
 	}
 
-	public Map<String, Variable> getOutputs() {
+	public Map<String, Substance> getOutputs() {
 		return this.outputs;
 	}
 
-	public void execute(Variable... variables) {
+	public void execute(Substance... variables) {
 		this.execute();
 	}
 
