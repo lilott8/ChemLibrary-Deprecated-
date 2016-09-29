@@ -59,6 +59,10 @@ public class Experiment implements Executable {
 		}
 	}
 
+	public List<Executable> getInstructions() {
+		return instructions;
+	}
+
 	public void addInstruction(Executable e) {
 		this.instructions.add(e);
 	}

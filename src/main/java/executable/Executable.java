@@ -18,6 +18,8 @@ public interface Executable {
 	void addInstruction(Executable exec);
 	void addInstructions(List<Executable> execs);
 
+	List<Executable> getInstructions();
+
 	void execute(Substance... variables);
 	void execute();
 }
