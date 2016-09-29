@@ -16,34 +16,33 @@ import java.lang.reflect.Type;
  */
 public class ExperimentDeserializer extends Deserializer<Experiment> {
 
-	public Experiment deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-		JsonObject obj = jsonElement.getAsJsonObject();
+	public Experiment deserialize(JsonElement jsonElement, Type type,
+	                              JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+
+		JsonObject obj = jsonElement.getAsJsonObject().get(EXPERIMENT).getAsJsonObject();
 
 		String name;
-		int id = -1;
 		Experiment experiment;
+		int id = obj.has(ID) ? obj.get(ID).getAsInt() : -1;
 
-		if(obj.has(ID)) {
-			id = obj.get(ID).getAsInt();
-		}
 		name = obj.get(NAME).getAsString();
 		experiment = new Experiment(id, name);
 
 		if(obj.has(INPUTS)) {
 			for(JsonElement e : obj.get(INPUTS).getAsJsonArray()) {
-				experiment.addInput((Substance) jsonDeserializationContext.deserialize(e, SubstanceDeserializer.class));
+				experiment.addInput((Substance) jsonDeserializationContext.deserialize(e, Substance.class));
 			}
 		}
 
 		if(obj.has(INSTRUCTIONS)) {
 			for(JsonElement e : obj.get(INSTRUCTIONS).getAsJsonArray()) {
-				experiment.addInstruction((Instruction) jsonDeserializationContext.deserialize(e, OperationDeserializer.class));
+				experiment.addInstruction((Instruction) jsonDeserializationContext.deserialize(e, Instruction.class));
 			}
 		}
 
 		if(obj.has(SUBROUTINES)) {
 			for(JsonElement e : obj.get(SUBROUTINES).getAsJsonArray()) {
-				experiment.addInstruction((Subroutine) jsonDeserializationContext.deserialize(e, SubroutineDeserializer.class));
+				experiment.addInstruction((Subroutine) jsonDeserializationContext.deserialize(e, Subroutine.class));
 			}
 		}
 		return experiment;

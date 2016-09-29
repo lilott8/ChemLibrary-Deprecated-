@@ -18,21 +18,26 @@ import java.lang.reflect.Type;
  */
 public class BenchtopDeserializer extends Deserializer<Benchtop> {
 
-	public Benchtop deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+	public Benchtop deserialize(JsonElement jsonElement, Type type,
+	                            JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
 
-		JsonObject obj = jsonElement.getAsJsonObject();
+		JsonObject obj = jsonElement.getAsJsonObject().get(BENCHTOP).getAsJsonObject();
+
+		Benchtop.INSTANCE.setId(obj.has(ID) ? obj.get(ID).getAsInt() : -1);
 
 		if(obj.has(INPUTS)) {
 			for(JsonElement elem : obj.get(INPUTS).getAsJsonArray()) {
-				Benchtop.INSTANCE.addInput((Substance) jsonDeserializationContext
-						.deserialize(elem, VariableDeserializer.class));
+				Substance s = jsonDeserializationContext.deserialize(elem, Substance.class);
+				if(s != null) {
+					Benchtop.INSTANCE.addInput(s);
+				}
 			}
 		} else {
 			System.err.println("There are no benchtop inputs defined");
 		}
 		if(obj.has(EXPERIMENTS)) {
 			for(JsonElement elem : obj.get(EXPERIMENTS).getAsJsonArray()) {
-				Benchtop.INSTANCE.addExperiment((Experiment) jsonDeserializationContext.deserialize(elem, ExperimentDeserializer.class));
+				Benchtop.INSTANCE.addExperiment((Experiment) jsonDeserializationContext.deserialize(elem, Experiment.class));
 			}
 		} else {
 			System.err.println("there are no benchtop experiments to run");

@@ -15,26 +15,34 @@ public class SubstanceDeserializer extends Deserializer<Substance> {
 
 	public Substance deserialize(JsonElement jsonElement, Type type,
 	                             JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-		//Gson gson = new Gson();
+
 		JsonObject obj = jsonElement.getAsJsonObject();
-		int id = -1;
-		if(obj.has(ID)) {
-			id = obj.get(ID).getAsInt();
+		Substance.Synthetic syn;
+
+		if(obj.has(CHEMICAL)) {
+			syn = Substance.Synthetic.CHEMICAL;
+			obj = obj.get(CHEMICAL).getAsJsonObject();
+		} else {
+			syn = Substance.Synthetic.COMPOUND;
+			obj = obj.get(COMPOUND).getAsJsonObject();
 		}
+
+		int id = obj.has(ID) ? obj.get(ID).getAsInt() : -1;
+
 		String name = obj.get(NAME).getAsString();
-		JsonObject volume = obj.get(VOLUME).getAsJsonObject();
-		Property<Units.Volume> property = new Property<Units.Volume>(volume.get(VALUE).getAsFloat(),
-				Units.Volume.valueOf(volume.get(UNITS).getAsString()));
-		Substance s = new Substance(id, name, property, obj.getAsString());
-		if(s.getMixtureType() == Substance.Synthetic.CHEMICAL) {
-			return s;
-		} else{
-			if(obj.has(CHEMICALS)) {
-				for(JsonElement elem : obj.get(CHEMICALS).getAsJsonArray()) {
-					s.addChemical((Chemical) jsonDeserializationContext.deserialize(elem, Chemical.class));
-				}
-			}
-			return s;
+		Property<Units.Volume> property = new Property<Units.Volume>(-1, Units.Volume.hL);
+		if(syn == Substance.Synthetic.CHEMICAL) {
+			JsonObject volume = obj.get(VOLUME).getAsJsonObject();
+			property = new Property<Units.Volume>(volume.get(VALUE).getAsFloat(),
+					Units.Volume.valueOf(volume.get(UNITS).getAsString()));
 		}
+		Substance s = new Substance(id, name, property, syn);
+		// Only go here if it's a compound
+		if(obj.has(LIST)) {
+			for(JsonElement elem : obj.get(LIST).getAsJsonArray()) {
+				s.addChemical((Chemical) jsonDeserializationContext.deserialize(elem, Chemical.class));
+			}
+		}
+		return s;
 	}
 }

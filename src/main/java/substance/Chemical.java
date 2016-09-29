@@ -27,4 +27,8 @@ public class Chemical {
 		return this.name;
 	}
 
+	public String toString() {
+		return String.format("%s has properties: %s", this.name, this.volume.toString());
+	}
+
 }
