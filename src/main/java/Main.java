@@ -1,3 +1,7 @@
+import com.google.gson.GsonBuilder;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by jason on 2016/09/21.
@@ -29,7 +33,8 @@ public class Main {
 		e.addInstruction(h);*/
 
 		//TypeSystem.parse("/Users/jason/Projects/IntelliJ/ChemTrails/src/main/resources/json_tests/typesystem_test.json");
-
+		GsonBuilder gson = new GsonBuilder();
+		
 
 	}
 }

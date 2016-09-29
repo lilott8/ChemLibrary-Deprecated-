@@ -64,7 +64,7 @@ public class Experiment implements Executable {
 	}
 
 	public Map<String, Substance> getInputs() {
-		return null;
+		return this.inputs;
 	}
 
 	public Map<String, Substance> getOutputs() {
