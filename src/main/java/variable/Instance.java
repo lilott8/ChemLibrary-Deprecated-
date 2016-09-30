@@ -14,6 +14,14 @@ public class Instance implements Variable {
 	private String name;
 	private Map<String, Substance> substances = new HashMap<String, Substance>();
 
+	public Instance(String id, String name, Substance... substances) {
+		this.id = id;
+		this. name = name;
+		for(Substance s : substances) {
+			this.substances.put(s.getName(), s);
+		}
+	}
+
 	public String getName() {
 		return this.name;
 	}
@@ -28,5 +36,9 @@ public class Instance implements Variable {
 
 	public Variable getReference() {
 		return this;
+	}
+
+	public boolean setReference(Variable v) {
+		return false;
 	}
 }

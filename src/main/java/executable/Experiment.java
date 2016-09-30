@@ -53,6 +53,10 @@ public class Experiment implements Executable {
 		this.outputs.putAll(v);
 	}
 
+	public void addOutput(Substance v) {
+		this.outputs.put(v.getName(), v);
+	}
+
 	public void addInstructions(List<Executable> instructions) {
 		for(Executable i : instructions) {
 			this.addInstruction(i);

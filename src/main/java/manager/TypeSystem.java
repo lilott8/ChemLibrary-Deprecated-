@@ -16,10 +16,18 @@ public enum TypeSystem {
 	private Map<Integer, Instruction> operationTable = new HashMap<Integer, Instruction>();
 
 	public void addVariable(Variable v) {
-
+		this.variableTable.put(v.getName(), v);
 	}
 
 	public void addOperation(Instruction i) {
+		this.operationTable.put(i.getId(), i);
+	}
 
+	public Variable getVariable(Variable v) {
+		return this.variableTable.get(v.getName());
+	}
+
+	public Variable getVariable(String key) {
+		return this.variableTable.get(key);
 	}
 }

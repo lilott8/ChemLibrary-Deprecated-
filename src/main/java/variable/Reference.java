@@ -13,6 +13,12 @@ public class Reference implements Variable {
 	private String name;
 	private Variable reference;
 
+	public Reference(String id, String name, Variable ref) {
+		this.id = id;
+		this.name = name;
+		this.reference = ref;
+	}
+
 	public String getName() {
 		return this.name;
 	}
@@ -27,5 +33,10 @@ public class Reference implements Variable {
 
 	public Variable getReference() {
 		return this.reference;
+	}
+
+	public boolean setReference(Variable v) {
+		this.reference = v;
+		return true;
 	}
 }
