@@ -7,6 +7,7 @@ import com.google.gson.JsonParseException;
 import executable.Executable;
 import executable.Experiment;
 import executable.Subroutine;
+import executable.instructions.Instruction;
 import manager.Benchtop;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -49,7 +50,7 @@ public class BenchtopDeserializer extends Deserializer<Benchtop> {
 		if(obj.has(INSTRUCTIONS)) {
 			for(JsonElement elem : obj.get(INSTRUCTIONS).getAsJsonArray()) {
 				Benchtop.INSTANCE.addInstruction((Executable) jsonDeserializationContext
-						.deserialize(elem, OperationDeserializer.class));
+						.deserialize(elem, Instruction.class));
 			}
 		}
 		if(obj.has(SUBROUTINES)) {
