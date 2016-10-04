@@ -1,7 +1,9 @@
 package executable.conditionals;
 
 import executable.instructions.Instruction;
+import substance.Property;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -33,17 +35,26 @@ public class Branch extends Conditional {
 	}
 
 	@Override
-	public void addTrueBranch(Instruction i) {
+	public Conditional addTrueBranch(Instruction i) {
 		this.trueBranch.add(i);
+		return this;
 	}
 
 	@Override
-	public void addElseIfBranch(Instruction i) {
+	public Conditional addElseIfBranch(Instruction i) {
 		this.elseIfBranch.add(i);
+		return this;
 	}
 
 	@Override
-	public void addElseBranch(Instruction i) {
+	public Conditional addElseBranch(Instruction i) {
 		this.elseBranch.add(i);
+		return this;
+	}
+
+	@Override
+	public Conditional addProperties(Property... p) {
+		this.properties.addAll(Arrays.asList(p));
+		return this;
 	}
 }

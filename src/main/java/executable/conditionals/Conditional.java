@@ -1,6 +1,7 @@
 package executable.conditionals;
 
 import executable.instructions.Instruction;
+import substance.Property;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,8 @@ public abstract class Conditional {
 	protected List<Instruction> trueBranch = new ArrayList<Instruction>();
 	protected List<Instruction> elseIfBranch = new ArrayList<Instruction>();
 	protected List<Instruction> elseBranch = new ArrayList<Instruction>();
+	protected List<Property> properties = new ArrayList<Property>();
+
 
 	protected Conditional(String expression, List<Instruction> tBranch, List<Instruction> eIBranch, List<Instruction> eBranch) {
 		this.evaluation = expression;
@@ -38,8 +41,9 @@ public abstract class Conditional {
 	public abstract List<Instruction> getTrueBranch();
 	public abstract List<Instruction> getElseIfBranch();
 	public abstract List<Instruction> getElseBranch();
-	public abstract void addTrueBranch(Instruction i);
-	public abstract void addElseIfBranch(Instruction i);
-	public abstract void addElseBranch(Instruction i);
+	public abstract Conditional addTrueBranch(Instruction i);
+	public abstract Conditional addElseIfBranch(Instruction i);
+	public abstract Conditional addElseBranch(Instruction i);
+	public abstract Conditional addProperties(Property... p);
 
 }
