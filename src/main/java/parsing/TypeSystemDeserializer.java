@@ -37,6 +37,8 @@ public class TypeSystemDeserializer extends Deserializer<TypeSystem> {
 		types.put(REFERENCE, new ArrayList<JsonObject>());
 		types.put(COMPOUND, new ArrayList<JsonObject>());
 
+		// We must work through the instances first
+
 		JsonObject temp;
 		for(JsonElement elem : vars) {
 			temp = elem.getAsJsonObject().get(DECLARATION).getAsJsonObject();
