@@ -67,7 +67,7 @@ public class BenchtopDeserializer extends Deserializer<Benchtop> {
 		if(obj.has(SUBROUTINES)) {
 			for(JsonElement elem : obj.get(SUBROUTINES).getAsJsonArray()) {
 				Benchtop.INSTANCE.addInstruction((Subroutine) jsonDeserializationContext
-						.deserialize(elem, SubroutineDeserializer.class));
+						.deserialize(elem, Subroutine.class));
 			}
 		}
 
