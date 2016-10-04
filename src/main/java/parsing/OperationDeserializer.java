@@ -13,7 +13,9 @@ public class OperationDeserializer extends Deserializer<Instruction> {
 
 	public Instruction deserialize(JsonElement jsonElement, Type type,
 	                               JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-		JsonObject obj = jsonElement.getAsJsonObject();
+
+		JsonObject obj = jsonElement.getAsJsonObject().get(OPERATION).getAsJsonObject();
+
 		String classification = obj.get(CLASSIFICATION).getAsString();
 
 		String name = obj.get(SubstanceDeserializer.NAME).getAsString();

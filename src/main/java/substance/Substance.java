@@ -9,7 +9,7 @@ import java.util.Map;
 public class Substance {
 
 	public enum Synthetic {
-		CHEMICAL, COMPOUND;
+		CHEMICAL, COMPOUND
 	}
 
 	private String name;
@@ -22,6 +22,16 @@ public class Substance {
 		this.id = id;
 		this.name = name;
 		this.mixtureType = Synthetic.valueOf(type);
+		this.property = p;
+		if(this.mixtureType == Synthetic.CHEMICAL) {
+			this.chemicals.put(name, new Chemical(this.id, this.name, this.property));
+		}
+	}
+
+	public Substance(int id, String name, Property p, Synthetic s) {
+		this.id = id;
+		this.name = name;
+		this.mixtureType = s;
 		this.property = p;
 		if(this.mixtureType == Synthetic.CHEMICAL) {
 			this.chemicals.put(name, new Chemical(this.id, this.name, this.property));

@@ -14,12 +14,12 @@ public class ChemicalDeserializer extends Deserializer<Chemical> {
 
 	public Chemical deserialize(JsonElement jsonElement, Type type,
 	                            JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-		JsonObject obj = jsonElement.getAsJsonObject();
+		JsonObject obj = jsonElement.getAsJsonObject().get(CHEMICAL).getAsJsonObject();
 
-		int id = -1;
-		if(obj.has(ID)) {
-			id = obj.get(ID).getAsInt();
-		}
+		//System.out.println(obj.toString());
+
+		int id = obj.has(ID) ? obj.get(ID).getAsInt() : -1;
+
 		String name = obj.get(NAME).getAsString();
 		JsonObject volume = obj.get(VOLUME).getAsJsonObject();
 		Property<Units.Volume> property =

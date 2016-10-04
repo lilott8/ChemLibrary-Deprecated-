@@ -8,6 +8,8 @@ import executable.Executable;
 import executable.Experiment;
 import executable.Subroutine;
 import manager.Benchtop;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import substance.Substance;
 import variable.Variable;
 
@@ -18,24 +20,31 @@ import java.lang.reflect.Type;
  */
 public class BenchtopDeserializer extends Deserializer<Benchtop> {
 
-	public Benchtop deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+	public static final Logger logger = LogManager.getLogger(BenchtopDeserializer.class);
 
-		JsonObject obj = jsonElement.getAsJsonObject();
+	public Benchtop deserialize(JsonElement jsonElement, Type type,
+	                            JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+
+		JsonObject obj = jsonElement.getAsJsonObject().get(BENCHTOP).getAsJsonObject();
+
+		Benchtop.INSTANCE.setId(obj.has(ID) ? obj.get(ID).getAsInt() : -1);
 
 		if(obj.has(INPUTS)) {
 			for(JsonElement elem : obj.get(INPUTS).getAsJsonArray()) {
-				Benchtop.INSTANCE.addInput((Substance) jsonDeserializationContext
-						.deserialize(elem, VariableDeserializer.class));
+				Substance s = jsonDeserializationContext.deserialize(elem, Substance.class);
+				if(s != null) {
+					Benchtop.INSTANCE.addInput(s);
+				}
 			}
 		} else {
-			System.err.println("There are no benchtop inputs defined");
+			logger.error("There are no benchtop inputs defined");
 		}
 		if(obj.has(EXPERIMENTS)) {
 			for(JsonElement elem : obj.get(EXPERIMENTS).getAsJsonArray()) {
-				Benchtop.INSTANCE.addExperiment((Experiment) jsonDeserializationContext.deserialize(elem, ExperimentDeserializer.class));
+				Benchtop.INSTANCE.addExperiment((Experiment) jsonDeserializationContext.deserialize(elem, Experiment.class));
 			}
 		} else {
-			System.err.println("there are no benchtop experiments to run");
+			logger.error("there are no benchtop experiments to run");
 		}
 		if(obj.has(INSTRUCTIONS)) {
 			for(JsonElement elem : obj.get(INSTRUCTIONS).getAsJsonArray()) {

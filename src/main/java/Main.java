@@ -1,40 +1,18 @@
-import com.google.gson.GsonBuilder;
-
-import java.util.List;
-import java.util.Set;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import parsing.*;
 
 /**
  * Created by jason on 2016/09/21.
  */
 public class Main {
 
-	public static void main(String... args) {
-		/*Experiment e = new Experiment(1, "test");
-		Chemical water = new Chemical("water", new Property<Units.Volume>(30, Units.Volume.mL));
-		Chemical oil = new Chemical("oil", new Property<Units.Volume>(30, Units.Volume.mL));
-		Combine c = new Combine(1, "mix");
-		Heat h = new Heat(2, "heat");
+	public static final Logger logger = LogManager.getLogger(Main.class);
 
-		e.addInput(water);
-		e.addInput(oil);
+	public static void main(String... args) throws Exception {
+		logger.info("Nothing to see here...");
 
-		// Add to combine instruction
-		c.addInput(water);
-		c.addInput(oil);
-
-		// Execute the instruction
-		c.execute();
-
-		h.addInputs(c.getOutputs());
-
-		e.execute();
-
-
-		e.addInstruction(h);*/
-
-		//TypeSystem.parse("/Users/jason/Projects/IntelliJ/ChemTrails/src/main/resources/json_tests/typesystem_test.json");
-		GsonBuilder gson = new GsonBuilder();
-		
-
+		TypeSystemParser.parse("/Users/jason/Projects/IntelliJ/ChemTrails/src/main/resources/json_tests/typesystem_test.json");
+		//BenchtopParser.parse("/Users/jason/Projects/IntelliJ/ChemTrails/src/main/resources/json_tests/test1.json");
 	}
 }

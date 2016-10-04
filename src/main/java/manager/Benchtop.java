@@ -94,4 +94,13 @@ public enum Benchtop {
 		}
 	}
 
+	public String toString() {
+		StringBuilder sb = new StringBuilder("Benchtop").append(System.lineSeparator());
+		sb.append("Inputs").append(inputs.toString()).append(System.lineSeparator());
+		sb.append("Outputs:").append(outputs.toString()).append(System.lineSeparator());
+		sb.append("Experiments:").append(experiments.toString()).append(System.lineSeparator());
+		sb.append("Executables:").append(executables.toString()).append(System.lineSeparator());
+		return sb.toString();
+	}
+
 }

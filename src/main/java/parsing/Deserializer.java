@@ -20,11 +20,18 @@ public abstract class Deserializer<T> implements JsonDeserializer<T> {
 	protected static final String PURPOSE = "purpose";
 	protected static final String SUBROUTINES = "subroutines";
 	protected static final String EXPERIMENTS = "experiments";
+	protected static final String EXPERIMENT = "experiment";
 	protected static final String TYPESYTEM = "typesystem";
 	protected static final String DECLARATION = "variable_declaration";
-	protected static final String VARIABLE = "substance";
+	protected static final String SUBSTANCE = "substance";
+	protected static final String VARIABLES = "variables";
 	protected static final String TYPE = "type";
 	protected static final String CHEMICAL = "chemical";
 	protected static final String REFERENCE = "chemical_reference";
 	protected static final String COMPOUND = "compound";
+	protected static final String LIST = "chemical_list";
+	protected static final String OPERATION = "operation";
+	protected static final String OPERATIONS = "operations";
+
+	public Deserializer() {}
 }

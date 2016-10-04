@@ -53,6 +53,10 @@ public class Experiment implements Executable {
 		this.outputs.putAll(v);
 	}
 
+	public void addOutput(Substance v) {
+		this.outputs.put(v.getName(), v);
+	}
+
 	public void addInstructions(List<Executable> instructions) {
 		for(Executable i : instructions) {
 			this.addInstruction(i);
@@ -83,5 +87,17 @@ public class Experiment implements Executable {
 		for(Executable e : this.instructions) {
 			e.execute();
 		}
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder("Experiments: ");
+
+		sb.append("Name: ").append(this.name).append(System.lineSeparator());
+		sb.append("Id: ").append(this.id).append(System.lineSeparator());
+		sb.append("Inputs: ").append(this.inputs.toString()).append(System.lineSeparator());
+		sb.append("Instructions: ").append(this.instructions.toString()).append(System.lineSeparator());
+		sb.append("Outputs: ").append(this.outputs.toString()).append(System.lineSeparator());
+
+		return sb.toString();
 	}
 }

@@ -13,14 +13,15 @@ import java.lang.reflect.Type;
  */
 public class SubroutineDeserializer extends Deserializer<Executable> {
 
-	public Executable deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+	public Executable deserialize(JsonElement jsonElement, Type type,
+	                              JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+
 		JsonObject obj = jsonElement.getAsJsonObject();
 
 		String name = obj.get(NAME).getAsString();
-		int id = -1;
-		if(obj.has(ID)) {
-			id = obj.get(ID).getAsInt();
-		}
+
+		int id = obj.has(ID) ? obj.get(ID).getAsInt() : -1;
+
 		Subroutine subroutine = new Subroutine(id, name);
 
 		if(obj.has(INPUTS)) {
