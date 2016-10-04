@@ -64,6 +64,9 @@ public class Subroutine implements Executable {
 			this.addInstruction(i);
 		}
 	}
+	public List<Executable> getInstructions() {
+		return  instructions;
+	}
 
 	public Map<String, Substance> getOutputs() {
 		return this.outputs;
