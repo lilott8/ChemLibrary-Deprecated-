@@ -39,7 +39,7 @@ public class BenchtopDeserializerTest {
 		String json = "";
 
 		try {
-			json = getJsonFromFile("./src/main/resources/json_tests/test1.json");
+			json = getJsonFromFile("./src/main/resources/json_tests/BenchtopDeserializerTests/test1.json");
 		} catch(FileNotFoundException e) {
 			System.err.println("Cannot find file: " + e.toString());
 		}
@@ -60,7 +60,7 @@ public class BenchtopDeserializerTest {
 		String json = "";
 
 		try {
-			json = getJsonFromFile("./src/main/resources/json_tests/test2.json");
+			json = getJsonFromFile("./src/main/resources/json_tests/BenchtopDeserializerTests/test2.json");
 		} catch(FileNotFoundException e) {
 			System.err.println("Cannot find file: " + e.toString());
 		}
@@ -77,7 +77,7 @@ public class BenchtopDeserializerTest {
 		String json = "";
 
 		try {
-			json = getJsonFromFile("./src/main/resources/json_tests/test3.json");
+			json = getJsonFromFile("./src/main/resources/json_tests/BenchtopDeserializerTests/test3.json");
 		} catch(FileNotFoundException e) {
 			System.err.println("Cannot find file: " + e.toString());
 		}
@@ -94,7 +94,7 @@ public class BenchtopDeserializerTest {
 		String json = "";
 
 		try {
-			json = getJsonFromFile("./src/main/resources/json_tests/test4.json");
+			json = getJsonFromFile("./src/main/resources/json_tests/BenchtopDeserializerTests/test4.json");
 		} catch(FileNotFoundException e) {
 			System.err.println("Cannot find file: " + e.toString());
 		}
@@ -111,7 +111,7 @@ public class BenchtopDeserializerTest {
 		String json = "";
 
 		try {
-			json = getJsonFromFile("./src/main/resources/json_tests/test5.json");
+			json = getJsonFromFile("./src/main/resources/json_tests/BenchtopDeserializerTests/test5.json");
 		} catch(FileNotFoundException e) {
 			System.err.println("Cannot find file: " + e.toString());
 		}

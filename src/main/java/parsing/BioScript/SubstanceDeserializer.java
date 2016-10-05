@@ -29,7 +29,10 @@ public class SubstanceDeserializer extends Deserializer<Substance> {
 
 		int id = obj.has(ID) ? obj.get(ID).getAsInt() : -1;
 
+
 		String name = obj.get(NAME).getAsString();
+
+
 		Property<Units.Volume> property = new Property<Units.Volume>(-1, Units.Volume.hL);
 		if(syn == Substance.Synthetic.CHEMICAL) {
 			JsonObject volume = obj.get(VOLUME).getAsJsonObject();
