@@ -16,5 +16,6 @@ import parsing.ChemicalDeserializer;
 		ExperimentDeserializerTest.class,
 		SubroutineDeserializerTest.class,
 		ChemicalDeserializerTest.class
+		SubroutineDeserializerTest.class
 })
 public class APISuite {}
