@@ -9,6 +9,10 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-		BenchtopTest.class
+		BenchtopTest.class,
+		BenchtopDeserializerTest.class,
+		SubstanceDeserializerTest.class,
+		ExperimentDeserializerTest.class,
+		SubroutineDeserializerTest.class
 })
 public class APISuite {}
