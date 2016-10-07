@@ -2,14 +2,22 @@ package parsing;
 
 import com.google.gson.*;
 import executable.instructions.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import substance.Substance;
+import variable.Instance;
+import variable.Reference;
+import variable.Variable;
 
+import java.lang.reflect.MalformedParameterizedTypeException;
 import java.lang.reflect.Type;
 
 /**
  * Created by jason on 2016/09/29.
  */
 public class OperationDeserializer extends Deserializer<Instruction> {
+
+	public static final Logger logger = LogManager.getLogger(OperationDeserializer.class);
 
 	public Instruction deserialize(JsonElement jsonElement, Type type,
 	                               JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
@@ -19,7 +27,9 @@ public class OperationDeserializer extends Deserializer<Instruction> {
 		String classification = obj.get(CLASSIFICATION).getAsString();
 
 		String name = obj.get(SubstanceDeserializer.NAME).getAsString();
-		int id = obj.get(SubstanceDeserializer.ID).getAsInt();
+		String IDString = (obj.get(SubstanceDeserializer.ID).getAsString());
+
+		Long id = Long.parseLong(IDString);
 		Instruction instruction;
 		if(classification.toLowerCase().equals("mix")) {
 			instruction = new Combine(id, name);
@@ -41,13 +51,28 @@ public class OperationDeserializer extends Deserializer<Instruction> {
 
 		if(obj.has(INPUTS)) {
 			for(JsonElement elem : obj.get(INPUTS).getAsJsonArray()) {
-				instruction.addInput((Substance) jsonDeserializationContext.deserialize(elem, Substance.class));
+				if (elem.getAsJsonObject().has(INPUT_TYPE)) {
+
+					if ((elem.getAsJsonObject().get(INPUT_TYPE).getAsString()).equals(VARIABLE)) {
+						instruction.addInput((Reference) jsonDeserializationContext.deserialize(elem, Reference.class));
+					}
+					else if ((elem.getAsJsonObject().get(INPUT_TYPE).getAsString()).equals(CHEMICAL)) {
+						instruction.addInput((Instance) jsonDeserializationContext.deserialize(elem, Instance.class));
+					}
+				}
+				else {
+					logger.fatal("No Input Type specified by: " + elem.toString());
+				}
+				//instruction.addInput((Variable) jsonDeserializationContext.deserialize(elem, Variable.class));
 			}
 		}
 
 		if(obj.has(OUTPUTS)) {
 			for(JsonElement elem : obj.get(OUTPUTS).getAsJsonArray()) {
-				instruction.addOutput((Substance) jsonDeserializationContext.deserialize(elem, Substance.class));
+				if(elem.getAsJsonObject().has(DECLARATION))
+					instruction.addOutput((Instance) jsonDeserializationContext.deserialize(elem, Instance.class));
+				else if(elem.getAsJsonObject().has(VARIABLE))
+					instruction.addOutput((Reference) jsonDeserializationContext.deserialize(elem, Reference.class));
 			}
 		}
 		return instruction;

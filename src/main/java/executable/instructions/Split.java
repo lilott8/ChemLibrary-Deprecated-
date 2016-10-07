@@ -8,11 +8,11 @@ import substance.Substance;
  */
 public class Split extends Instruction {
 
-	public Split(int id, String name) {
+	public Split(long id, String name) {
 		super(id, name, Split.class);
 	}
 
-	public Split(int id) {
+	public Split(long id) {
 		super(id, Split.class);
 	}
 

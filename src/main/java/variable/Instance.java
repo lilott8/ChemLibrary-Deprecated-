@@ -3,6 +3,7 @@ package variable;
 import substance.Substance;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,7 +15,7 @@ public class Instance implements Variable {
 	private String name;
 	private Map<String, Substance> substances = new HashMap<String, Substance>();
 
-	public Instance(String id, String name, Substance... substances) {
+	public Instance(String id, String name, List<Substance> substances) {
 		this.id = id;
 		this. name = name;
 		for(Substance s : substances) {
@@ -38,7 +39,7 @@ public class Instance implements Variable {
 		return this;
 	}
 
-	public boolean setReference(Variable v) {
+	public boolean setReference(Map<String, Substance> v) {
 		return false;
 	}
 }

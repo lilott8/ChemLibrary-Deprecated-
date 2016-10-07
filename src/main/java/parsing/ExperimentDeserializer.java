@@ -7,7 +7,12 @@ import com.google.gson.JsonParseException;
 import executable.Experiment;
 import executable.Subroutine;
 import executable.instructions.Instruction;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import substance.Substance;
+import variable.Instance;
+import variable.Reference;
+import variable.Variable;
 
 import java.lang.reflect.Type;
 
@@ -15,6 +20,8 @@ import java.lang.reflect.Type;
  * Created by jason on 2016/09/29.
  */
 public class ExperimentDeserializer extends Deserializer<Experiment> {
+
+	public static final Logger logger = LogManager.getLogger(ExperimentDeserializer.class);
 
 	public Experiment deserialize(JsonElement jsonElement, Type type,
 	                              JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
@@ -29,9 +36,16 @@ public class ExperimentDeserializer extends Deserializer<Experiment> {
 		experiment = new Experiment(id, name);
 
 		if(obj.has(INPUTS)) {
+			//logger.info("Starting inputs");
 			for(JsonElement e : obj.get(INPUTS).getAsJsonArray()) {
-				experiment.addInput((Substance) jsonDeserializationContext.deserialize(e, Substance.class));
+				if(e.getAsJsonObject().has(DECLARATION)){
+					if (! e.getAsJsonObject().getAsJsonObject(DECLARATION).has(VARIABLE))
+						experiment.addInput((Instance) jsonDeserializationContext.deserialize(e, Instance.class));
+					else
+						experiment.addInput((Reference) jsonDeserializationContext.deserialize(e, Reference.class));
+				}
 			}
+			//logger.info("Finished Inputs");
 		}
 
 		if(obj.has(INSTRUCTIONS)) {

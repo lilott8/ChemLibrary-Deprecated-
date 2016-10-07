@@ -8,11 +8,11 @@ import substance.Substance;
  */
 public class Store extends Instruction {
 
-	public Store(int id, String name) {
+	public Store(long id, String name) {
 		super(id, name, Store.class);
 	}
 
-	public Store(int id) {
+	public Store(long id) {
 		super(id, Store.class);
 	}
 

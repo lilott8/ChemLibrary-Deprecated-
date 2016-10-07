@@ -7,11 +7,11 @@ import substance.Substance;
  */
 public class Detect extends Instruction {
 
-	public Detect(int id, String name) {
+	public Detect(long id, String name) {
 		super(id, name, Detect.class);
 	}
 
-	public Detect(int id) {
+	public Detect(long id) {
 		super(id, Detect.class);
 	}
 

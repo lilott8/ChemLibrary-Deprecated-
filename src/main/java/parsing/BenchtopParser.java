@@ -10,6 +10,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import substance.Chemical;
 import substance.Substance;
+import variable.Instance;
+import variable.Reference;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -31,6 +33,9 @@ public class BenchtopParser {
 		gsonBuilder.registerTypeAdapter(Subroutine.class, new SubroutineDeserializer());
 		gsonBuilder.registerTypeAdapter(Instruction.class, new OperationDeserializer());
 		gsonBuilder.registerTypeAdapter(Benchtop.class, new BenchtopDeserializer());
+		gsonBuilder.registerTypeAdapter(Instance.class, new InstanceDeserializer());
+		gsonBuilder.registerTypeAdapter(Reference.class, new ReferenceDeserializer());
+
 
 		Gson gson = gsonBuilder.setPrettyPrinting().create();
 		if(isFile(path)) {

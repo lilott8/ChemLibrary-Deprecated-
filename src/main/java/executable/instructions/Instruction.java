@@ -2,6 +2,7 @@ package executable.instructions;
 
 import executable.Executable;
 import substance.Substance;
+import variable.Variable;
 
 import java.util.HashMap;
 import java.util.List;
@@ -14,11 +15,11 @@ public abstract class Instruction implements Executable {
 
 	protected String name = "";
 	protected Class classification = this.getClass();
-	protected int id = -1;
-	protected Map<String, Substance> inputs = new HashMap<String, Substance>();
-	private Map<String, Substance> outputs = new HashMap<String, Substance>();
+	protected long id = -1;
+	protected Map<String, Variable> inputs = new HashMap<String, Variable>();
+	private Map<String, Variable> outputs = new HashMap<String, Variable>();
 
-	protected Instruction(int id, Class c) {
+	protected Instruction(long id, Class c) {
 		this.id = id;
 		this.classification = c;
 	}
@@ -28,12 +29,12 @@ public abstract class Instruction implements Executable {
 		this.classification = c;
 	}
 
-	protected Instruction(int id, String name) {
+	protected Instruction(long id, String name) {
 		this.id = id;
 		this.name = name;
 	}
 
-	protected Instruction(int id, String name, Class classification) {
+	protected Instruction(long id, String name, Class classification) {
 		this.name = name;
 		this.classification = classification;
 		this.id = id;
@@ -43,27 +44,27 @@ public abstract class Instruction implements Executable {
 
 	public void addInstructions(List<Executable> instructions) {}
 
-	public void addInput(Substance input) {
+	public void addInput(Variable input) {
 		this.inputs.put(input.getName(), input);
 	}
 
-	public void addInputs(List<Substance> inputs) {
-		for(Substance v : inputs) {
+	public void addInputs(List<Variable> inputs) {
+		for(Variable v : inputs) {
 			this.addInput(v);
 		}
 	}
 
-	public void addInputs(Map<String, Substance> inputs) {
+	public void addInputs(Map<String, Variable> inputs) {
 		this.inputs.putAll(inputs);
 	}
 
-	public void addOutputs(List<Substance> outputs) {
-		for(Substance v : outputs) {
+	public void addOutputs(List<Variable> outputs) {
+		for(Variable v : outputs) {
 			this.addOutput(v);
 		}
 	}
 
-	public void addOutput(Substance variable) {
+	public void addOutput(Variable variable) {
 		this.outputs.put(variable.getName(), variable);
 	}
 
@@ -72,7 +73,7 @@ public abstract class Instruction implements Executable {
 		return this.name;
 	}
 
-	public int getId() {
+	public long getId() {
 		return this.id;
 	}
 
@@ -81,21 +82,21 @@ public abstract class Instruction implements Executable {
 		sb.append("Name: ").append(this.name).append("\n");
 		sb.append("Id: ").append(this.id).append("\n");
 		sb.append("Inputs: ").append("\n");
-		for(Map.Entry<String, Substance> entry : this.inputs.entrySet()) {
+		for(Map.Entry<String, Variable> entry : this.inputs.entrySet()) {
 			sb.append(entry.getValue().toString()).append("\n");
 		}
 		sb.append("Outputs: ").append("\n");
-		for(Map.Entry<String, Substance> entry : this.outputs.entrySet()) {
+		for(Map.Entry<String, Variable> entry : this.outputs.entrySet()) {
 			sb.append(entry.getValue().toString()).append("\n");
 		}
 		return sb.toString();
 	}
 
-	public Map<String, Substance> getOutputs() {
+	public Map<String, Variable> getOutputs() {
 		return this.outputs;
 	}
 
-	public Map<String, Substance> getInputs() {
+	public Map<String, Variable> getInputs() {
 		return this.inputs;
 	}
 }

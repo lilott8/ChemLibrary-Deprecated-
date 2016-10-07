@@ -13,7 +13,7 @@ public enum TypeSystem {
 	INSTANCE;
 
 	private Map<String, Variable> variableTable = new HashMap<String, Variable>();
-	private Map<Integer, Instruction> operationTable = new HashMap<Integer, Instruction>();
+	private Map<Long, Instruction> operationTable = new HashMap<Long, Instruction>();
 
 	public void addVariable(Variable v) {
 		this.variableTable.put(v.getName(), v);
