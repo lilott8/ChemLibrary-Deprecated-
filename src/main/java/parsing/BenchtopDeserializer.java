@@ -46,14 +46,6 @@ public class BenchtopDeserializer extends Deserializer<Benchtop> {
 				Benchtop.INSTANCE.addExperiment((Experiment) jsonDeserializationContext.deserialize(elem, Experiment.class));
 			}
 
-			for (ArrayList<Experiment> experimentList : Benchtop.INSTANCE.getExperiments().values()) {
-				for (Experiment e :experimentList) {
-					System.out.println(e.getName());
-					for(Executable i : e.getInstructions()) {
-						System.out.println(i.getName());
-					}
-				}
-			}
 		} else {
 			logger.error("there are no benchtop experiments to run");
 		}
