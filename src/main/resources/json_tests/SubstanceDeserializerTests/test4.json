@@ -1,0 +1,13 @@
+{
+  "compound": {
+    "name": "compound1",
+    "chemical_list": [
+      {
+        "chemical": {
+          "name": "compound_chemical_1"
+
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "experiment": {
+    "name": "test blow up of ketones!",
+    "inputs": [
+      {
+        "chemical": {
+          "name": "water",
+          "volume": {
+            "value": 10,
+            "units": "mL"
+          }
+        }
+      },
+      {
+        "chemical": {
+          "name": "butanone",
+          "volume": {
+            "value": 10,
+            "units": "mL"
+          }
+        }
+      }
+    ]
+
+  }
+}
