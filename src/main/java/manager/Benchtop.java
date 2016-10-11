@@ -80,6 +80,8 @@ public enum Benchtop {
 		}
 	}
 
+	public Map<String, ArrayList<Experiment>> getExperiments() {return experiments; }
+
 	public void runAllExperiments() {
 		for(Map.Entry<String, ArrayList<Experiment>> entry : this.experiments.entrySet()) {
 			this.runExperiment(entry.getKey());

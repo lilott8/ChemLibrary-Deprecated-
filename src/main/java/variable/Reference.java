@@ -2,6 +2,8 @@ package variable;
 
 import substance.Substance;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -11,12 +13,15 @@ public class Reference implements Variable {
 
 	private String id;
 	private String name;
-	private Variable reference;
+	private Map<String, Substance> substances = new HashMap<String, Substance>();
 
-	public Reference(String id, String name, Variable ref) {
+
+	public Reference(String id, String name, List<Substance> ref) {
 		this.id = id;
-		this.name = name;
-		this.reference = ref;
+		this. name = name;
+		for(Substance s : ref) {
+			this.substances.put(s.getName(), s);
+		}
 	}
 
 	public String getName() {
@@ -28,15 +33,16 @@ public class Reference implements Variable {
 	}
 
 	public Map<String, Substance> getSubstance() {
-		return this.reference.getSubstance();
+		return this.substances;
 	}
 
 	public Variable getReference() {
-		return this.reference;
+		return this;
 	}
 
-	public boolean setReference(Variable v) {
-		this.reference = v;
+	public boolean setReference( Map<String, Substance> substances ) {
+		this.substances = substances;
 		return true;
 	}
 }
+

@@ -7,6 +7,7 @@ import com.google.gson.JsonParseException;
 import executable.Executable;
 import executable.Experiment;
 import executable.Subroutine;
+import executable.instructions.Instruction;
 import manager.Benchtop;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,6 +15,7 @@ import substance.Substance;
 import variable.Variable;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 /**
  * Created by jason on 2016/09/29.
@@ -43,6 +45,7 @@ public class BenchtopDeserializer extends Deserializer<Benchtop> {
 			for(JsonElement elem : obj.get(EXPERIMENTS).getAsJsonArray()) {
 				Benchtop.INSTANCE.addExperiment((Experiment) jsonDeserializationContext.deserialize(elem, Experiment.class));
 			}
+
 		} else {
 			logger.error("there are no benchtop experiments to run");
 		}

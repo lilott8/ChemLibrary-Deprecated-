@@ -7,11 +7,11 @@ import substance.Substance;
  */
 public class Dispense extends Instruction {
 
-	public Dispense(int id, String name) {
+	public Dispense(long id, String name) {
 		super(id, name, Dispense.class);
 	}
 
-	public Dispense(int id) {
+	public Dispense(long id) {
 		super(id, Dispense.class);
 	}
 

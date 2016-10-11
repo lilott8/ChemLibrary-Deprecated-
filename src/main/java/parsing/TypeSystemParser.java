@@ -32,7 +32,7 @@ public class TypeSystemParser {
 		gsonBuilder.registerTypeAdapter(Subroutine.class, new SubroutineDeserializer());
 		gsonBuilder.registerTypeAdapter(Instruction.class, new OperationDeserializer());
 		gsonBuilder.registerTypeAdapter(TypeSystem.class, new TypeSystemDeserializer());
-		gsonBuilder.registerTypeAdapter(Variable.class, new VariableDeserializer());
+		//gsonBuilder.registerTypeAdapter(Variable.class, new VariableDeserializer());
 
 		Gson gson = gsonBuilder.setPrettyPrinting().create();
 		if(isFile(path)) {

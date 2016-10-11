@@ -7,11 +7,11 @@ import substance.Substance;
  */
 public class Heat extends Instruction {
 
-	public Heat(int id, String name) {
+	public Heat(long id, String name) {
 		super(id, name, Heat.class);
 	}
 
-	public Heat(int id) {
+	public Heat(long id) {
 		super(id, Heat.class);
 	}
 

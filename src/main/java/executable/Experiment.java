@@ -2,6 +2,7 @@ package executable;
 
 
 import substance.Substance;
+import variable.Variable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,12 +15,12 @@ import java.util.Map;
 public class Experiment implements Executable {
 
 	private String name = "";
-	private int id = -1;
-	private Map<String, Substance> inputs = new HashMap<String, Substance>();
+	private long id = -1;
+	private Map<String, Variable> inputs = new HashMap<String, Variable>();
 	private List<Executable> instructions = new ArrayList<Executable>();
-	private Map<String, Substance> outputs = new HashMap<String, Substance>();
+	private Map<String, Variable> outputs = new HashMap<String, Variable>();
 
-	public Experiment(int id) {
+	public Experiment(long id) {
 		this.id = id;
 	}
 
@@ -28,12 +29,12 @@ public class Experiment implements Executable {
 		this.id = -1;
 	}
 
-	public Experiment(int id, String name) {
+	public Experiment(long id, String name) {
 		this.name = name;
 		this.id = id;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -41,19 +42,19 @@ public class Experiment implements Executable {
 		return this.name;
 	}
 
-	public void addInputs(Map<String, Substance> inputs) {
+	public void addInputs(Map<String, Variable> inputs) {
 		this.inputs.putAll(inputs);
 	}
 
-	public void addInput(Substance v) {
+	public void addInput(Variable v) {
 		this.inputs.put(v.getName(), v);
 	}
 
-	public void addOutputs(Map<String, Substance> v) {
+	public void addOutputs(Map<String, Variable> v) {
 		this.outputs.putAll(v);
 	}
 
-	public void addOutput(Substance v) {
+	public void addOutput(Variable v) {
 		this.outputs.put(v.getName(), v);
 	}
 
@@ -71,11 +72,11 @@ public class Experiment implements Executable {
 		this.instructions.add(e);
 	}
 
-	public Map<String, Substance> getInputs() {
+	public Map<String, Variable> getInputs() {
 		return this.inputs;
 	}
 
-	public Map<String, Substance> getOutputs() {
+	public Map<String, Variable> getOutputs() {
 		return this.outputs;
 	}
 

@@ -8,11 +8,11 @@ import substance.Substance;
  */
 public class Combine extends Instruction {
 
-	public Combine(int id, String name) {
+	public Combine(long id, String name) {
 		super(id, name, Combine.class);
 	}
 
-	public Combine(int id) {
+	public Combine(long id) {
 		super(id, Combine.class);
 	}
 

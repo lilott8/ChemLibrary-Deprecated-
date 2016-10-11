@@ -1,6 +1,7 @@
 package executable;
 
 import substance.Substance;
+import variable.Variable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,25 +14,25 @@ import java.util.Map;
 public class Subroutine implements Executable {
 
 	private String name = "";
-	private int id = -1;
-	private Map<String, Substance> inputs = new HashMap<String, Substance>();
+	private long id = -1;
+	private Map<String, Variable> inputs = new HashMap<String, Variable>();
 	private List<Executable> instructions = new ArrayList<Executable>();
-	private Map<String, Substance> outputs = new HashMap<String, Substance>();
+	private Map<String, Variable> outputs = new HashMap<String, Variable>();
 
 	public Subroutine(String name) {
 		this.name = name;
 	}
 
-	public Subroutine(int id, String name) {
+	public Subroutine(long id, String name) {
 		this.name = name;
 		this.id = id;
 	}
 
-	public Subroutine(int id) {
+	public Subroutine(long id) {
 		this.id = id;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -39,19 +40,19 @@ public class Subroutine implements Executable {
 		return this.name;
 	}
 
-	public void addInputs(Map<String, Substance> inputs) {
+	public void addInputs(Map<String, Variable> inputs) {
 		this.inputs.putAll(inputs);
 	}
 
-	public void addInput(Substance input) {
+	public void addInput(Variable input) {
 		this.inputs.put(input.getName(), input);
 	}
 
-	public void addOutput(Substance output) {
+	public void addOutput(Variable output) {
 		this.outputs.put(output.getName(), output);
 	}
 
-	public void addOutputs(Map<String, Substance> output) {
+	public void addOutputs(Map<String, Variable> output) {
 		this.outputs.putAll(output);
 	}
 
@@ -68,11 +69,11 @@ public class Subroutine implements Executable {
 		return  instructions;
 	}
 
-	public Map<String, Substance> getOutputs() {
+	public Map<String, Variable> getOutputs() {
 		return this.outputs;
 	}
 
-	public Map<String, Substance> getInputs() {
+	public Map<String, Variable> getInputs() {
 		return this.inputs;
 	}
 

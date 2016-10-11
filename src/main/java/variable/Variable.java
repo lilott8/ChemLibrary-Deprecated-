@@ -13,6 +13,6 @@ public interface Variable {
 	String getId();
 	Map<String, Substance> getSubstance();
 	Variable getReference();
-	boolean setReference(Variable v);
+	boolean setReference(Map<String, Substance>  v);
 
 }

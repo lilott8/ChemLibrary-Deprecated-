@@ -5,6 +5,7 @@ import executable.Executable;
 import executable.Subroutine;
 import executable.instructions.Instruction;
 import substance.Substance;
+import variable.Variable;
 
 import java.lang.reflect.Type;
 
@@ -26,13 +27,13 @@ public class SubroutineDeserializer extends Deserializer<Executable> {
 
 		if(obj.has(INPUTS)) {
 			for(JsonElement elem : obj.get(INPUTS).getAsJsonArray()) {
-				subroutine.addInput((Substance) jsonDeserializationContext.deserialize(elem, Substance.class));
+				subroutine.addInput((Variable) jsonDeserializationContext.deserialize(elem, Variable.class));
 			}
 		}
 
 		if(obj.has(OUTPUTS)) {
 			for(JsonElement elem : obj.get(OUTPUTS).getAsJsonArray()) {
-				subroutine.addOutput((Substance) jsonDeserializationContext.deserialize(elem, Substance.class));
+				subroutine.addOutput((Variable) jsonDeserializationContext.deserialize(elem, Variable.class));
 			}
 		}
 
