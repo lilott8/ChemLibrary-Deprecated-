@@ -19,6 +19,13 @@ public class Branch extends Instruction {
 	protected List<Instruction> elseBranch = new ArrayList<Instruction>();
 	protected List<Property> properties = new ArrayList<Property>();
 
+
+	public Branch(long id, String name, String expression) {
+		super(id, name, Branch.class);
+
+		evaluation = expression;
+	}
+
 	public Branch(String expression, List<Instruction> tBranch, List<Instruction> eIBranch, List<Instruction> eBranch) {
 		super(-1, "Branch", Branch.class);
 
@@ -85,4 +92,15 @@ public class Branch extends Instruction {
 	public void execute(Substance... variables) {
 
 	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder(super.toString());
+		sb.append("Evaluation: " + evaluation);
+		sb.append("TrueBranch: " + trueBranch);
+		sb.append("ElseBranch: " + elseBranch);
+		sb.append("ElseIf: " + elseIfBranch);
+		sb.append("Properties: " + properties);
+		return sb.toString();
+	}
+
 }
