@@ -12,6 +12,7 @@ import manager.Benchtop;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import substance.Substance;
+import variable.Instance;
 import variable.Variable;
 
 import java.lang.reflect.Type;
@@ -33,7 +34,7 @@ public class BenchtopDeserializer extends Deserializer<Benchtop> {
 
 		if(obj.has(INPUTS)) {
 			for(JsonElement elem : obj.get(INPUTS).getAsJsonArray()) {
-				Substance s = jsonDeserializationContext.deserialize(elem, Substance.class);
+				Variable s = jsonDeserializationContext.deserialize(elem, Instance.class);
 				if(s != null) {
 					Benchtop.INSTANCE.addInput(s);
 				}
