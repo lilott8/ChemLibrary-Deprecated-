@@ -47,6 +47,7 @@ public abstract class Deserializer<T> implements JsonDeserializer<T> {
 	protected static final String TRUE_BRANCH = "TRUE_BRANCH";
 	protected static final String FALSE_BRANCH = "FALSE_BRANCH";
 	protected static final String ELSEIF_BRANCH = "ELSEIF_BRANCH";
+	protected static final String LOOP_NUM = "LOOP_NUM";
 
 	public Deserializer() {}
 

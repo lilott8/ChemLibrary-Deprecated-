@@ -54,7 +54,17 @@ public class OperationDeserializer extends Deserializer<Instruction> {
 			String evaluation = obj.get(CONDITION).getAsString();
 			instruction = new Branch(id, name, evaluation);
 		} else if(classification.toLowerCase().equals("cfg_loop")) {
-			String evaluation = obj.get(CONDITION).getAsString();
+			String evaluation;
+			if(obj.has(CONDITION)) {
+				evaluation = obj.get(CONDITION).getAsString();
+			}
+			else if(obj.has(LOOP_NUM)) {
+				StringBuilder number = new StringBuilder();
+				number.append(LOOP_NUM + ": ");
+				number.append(obj.get(LOOP_NUM).getAsString());
+				evaluation = number.toString();
+			}
+			else evaluation = "No Expression";
 			instruction = new Loop(id, name, evaluation);
 		} else {
 			throw new UnsupportedOperationException("No other instructions have been created");
