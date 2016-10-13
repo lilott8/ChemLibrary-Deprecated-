@@ -2,59 +2,87 @@ package executable.conditionals;
 
 import executable.instructions.Instruction;
 import substance.Property;
+import substance.Substance;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 /**
  * Created by jason on 2016/10/03.
  */
-public class Branch extends Conditional {
+public class Branch extends Instruction {
+	protected int id = -1;
+	protected String evaluation;
+	protected List<Instruction> trueBranch = new ArrayList<Instruction>();
+	protected List<Instruction> elseIfBranch = new ArrayList<Instruction>();
+	protected List<Instruction> elseBranch = new ArrayList<Instruction>();
+	protected List<Property> properties = new ArrayList<Property>();
 
 	public Branch(String expression, List<Instruction> tBranch, List<Instruction> eIBranch, List<Instruction> eBranch) {
-		super(expression, tBranch, eIBranch, eBranch);
+		super(-1, "Branch", Branch.class);
+
+		evaluation = expression;
+		trueBranch = tBranch;
+		elseIfBranch = eIBranch;
+		elseBranch = eBranch;
+
 	}
 
 	public Branch(int id, String expression, List<Instruction> tBranch, List<Instruction> eIBranch, List<Instruction> eBranch) {
-		super(id, expression, tBranch, eIBranch, eBranch);
+		super(id, "Branch", Branch.class);
+
+		evaluation = expression;
+		trueBranch = tBranch;
+		elseIfBranch = eIBranch;
+		elseBranch = eBranch;
 	}
 
-	@Override
+
 	public List<Instruction> getTrueBranch() {
 		return this.trueBranch;
 	}
 
-	@Override
+
 	public List<Instruction> getElseIfBranch() {
 		return this.elseIfBranch;
 	}
 
-	@Override
+
 	public List<Instruction> getElseBranch() {
 		return this.elseBranch;
 	}
 
-	@Override
-	public Conditional addTrueBranch(Instruction i) {
+	public Branch addTrueBranch(Instruction i) {
 		this.trueBranch.add(i);
 		return this;
 	}
 
-	@Override
-	public Conditional addElseIfBranch(Instruction i) {
-		this.elseIfBranch.add(i);
+	public Branch addElseIfBranch(Instruction i) throws IllegalArgumentException {
+
+		if (i instanceof Branch)
+			this.elseIfBranch.add(i);
+
+		else
+			throw new IllegalArgumentException("You must add a Branch to the Else if list");
 		return this;
 	}
 
-	@Override
-	public Conditional addElseBranch(Instruction i) {
+	public Branch addElseBranch(Instruction i) {
 		this.elseBranch.add(i);
 		return this;
 	}
 
-	@Override
-	public Conditional addProperties(Property... p) {
+	public Branch addProperties(Property... p) {
 		this.properties.addAll(Arrays.asList(p));
 		return this;
+	}
+
+	public void execute() {
+
+	}
+
+	public void execute(Substance... variables) {
+
 	}
 }

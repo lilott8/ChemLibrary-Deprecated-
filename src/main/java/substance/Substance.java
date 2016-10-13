@@ -51,6 +51,8 @@ public class Substance {
 		return true;
 	}
 
+	public Map<String,Chemical> getChemicals() {return chemicals;}
+
 	public String getName() {
 		return name;
 	}

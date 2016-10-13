@@ -3,6 +3,7 @@ package manager;
 import executable.Executable;
 import executable.Experiment;
 import substance.Substance;
+import variable.Variable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,8 +19,8 @@ public enum Benchtop {
 	// all the experiments on the manager
 	private Map<String, ArrayList<Experiment>> experiments = new HashMap<String, ArrayList<Experiment>>();
 	// inputs for the all experiments
-	private Map<String, Substance> inputs = new HashMap<String, Substance>();
-	private Map<String, Substance> outputs = new HashMap<String, Substance>();
+	private Map<String, Variable> inputs = new HashMap<String, Variable>();
+	private Map<String, Variable> outputs = new HashMap<String, Variable>();
 	private List<Executable> executables = new ArrayList<Executable>();
 
 	private String name = "";
@@ -47,23 +48,23 @@ public enum Benchtop {
 		}
 	}
 
-	public void addInputs(Map<String, Substance> inputs) {
+	public void addInputs(Map<String, Variable> inputs) {
 		this.inputs.putAll(inputs);
 	}
 
-	public void addInput(Substance input) {
+	public void addInput(Variable input) {
 		this.inputs.put(input.getName(), input);
 	}
 
-	public void addOutputs(List<Substance> outputs) {
+	public void addOutputs(List<Variable> outputs) {
 		if(outputs != null) {
-			for (Substance v : outputs) {
+			for (Variable v : outputs) {
 				this.addOutput(v);
 			}
 		}
 	}
 
-	public void addOutput(Substance variable) {
+	public void addOutput(Variable variable) {
 		this.outputs.put(variable.getName(), variable);
 	}
 
@@ -81,6 +82,8 @@ public enum Benchtop {
 	}
 
 	public Map<String, ArrayList<Experiment>> getExperiments() {return experiments; }
+	public Map<String, Variable> getInputs() { return inputs; }
+	public Map<String, Variable> getOutputs() { return outputs; }
 
 	public void runAllExperiments() {
 		for(Map.Entry<String, ArrayList<Experiment>> entry : this.experiments.entrySet()) {

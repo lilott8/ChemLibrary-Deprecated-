@@ -2,59 +2,55 @@ package executable.conditionals;
 
 import executable.instructions.Instruction;
 import substance.Property;
+import substance.Substance;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 /**
  * Created by jason on 2016/10/03.
  */
-public class Loop extends Conditional {
+public class Loop extends Instruction {
+	protected int id = -1;
+	protected String evaluation;
+	protected List<Instruction> trueBranch = new ArrayList<Instruction>();
 
-	public Loop(String expression, List<Instruction> tBranch, List<Instruction> eIBranch, List<Instruction> eBranch) {
-		super(expression, tBranch, eIBranch, eBranch);
+	protected List<Property> properties = new ArrayList<Property>();
+
+
+	public Loop(String expression, List<Instruction> tBranch) {
+		super(-1, "Branch", Loop.class);
+
+		evaluation = expression;
+		trueBranch = tBranch;
+
 	}
 
-	public Loop(int id, String expression, List<Instruction> tBranch, List<Instruction> eIBranch, List<Instruction> eBranch) {
-		super(id, expression, tBranch, eIBranch, eBranch);
+	public Loop(int id, String expression, List<Instruction> tBranch) {
+		super(id, "Branch", Loop.class);
+
+		evaluation = expression;
+		trueBranch = tBranch;
 	}
 
-	@Override
 	public List<Instruction> getTrueBranch() {
 		return this.trueBranch;
 	}
 
-	@Override
-	public List<Instruction> getElseIfBranch() {
-		return this.elseIfBranch;
-	}
-
-	@Override
-	public List<Instruction> getElseBranch() {
-		return this.elseBranch;
-	}
-
-	@Override
-	public Conditional addTrueBranch(Instruction i) {
+	public void addTrueBranch(Instruction i) {
 		this.trueBranch.add(i);
-		return this;
 	}
 
-	@Override
-	public Conditional addElseIfBranch(Instruction i) {
-		this.elseIfBranch.add(i);
-		return this;
-	}
-
-	@Override
-	public Conditional addElseBranch(Instruction i) {
-		this.elseBranch.add(i);
-		return this;
-	}
-
-	@Override
-	public Conditional addProperties(Property... p) {
+	public void addProperties(Property... p) {
 		this.properties.addAll(Arrays.asList(p));
-		return this;
+	}
+
+	public void execute() {
+
+	}
+
+	public void execute(Substance... variables) {
+
 	}
 }
