@@ -1,6 +1,9 @@
 package parsing;
 
 import com.google.gson.*;
+import executable.Executable;
+import executable.conditionals.Branch;
+import executable.conditionals.Loop;
 import executable.instructions.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,6 +14,8 @@ import variable.Variable;
 
 import java.lang.reflect.MalformedParameterizedTypeException;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by jason on 2016/09/29.
@@ -45,6 +50,12 @@ public class OperationDeserializer extends Deserializer<Instruction> {
 			instruction = new Store(id, name);
 		} else if(classification.toLowerCase().equals("dispense")) {
 			instruction = new Dispense(id, name);
+		} else if(classification.toLowerCase().equals("cfg_branch")) {
+			String evaluation = obj.get(CONDITION).getAsString();
+			instruction = new Branch(id, name, evaluation);
+		} else if(classification.toLowerCase().equals("cfg_loop")) {
+			String evaluation = obj.get(CONDITION).getAsString();
+			instruction = new Loop(id, name, evaluation);
 		} else {
 			throw new UnsupportedOperationException("No other instructions have been created");
 		}
@@ -75,6 +86,25 @@ public class OperationDeserializer extends Deserializer<Instruction> {
 					instruction.addOutput((Reference) jsonDeserializationContext.deserialize(elem, Reference.class));
 			}
 		}
+
+		if(obj.has(TRUE_BRANCH)) {
+			for(JsonElement elem : obj.get(TRUE_BRANCH).getAsJsonArray()) {
+				((Branch)instruction).addTrueBranch(((Instruction) jsonDeserializationContext.deserialize(elem, Instruction.class)));
+			}
+		}
+
+		if(obj.has(FALSE_BRANCH)) {
+			for(JsonElement elem : obj.get(FALSE_BRANCH).getAsJsonArray()) {
+				((Branch)instruction).addElseBranch((Instruction) jsonDeserializationContext.deserialize(elem, Instruction.class));
+			}
+		}
+
+		if(obj.has(ELSEIF_BRANCH)) {
+			for(JsonElement elem : obj.get(ELSEIF_BRANCH).getAsJsonArray()) {
+				((Branch)instruction).addElseIfBranch((Instruction) jsonDeserializationContext.deserialize(elem, Instruction.class));
+			}
+		}
+
 		return instruction;
 	}
 }
