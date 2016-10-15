@@ -18,6 +18,11 @@ public class Loop extends Instruction {
 
 	protected List<Property> properties = new ArrayList<Property>();
 
+	public Loop(long id, String name, String expression) {
+		super(id, name, Loop.class);
+
+		evaluation = expression;
+	}
 
 	public Loop(String expression, List<Instruction> tBranch) {
 		super(-1, "Branch", Loop.class);
