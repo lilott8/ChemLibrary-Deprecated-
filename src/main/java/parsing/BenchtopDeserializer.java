@@ -44,7 +44,8 @@ public class BenchtopDeserializer extends Deserializer<Benchtop> {
 		}
 		if(obj.has(EXPERIMENTS)) {
 			for(JsonElement elem : obj.get(EXPERIMENTS).getAsJsonArray()) {
-				Benchtop.INSTANCE.addExperiment((Experiment) jsonDeserializationContext.deserialize(elem, Experiment.class));
+				Experiment experi =(Experiment) jsonDeserializationContext.deserialize(elem, Experiment.class);
+				Benchtop.INSTANCE.addExperiment(experi);
 			}
 
 		} else {

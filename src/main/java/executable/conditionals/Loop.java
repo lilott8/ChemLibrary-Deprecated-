@@ -1,5 +1,6 @@
 package executable.conditionals;
 
+import executable.Executable;
 import executable.instructions.Instruction;
 import substance.Property;
 import substance.Substance;
@@ -43,6 +44,8 @@ public class Loop extends Instruction {
 		return this.trueBranch;
 	}
 
+	public String getCondition() { return evaluation; }
+
 	public void addTrueBranch(Instruction i) {
 		this.trueBranch.add(i);
 	}
@@ -57,5 +60,14 @@ public class Loop extends Instruction {
 
 	public void execute(Substance... variables) {
 
+	}
+
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Loop");
+		builder.append(this.evaluation).append(System.lineSeparator()) ;
+		for(Instruction instruction: this.getTrueBranch())
+			builder.append(instruction.toString()).append(System.lineSeparator());
+		return builder.toString();
 	}
 }

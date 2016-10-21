@@ -60,6 +60,8 @@ public class Branch extends Instruction {
 		return this.elseBranch;
 	}
 
+	public String getCondition() { return evaluation; }
+
 	public Branch addTrueBranch(Instruction i) {
 		this.trueBranch.add(i);
 		return this;
