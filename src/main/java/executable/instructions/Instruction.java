@@ -68,6 +68,12 @@ public abstract class Instruction implements Executable {
 		this.outputs.put(variable.getName(), variable);
 	}
 
+	public void removeOutput(Variable variable) {
+		if (this.outputs.containsKey(variable.getName())){
+			this.outputs.remove(variable.getName(),variable);
+		}
+	}
+
 
 	public String getName() {
 		return this.name;

@@ -53,6 +53,24 @@ public class OperationDeserializer extends Deserializer<Instruction> {
 		} else if(classification.toLowerCase().equals("cfg_branch")) {
 			String evaluation = obj.get(CONDITION).getAsString();
 			instruction = new Branch(id, name, evaluation);
+
+			if(obj.has(TRUE_BRANCH)) {
+				for(JsonElement elem : obj.get(TRUE_BRANCH).getAsJsonArray()) {
+					((Branch)instruction).addTrueBranch(((Instruction) jsonDeserializationContext.deserialize(elem, Instruction.class)));
+				}
+			}
+
+			if(obj.has(FALSE_BRANCH)) {
+				for(JsonElement elem : obj.get(FALSE_BRANCH).getAsJsonArray()) {
+					((Branch)instruction).addElseBranch((Instruction) jsonDeserializationContext.deserialize(elem, Instruction.class));
+				}
+			}
+
+			if(obj.has(ELSEIF_BRANCH)) {
+				for(JsonElement elem : obj.get(ELSEIF_BRANCH).getAsJsonArray()) {
+					((Branch)instruction).addElseIfBranch((Instruction) jsonDeserializationContext.deserialize(elem, Instruction.class));
+				}
+			}
 		} else if(classification.toLowerCase().equals("cfg_loop")) {
 			String evaluation;
 			if(obj.has(CONDITION)) {
@@ -66,6 +84,12 @@ public class OperationDeserializer extends Deserializer<Instruction> {
 			}
 			else evaluation = "No Expression";
 			instruction = new Loop(id, name, evaluation);
+
+			if(obj.has(OPERATIONS)) {
+				for (JsonElement elem : obj.getAsJsonArray(OPERATIONS)) {
+					((Loop) instruction).addTrueBranch((Instruction) jsonDeserializationContext.deserialize(elem, Instruction.class));
+				}
+			}
 		} else {
 			throw new UnsupportedOperationException("No other instructions have been created");
 		}
@@ -97,23 +121,7 @@ public class OperationDeserializer extends Deserializer<Instruction> {
 			}
 		}
 
-		if(obj.has(TRUE_BRANCH)) {
-			for(JsonElement elem : obj.get(TRUE_BRANCH).getAsJsonArray()) {
-				((Branch)instruction).addTrueBranch(((Instruction) jsonDeserializationContext.deserialize(elem, Instruction.class)));
-			}
-		}
 
-		if(obj.has(FALSE_BRANCH)) {
-			for(JsonElement elem : obj.get(FALSE_BRANCH).getAsJsonArray()) {
-				((Branch)instruction).addElseBranch((Instruction) jsonDeserializationContext.deserialize(elem, Instruction.class));
-			}
-		}
-
-		if(obj.has(ELSEIF_BRANCH)) {
-			for(JsonElement elem : obj.get(ELSEIF_BRANCH).getAsJsonArray()) {
-				((Branch)instruction).addElseIfBranch((Instruction) jsonDeserializationContext.deserialize(elem, Instruction.class));
-			}
-		}
 
 		return instruction;
 	}

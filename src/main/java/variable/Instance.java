@@ -26,10 +26,12 @@ public class Instance implements Variable {
 	public String getName() {
 		return this.name;
 	}
+	public void setName(String name) { this.name = name; }
 
-	public String getId() {
+	public String getID() {
 		return this.id;
 	}
+	public void setID(String ID) { this.id = ID; }
 
 	public Map<String, Substance> getSubstance() {
 		return this.substances;
