@@ -46,5 +46,17 @@ public class Reference implements Variable {
 		this.substances = substances;
 		return true;
 	}
+
+	public String toString(){
+		return this.toString("");
+	}
+
+	public String toString(String indentBuffer){
+		String ret=indentBuffer +"(Reference)"+ name + '\n' ;
+		for (Substance s: substances.values())
+			ret += s.toString(indentBuffer + '\t') +'\n';
+
+		return ret;
+	}
 }
 

@@ -26,6 +26,7 @@ public enum Benchtop {
 	private String name = "";
 	private int id = -1;
 
+
 	public void setName(String n) {
 		if(this.name.isEmpty()) {
 			this.name = n;
@@ -100,12 +101,25 @@ public enum Benchtop {
 	}
 
 	public String toString() {
-		StringBuilder sb = new StringBuilder("Benchtop").append(System.lineSeparator());
+		return this.toString("");
+	}
+	public String toString(String indentBuffer){
+		String ret=indentBuffer+ "Benchtop : \n";
+		for(Variable v : inputs.values()) {
+			ret+= v.toString(indentBuffer+'\t') + '\n';
+		}
+		if(experiments != null) {
+			for (ArrayList<Experiment> experiment : experiments.values())
+				for (Experiment experimen : experiment)
+					ret += experimen.toString(indentBuffer + '\t') + '\n';
+
+		}
+		/*StringBuilder sb = new StringBuilder("Benchtop").append(System.lineSeparator());
 		sb.append("Inputs").append(inputs.toString()).append(System.lineSeparator());
 		sb.append("Outputs:").append(outputs.toString()).append(System.lineSeparator());
 		sb.append("Experiments:").append(experiments.toString()).append(System.lineSeparator());
-		sb.append("Executables:").append(executables.toString()).append(System.lineSeparator());
-		return sb.toString();
+		sb.append("Executables:").append(executables.toString()).append(System.lineSeparator());*/
+		return ret;
 	}
 
 }

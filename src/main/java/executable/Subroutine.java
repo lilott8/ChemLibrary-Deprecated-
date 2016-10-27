@@ -86,4 +86,11 @@ public class Subroutine implements Executable {
 	public void execute(Substance... variables) {
 		this.execute();
 	}
+
+	public String toString(){
+		return this.toString("");
+	}
+	public String toString(String indentbuffer) {
+		return indentbuffer + "Subroutine Print Not implemented";
+	}
 }

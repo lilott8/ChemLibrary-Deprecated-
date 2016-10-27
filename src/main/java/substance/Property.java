@@ -1,9 +1,11 @@
 package substance;
 
+import java.io.Serializable;
+
 /**
  * Created by jason on 2016/08/18.
  */
-public class Property<V> {
+public class Property<V> implements Serializable {
 	private float quantity;
 	private V unit;
 
@@ -21,6 +23,10 @@ public class Property<V> {
 	}
 
 	public String toString() {
-		return String.format("%.2f %s", this.quantity, this.unit.toString());
+		return this.toString("");
+	}
+
+	public String toString(String indentBuffer) {
+		return indentBuffer + String.format("%.2f %s", this.quantity, this.unit.toString());
 	}
 }
