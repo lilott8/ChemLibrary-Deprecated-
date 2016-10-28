@@ -1,9 +1,11 @@
 package substance;
 
+import java.io.Serializable;
+
 /**
  * Created by jason on 2016/09/29.
  */
-public class Chemical {
+public class Chemical implements Serializable{
 
 	private int groupId;
 	private String name = "";
@@ -28,7 +30,21 @@ public class Chemical {
 	}
 
 	public String toString() {
-		return String.format("%s has properties: %s", this.name, this.volume.toString());
+		return this.toString("");
 	}
 
+	public String toString(String indentBuffer){
+		String ret = indentBuffer + name + '\n';
+		if(!smiles.equals("")) {
+			ret+= indentBuffer+'\t' + smiles;
+		}
+		if(!raw.equals("")) {
+			ret+= indentBuffer+'\t' + raw;
+		}
+		if(volume != null) {
+			ret+=volume.toString(indentBuffer+'\t') +'\n';
+		}
+
+		return ret;
+	}
 }

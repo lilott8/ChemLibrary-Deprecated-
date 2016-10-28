@@ -63,11 +63,14 @@ public class Loop extends Instruction {
 	}
 
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Loop");
-		builder.append(this.evaluation).append(System.lineSeparator()) ;
-		for(Instruction instruction: this.getTrueBranch())
-			builder.append(instruction.toString()).append(System.lineSeparator());
-		return builder.toString();
+		return this.toString("");
+	}
+
+	public String toString(String indentBuffer) {
+		String ret = indentBuffer + this.name + ": " + evaluation +'\n';
+		for(Instruction instruction : this.trueBranch){
+			ret+= instruction.toString(indentBuffer+'\t');
+		}
+		return ret;
 	}
 }

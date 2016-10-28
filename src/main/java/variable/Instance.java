@@ -44,4 +44,16 @@ public class Instance implements Variable {
 	public boolean setReference(Map<String, Substance> v) {
 		return false;
 	}
+
+	public String toString(){
+		return this.toString("");
+	}
+
+	public String toString(String indentBuffer){
+		String ret=indentBuffer +"(Instance)"+ name + '\n' ;
+		for (Substance s: substances.values())
+			ret += s.toString(indentBuffer + '\t') +'\n';
+
+		return ret;
+	}
 }

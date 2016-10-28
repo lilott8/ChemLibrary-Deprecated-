@@ -1,12 +1,13 @@
 package substance;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by jason on 2016/09/28.
  */
-public class Substance {
+public class Substance implements Serializable {
 
 	public enum Synthetic {
 		CHEMICAL, COMPOUND
@@ -66,10 +67,18 @@ public class Substance {
 	}
 
 	public String toString() {
-		StringBuilder sb = new StringBuilder("Substance:").append("\n");
-		sb.append("Name: ").append(this.name).append("\n");
-		sb.append("Volume: ").append(this.property.toString());
+		return this.toString("");
+	}
 
-		return sb.toString();
+	public String toString(String indentBuffer) {
+		String ret = indentBuffer + name + '\n';
+		if(property != null) {
+			ret += indentBuffer + '\t' + property.toString() + '\n';
+		}
+		if(chemicals != null) {
+			for (Chemical c : chemicals.values())
+				ret += c.toString(indentBuffer + '\t') + '\n';
+		}
+		return ret;
 	}
 }
