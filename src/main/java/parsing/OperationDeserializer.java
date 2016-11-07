@@ -50,6 +50,8 @@ public class OperationDeserializer extends Deserializer<Instruction> {
 			instruction = new Store(id, name);
 		} else if(classification.toLowerCase().equals("dispense")) {
 			instruction = new Dispense(id, name);
+		} else if(classification.toLowerCase().equals("react")) {
+			instruction = new React(id, name);
 		} else if(classification.toLowerCase().equals("cfg_branch")) {
 			String evaluation = obj.get(CONDITION).getAsString();
 			instruction = new Branch(id, name, evaluation);
