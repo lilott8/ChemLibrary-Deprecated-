@@ -104,5 +104,18 @@ public class Branch extends Instruction {
 		sb.append("Properties: " + properties);
 		return sb.toString();
 	}
+	public String toString(String indentBuffer) {
+		String ret = indentBuffer + this.name + ": " + evaluation +'\n';
+		for(Instruction instruction : this.trueBranch){
+			ret+= instruction.toString(indentBuffer+'\t');
+		}
+		for(Instruction instruction : this.getElseIfBranch()){
+			ret+= instruction.toString(indentBuffer+'\t');
+		}
+		for(Instruction instruction : this.getElseBranch()){
+			ret+= instruction.toString(indentBuffer+'\t');
+		}
+		return ret;
+	}
 
 }

@@ -28,32 +28,41 @@ public class ReferenceDeserializer extends Deserializer<Reference> {
 
     public Reference deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
         JsonObject obj;
-        if (jsonElement.getAsJsonObject().has(DECLARATION))
-            obj = jsonElement.getAsJsonObject().getAsJsonObject(DECLARATION);
-        else
-            obj = jsonElement.getAsJsonObject();
+        obj = jsonElement.getAsJsonObject().getAsJsonObject(DECLARATION);
 
         List<Substance> substances = new ArrayList<Substance>();
+        if (obj != null) {
+            if (obj.has(VARIABLE)) {
+                JsonObject referenceObject = obj.getAsJsonObject(VARIABLE);
+                Property<Units.Volume> volume = extractVolumeProperty(referenceObject);
 
-        if (obj.has(VARIABLE)) {
-            JsonObject referenceObject = obj.getAsJsonObject(VARIABLE);
-            Property<Units.Volume> volume = extractVolumeProperty(referenceObject);
+                if (volume == null)
+                    volume = new Property<Units.Volume>(-1, Units.Volume.nL);
 
-            if(volume == null)
-                volume = new Property<Units.Volume>(-1, Units.Volume.nL);
+                Substance substance = new Substance(-1, referenceObject.get(NAME).getAsString(), volume, CHEMICAL);
+                substances.add(substance);
 
-            Substance substance = new Substance(-1,referenceObject.get(NAME).getAsString(),volume,CHEMICAL);
-            substances.add(substance);
+                String nameID;
+                if (jsonElement.getAsJsonObject().has(DECLARATION))
+                    nameID = obj.get(NAME).getAsString();
+                else
+                    nameID = referenceObject.get(NAME).getAsString();
 
-            String nameID;
-            if (jsonElement.getAsJsonObject().has(DECLARATION))
-                nameID = obj.get(NAME).getAsString();
-            else
-                nameID = referenceObject.get(NAME).getAsString();
-
-            return new Reference(nameID,nameID,substances);
+                return new Reference(nameID, nameID, substances);
+            }
         }
+        else{
+            obj = jsonElement.getAsJsonObject();
+            if(obj.has(CHEMICAL)){
+                String ChemType = obj.get(INPUT_TYPE).getAsString();
+                JsonObject chemcialObject = obj.getAsJsonObject(CHEMICAL);
+                Property<Units.Volume> volume = this.extractVolumeProperty(chemcialObject);
 
+                String ChemName = chemcialObject.get(NAME).getAsString();
+                substances.add(new Substance(-1, ChemName, volume, ChemType));
+                return new Reference(ChemName,ChemName,substances);
+            }
+        }
         logger.warn("Reference: \"" +obj.get(NAME).getAsString() + "\" was not able to be converted");
         return null;
     }

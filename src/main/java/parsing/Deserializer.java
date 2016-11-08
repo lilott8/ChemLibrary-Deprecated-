@@ -43,10 +43,14 @@ public abstract class Deserializer<T> implements JsonDeserializer<T> {
 	protected static final String LIST = "CHEMICAL_LIST";
 	protected static final String OPERATION = "OPERATION";
 	protected static final String OPERATIONS = "OPERATIONS";
+	protected static final String PROPERTY = "PROPERTY";
 	protected static final String CONDITION = "CONDITION";
 	protected static final String TRUE_BRANCH = "TRUE_BRANCH";
 	protected static final String FALSE_BRANCH = "FALSE_BRANCH";
 	protected static final String ELSEIF_BRANCH = "ELSEIF_BRANCH";
+	protected static final String STATIONARY = "STATIONARY";
+	protected static final String SENSOR = "SENSOR";
+	protected static final String SENSOR_DECLARATION = "SENSOR_DECLARATION";
 	protected static final String LOOP_NUM = "LOOP_NUM";
 
 	public Deserializer() {}
