@@ -1,4 +1,4 @@
-package parsing;
+package parsing.BioScript;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
@@ -9,15 +9,11 @@ import org.apache.logging.log4j.Logger;
 import substance.Property;
 import substance.Substance;
 import substance.Units;
-import variable.Instance;
 import variable.Reference;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-
-import java.lang.reflect.Type;
-import java.util.jar.Attributes;
 
 /**
  * Created by chriscurtis on 10/6/16.

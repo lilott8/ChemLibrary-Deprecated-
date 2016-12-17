@@ -1,18 +1,13 @@
-package parsing;
+package parsing.BioScript;
 
 import com.google.gson.*;
-import manager.TypeSystem;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import com.google.gson.JsonElement;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import substance.Property;
 import substance.Substance;
 import substance.Units;
 import variable.Instance;
-import variable.Reference;
-import variable.Variable;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;

@@ -1,21 +1,14 @@
-package parsing;
+package parsing.BioScript;
 
 import com.google.gson.*;
-import executable.Executable;
 import executable.conditionals.Branch;
 import executable.conditionals.Loop;
 import executable.instructions.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import substance.Substance;
 import variable.Instance;
-import variable.Reference;
-import variable.Variable;
 
-import java.lang.reflect.MalformedParameterizedTypeException;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by jason on 2016/09/29.

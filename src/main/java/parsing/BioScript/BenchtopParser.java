@@ -1,4 +1,4 @@
-package parsing;
+package parsing.BioScript;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

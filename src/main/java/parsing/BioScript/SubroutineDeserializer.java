@@ -1,10 +1,9 @@
-package parsing;
+package parsing.BioScript;
 
 import com.google.gson.*;
 import executable.Executable;
 import executable.Subroutine;
 import executable.instructions.Instruction;
-import substance.Substance;
 import variable.Variable;
 
 import java.lang.reflect.Type;
