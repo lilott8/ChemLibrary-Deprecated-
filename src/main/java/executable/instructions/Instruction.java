@@ -75,7 +75,7 @@ public abstract class Instruction implements Executable {
 
 	public void removeOutput(Variable variable) {
 		if (this.outputs.containsKey(variable.getName())){
-			this.outputs.remove(variable.getName(),variable);
+			this.outputs.remove(variable.getName());
 		}
 	}
 
@@ -118,4 +118,6 @@ public abstract class Instruction implements Executable {
 	public Map<String, Variable> getInputs() {
 		return this.inputs;
 	}
+
+	public ArrayList<Property> getProperties() { return this.properties; }
 }
