@@ -31,10 +31,10 @@ public class BenchtopDeserializer extends Deserializer<Benchtop> {
 
 		if(obj.has(INPUTS)) {
 			for(JsonElement elem : obj.get(INPUTS).getAsJsonArray()) {
-				Variable s = jsonDeserializationContext.deserialize(elem, Instance.class);
-				if(s != null) {
-					Benchtop.INSTANCE.addInput(s);
-				}
+					Variable s = jsonDeserializationContext.deserialize(elem, Instance.class);
+					if(s != null) {
+						Benchtop.INSTANCE.addInput(s);
+					}
 			}
 		} else {
 			logger.error("There are no benchtop inputs defined");

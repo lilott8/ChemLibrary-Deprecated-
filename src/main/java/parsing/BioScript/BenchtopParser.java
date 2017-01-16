@@ -9,6 +9,7 @@ import manager.Benchtop;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import substance.Chemical;
+import substance.Property;
 import substance.Substance;
 import variable.Instance;
 import variable.Reference;
@@ -35,6 +36,7 @@ public class BenchtopParser {
 		gsonBuilder.registerTypeAdapter(Benchtop.class, new BenchtopDeserializer());
 		gsonBuilder.registerTypeAdapter(Instance.class, new InstanceDeserializer());
 		gsonBuilder.registerTypeAdapter(Reference.class, new ReferenceDeserializer());
+		gsonBuilder.registerTypeAdapter(Property.class, new PropertyDeserializer());
 
 
 		Gson gson = gsonBuilder.setPrettyPrinting().create();

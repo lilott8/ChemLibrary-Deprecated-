@@ -6,6 +6,7 @@ import executable.conditionals.Loop;
 import executable.instructions.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import substance.Property;
 import variable.Instance;
 
 import java.lang.reflect.Type;
@@ -102,7 +103,11 @@ public class OperationDeserializer extends Deserializer<Instruction> {
 
 					if(!(elem.getAsJsonObject().get(INPUT_TYPE).getAsString()).equals(PROPERTY))
 						instruction.addInput((Instance) jsonDeserializationContext.deserialize(elem, Instance.class));
-					//}
+					else {
+						Property p = jsonDeserializationContext.deserialize(elem, Property.class);
+						if (p != null)
+							instruction.addProperty(p);
+					}
 				}
 				else {
 					logger.fatal("No Input Type specified by: " + elem.toString());
@@ -110,6 +115,7 @@ public class OperationDeserializer extends Deserializer<Instruction> {
 				//instruction.addInput((Variable) jsonDeserializationContext.deserialize(elem, Variable.class));
 			}
 		}
+
 
 		if(obj.has(OUTPUTS)) {
 			for(JsonElement elem : obj.get(OUTPUTS).getAsJsonArray()) {
