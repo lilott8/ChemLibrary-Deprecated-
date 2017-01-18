@@ -101,12 +101,20 @@ public abstract class Instruction implements Executable {
 				ret+= indentBuffer + "\t\t" + v.getName() +'\n';
 			}
 		}
+
+		if(this.properties != null && this.properties.size() > 0) {
+            ret += indentBuffer + '\t' + "Properties: " + '\n';
+            for(Property p : this.properties)
+                ret += indentBuffer + "\t\t" + p.toString() + '\n';
+        }
+
 		if(this.outputs!=null &&this.outputs.size() > 0){
 			ret+= indentBuffer +'\t' + "Outputs: "+ '\n';
 			for(Variable v : this.outputs.values()){
 				ret+= v.toString(indentBuffer+"\t\t");
 			}
 		}
+
 		return ret;
 	}
 
