@@ -13,6 +13,7 @@ import substance.Property;
 import substance.Substance;
 import variable.Instance;
 import variable.Reference;
+import variable.Sensor;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -35,7 +36,8 @@ public class BenchtopParser {
 		gsonBuilder.registerTypeAdapter(Instruction.class, new OperationDeserializer());
 		gsonBuilder.registerTypeAdapter(Benchtop.class, new BenchtopDeserializer());
 		gsonBuilder.registerTypeAdapter(Instance.class, new InstanceDeserializer());
-		gsonBuilder.registerTypeAdapter(Reference.class, new ReferenceDeserializer());
+		gsonBuilder.registerTypeAdapter(Sensor.class, new SensorDeserializer());
+		//gsonBuilder.registerTypeAdapter(Reference.class, new ReferenceDeserializer());
 		gsonBuilder.registerTypeAdapter(Property.class, new PropertyDeserializer());
 
 

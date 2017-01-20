@@ -106,14 +106,25 @@ public class Branch extends Instruction {
 	}
 	public String toString(String indentBuffer) {
 		String ret = indentBuffer + this.name + ": " + evaluation +'\n';
-		for(Instruction instruction : this.trueBranch){
-			ret+= instruction.toString(indentBuffer+'\t');
+
+		if(this.trueBranch.size() > 0){
+			ret += indentBuffer + "True Branch: " + '\n';
+			for(Instruction instruction : this.trueBranch){
+				ret+= instruction.toString(indentBuffer+'\t');
+			}
 		}
-		for(Instruction instruction : this.getElseIfBranch()){
-			ret+= instruction.toString(indentBuffer+'\t');
+
+		if(this.elseIfBranch.size() > 0) {
+			ret += indentBuffer + "Else IF Branch: " + '\n';
+				for (Instruction instruction : this.getElseIfBranch()) {
+				ret += instruction.toString(indentBuffer + '\t');
+			}
 		}
-		for(Instruction instruction : this.getElseBranch()){
-			ret+= instruction.toString(indentBuffer+'\t');
+		if(this.elseBranch.size() > 0 ) {
+			ret += indentBuffer + "Else Branch: " + '\n';
+			for (Instruction instruction : this.getElseBranch()) {
+				ret += instruction.toString(indentBuffer + '\t');
+			}
 		}
 		return ret;
 	}

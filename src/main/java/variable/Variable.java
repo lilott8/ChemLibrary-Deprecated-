@@ -14,8 +14,8 @@ public interface Variable extends Serializable{
 	void setName(String name);
 	String getID();
 	void setID(String ID);
-	Map<String, Substance> getSubstance();
-	Variable getReference();
-	boolean setReference(Map<String, Substance>  v);
+	//Map<String, Substance> getSubstance();
+	//Variable getReference();
+	//boolean setReference(Map<String, Substance>  v);
 	String toString(String s);
 }
