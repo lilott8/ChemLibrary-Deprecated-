@@ -1,4 +1,4 @@
-package parsing;
+package parsing.BioScript;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -6,12 +6,13 @@ import executable.Experiment;
 import executable.Subroutine;
 import executable.instructions.Instruction;
 import manager.Benchtop;
-import manager.TypeSystem;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import substance.Chemical;
+import substance.Property;
 import substance.Substance;
-import variable.Variable;
+import variable.Instance;
+import variable.Reference;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,7 +21,8 @@ import java.io.FileReader;
 /**
  * Created by jason on 2016/09/30.
  */
-public class TypeSystemParser {
+public class BenchtopParser {
+
 	public static final Logger logger = LogManager.getLogger(BenchtopParser.class);
 
 	public static void parse(String path) throws FileNotFoundException {
@@ -31,8 +33,11 @@ public class TypeSystemParser {
 		gsonBuilder.registerTypeAdapter(Substance.class, new SubstanceDeserializer());
 		gsonBuilder.registerTypeAdapter(Subroutine.class, new SubroutineDeserializer());
 		gsonBuilder.registerTypeAdapter(Instruction.class, new OperationDeserializer());
-		gsonBuilder.registerTypeAdapter(TypeSystem.class, new TypeSystemDeserializer());
-		//gsonBuilder.registerTypeAdapter(Variable.class, new VariableDeserializer());
+		gsonBuilder.registerTypeAdapter(Benchtop.class, new BenchtopDeserializer());
+		gsonBuilder.registerTypeAdapter(Instance.class, new InstanceDeserializer());
+		gsonBuilder.registerTypeAdapter(Reference.class, new ReferenceDeserializer());
+		gsonBuilder.registerTypeAdapter(Property.class, new PropertyDeserializer());
+
 
 		Gson gson = gsonBuilder.setPrettyPrinting().create();
 		if(isFile(path)) {

@@ -1,8 +1,7 @@
 import manager.Benchtop;
-import manager.TypeSystem;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import parsing.*;
+import parsing.BioScript.BenchtopParser;
 
 /**
  * Created by jason on 2016/09/21.
@@ -14,10 +13,7 @@ public class Main {
 	public static void main(String... args) throws Exception {
 		logger.info("Nothing to see here...");
 
-//		System.out.println();
-//		System.out.println(System.class.getResource("test1.json").getPath());
-//		TypeSystemParser.parse(Main.class.getClassLoader().getResource("json_tests/test1.json").getPath());
-//		BenchtopParser.parse(Main.class.getClassLoader().getResource("json_tests/SimpleLoop.json").getPath());
-//		logger.info(Benchtop.INSTANCE.toString());
+		BenchtopParser.parse(Main.class.getClassLoader().getResource("json_tests/test2.json").getPath());
+		logger.info(Benchtop.INSTANCE.toString());
 	}
 }

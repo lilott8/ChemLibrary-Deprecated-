@@ -1,9 +1,11 @@
 package executable.instructions;
 
 import executable.Executable;
+import substance.Property;
 import substance.Substance;
 import variable.Variable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +19,7 @@ public abstract class Instruction implements Executable {
 	protected Class classification = this.getClass();
 	protected long id = -1;
 	protected Map<String, Variable> inputs = new HashMap<String, Variable>();
+	protected ArrayList<Property> properties = new ArrayList<Property>();
 	private Map<String, Variable> outputs = new HashMap<String, Variable>();
 
 	protected Instruction(long id, Class c) {
@@ -39,6 +42,8 @@ public abstract class Instruction implements Executable {
 		this.classification = classification;
 		this.id = id;
 	}
+
+	public void addProperty(Property p){ this.properties.add(p); }
 
 	public void addInstruction(Executable instruction) {}
 
@@ -70,7 +75,7 @@ public abstract class Instruction implements Executable {
 
 	public void removeOutput(Variable variable) {
 		if (this.outputs.containsKey(variable.getName())){
-			this.outputs.remove(variable.getName(),variable);
+			this.outputs.remove(variable.getName());
 		}
 	}
 
@@ -96,12 +101,20 @@ public abstract class Instruction implements Executable {
 				ret+= indentBuffer + "\t\t" + v.getName() +'\n';
 			}
 		}
+
+		if(this.properties != null && this.properties.size() > 0) {
+            ret += indentBuffer + '\t' + "Properties: " + '\n';
+            for(Property p : this.properties)
+                ret += indentBuffer + "\t\t" + p.toString() + '\n';
+        }
+
 		if(this.outputs!=null &&this.outputs.size() > 0){
 			ret+= indentBuffer +'\t' + "Outputs: "+ '\n';
 			for(Variable v : this.outputs.values()){
 				ret+= v.toString(indentBuffer+"\t\t");
 			}
 		}
+
 		return ret;
 	}
 
@@ -113,4 +126,6 @@ public abstract class Instruction implements Executable {
 	public Map<String, Variable> getInputs() {
 		return this.inputs;
 	}
+
+	public ArrayList<Property> getProperties() { return this.properties; }
 }

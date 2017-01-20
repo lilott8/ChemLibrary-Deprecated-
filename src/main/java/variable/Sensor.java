@@ -1,6 +1,5 @@
 package variable;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import substance.Substance;
 
 import java.util.HashMap;
@@ -10,20 +9,15 @@ import java.util.Map;
 /**
  * Created by jason on 2016/09/29.
  */
-public class Instance implements Variable {
+public class Sensor implements Variable {
 
 	private String id;
 	private String name;
-	private Boolean isStationary;
-	private Map<String, Substance> substances = new HashMap<String, Substance>();
 
-	public Instance(String id, String name, List<Substance> substances) {
+
+	public Sensor(String id, String name) {
 		this.id = id;
 		this. name = name;
-		this.isStationary = false;
-		for(Substance s : substances) {
-			this.substances.put(s.getName(), s);
-		}
 	}
 
 	public String getName() {
@@ -36,11 +30,8 @@ public class Instance implements Variable {
 	}
 	public void setID(String ID) { this.id = ID; }
 
-	public Boolean getIsStationary() { return isStationary; }
-	public void setIsStationary(Boolean isStationary) { this.isStationary = isStationary; }
-
 	public Map<String, Substance> getSubstance() {
-		return this.substances;
+		return null;
 	}
 
 	public Variable getReference() {
@@ -57,8 +48,8 @@ public class Instance implements Variable {
 
 	public String toString(String indentBuffer){
 		String ret=indentBuffer +"(Instance)"+ name + '\n' ;
-		for (Substance s: substances.values())
-			ret += s.toString(indentBuffer + '\t') +'\n';
+//		for (Substance s: substances.values())
+//			ret += s.toString(indentBuffer + '\t') +'\n';
 
 		return ret;
 	}

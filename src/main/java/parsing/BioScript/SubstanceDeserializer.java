@@ -1,4 +1,4 @@
-package parsing;
+package parsing.BioScript;
 
 import com.google.gson.*;
 import substance.Chemical;

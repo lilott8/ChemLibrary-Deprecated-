@@ -1,21 +1,15 @@
-package parsing;
+package parsing.BioScript;
 
 import com.google.gson.*;
-import executable.Executable;
 import executable.conditionals.Branch;
 import executable.conditionals.Loop;
 import executable.instructions.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import substance.Substance;
+import substance.Property;
 import variable.Instance;
-import variable.Reference;
-import variable.Variable;
 
-import java.lang.reflect.MalformedParameterizedTypeException;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by jason on 2016/09/29.
@@ -100,11 +94,19 @@ public class OperationDeserializer extends Deserializer<Instruction> {
 			for(JsonElement elem : obj.get(INPUTS).getAsJsonArray()) {
 				if (elem.getAsJsonObject().has(INPUT_TYPE)) {
 
-					if ((elem.getAsJsonObject().get(INPUT_TYPE).getAsString()).equals(VARIABLE)) {
-						instruction.addInput((Reference) jsonDeserializationContext.deserialize(elem, Reference.class));
-					}
-					else if ((elem.getAsJsonObject().get(INPUT_TYPE).getAsString()).equals(CHEMICAL)) {
+					//if ((elem.getAsJsonObject().get(INPUT_TYPE).getAsString()).equals(VARIABLE)) {
+					//	instruction.addInput((Reference) jsonDeserializationContext.deserialize(elem, Reference.class));
+					//}
+					//else if ((elem.getAsJsonObject().get(INPUT_TYPE).getAsString()).equals(CHEMICAL)) {
+					if (elem.getAsJsonObject().has(SENSOR_DECLARATION))
+						continue;
+
+					if(!(elem.getAsJsonObject().get(INPUT_TYPE).getAsString()).equals(PROPERTY))
 						instruction.addInput((Instance) jsonDeserializationContext.deserialize(elem, Instance.class));
+					else {
+						Property p = jsonDeserializationContext.deserialize(elem, Property.class);
+						if (p != null)
+							instruction.addProperty(p);
 					}
 				}
 				else {
@@ -114,12 +116,14 @@ public class OperationDeserializer extends Deserializer<Instruction> {
 			}
 		}
 
+
 		if(obj.has(OUTPUTS)) {
 			for(JsonElement elem : obj.get(OUTPUTS).getAsJsonArray()) {
-				if(elem.getAsJsonObject().has(DECLARATION))
+				if (elem.getAsJsonObject().has(SENSOR_DECLARATION))
+					continue;
+				if(!elem.getAsJsonObject().has(PROPERTY))
 					instruction.addOutput((Instance) jsonDeserializationContext.deserialize(elem, Instance.class));
-				else if(elem.getAsJsonObject().has(VARIABLE))
-					instruction.addOutput((Reference) jsonDeserializationContext.deserialize(elem, Reference.class));
+
 			}
 		}
 
