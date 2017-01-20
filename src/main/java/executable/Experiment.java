@@ -94,15 +94,6 @@ public class Experiment implements Executable {
 	public String toString() {
 		return this.toString("");
 
-		/*StringBuilder sb = new StringBuilder("Experiments: ");
-
-		sb.append("Name: ").append(this.name).append(System.lineSeparator());
-		sb.append("Id: ").append(this.id).append(System.lineSeparator());
-		sb.append("Inputs: ").append(this.inputs.toString()).append(System.lineSeparator());
-		sb.append("Instructions: ").append(this.instructions.toString()).append(System.lineSeparator());
-		sb.append("Outputs: ").append(this.outputs.toString()).append(System.lineSeparator());
-
-		return sb.toString();*/
 	}
 	public String toString(String indentbuffer){
 		String ret= indentbuffer + "Experiement : " + this.name + '\n';

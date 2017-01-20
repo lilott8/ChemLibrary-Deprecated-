@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import substance.Property;
 import variable.Instance;
+import variable.Sensor;
 
 import java.lang.reflect.Type;
 
@@ -67,6 +68,10 @@ public class OperationDeserializer extends Deserializer<Instruction> {
 					((Branch)instruction).addElseIfBranch((Instruction) jsonDeserializationContext.deserialize(elem, Instruction.class));
 				}
 			}
+			if(obj.has(NAME) && obj.get(NAME).getAsString().toLowerCase().equals("elseif")) {
+				for(JsonElement elem : obj.getAsJsonArray(OPERATIONS))
+					((Branch)instruction).addTrueBranch((Instruction) jsonDeserializationContext.deserialize(elem,Instruction.class));
+			}
 		} else if(classification.toLowerCase().equals("cfg_loop")) {
 			String evaluation;
 			if(obj.has(CONDITION)) {
@@ -119,10 +124,12 @@ public class OperationDeserializer extends Deserializer<Instruction> {
 
 		if(obj.has(OUTPUTS)) {
 			for(JsonElement elem : obj.get(OUTPUTS).getAsJsonArray()) {
-				if (elem.getAsJsonObject().has(SENSOR_DECLARATION))
-					continue;
-				if(!elem.getAsJsonObject().has(PROPERTY))
-					instruction.addOutput((Instance) jsonDeserializationContext.deserialize(elem, Instance.class));
+				if (elem.getAsJsonObject().has(SENSOR_DECLARATION)) {
+					instruction.addOutput((Sensor) jsonDeserializationContext.deserialize(elem, Sensor.class));
+				}
+				else if(!elem.getAsJsonObject().has(PROPERTY)) {
+						instruction.addOutput((Instance) jsonDeserializationContext.deserialize(elem, Instance.class));
+				}
 
 			}
 		}

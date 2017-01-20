@@ -34,15 +34,18 @@ public class Chemical implements Serializable{
 	}
 
 	public String toString(String indentBuffer){
-		String ret = indentBuffer + name + '\n';
+		String ret = indentBuffer;
+
+		if(volume != null) {
+			ret+=volume.toString() + " ";
+		}
+		ret+=name + '\n';
+
 		if(!smiles.equals("")) {
 			ret+= indentBuffer+'\t' + smiles;
 		}
 		if(!raw.equals("")) {
 			ret+= indentBuffer+'\t' + raw;
-		}
-		if(volume != null) {
-			ret+=volume.toString(indentBuffer+'\t') +'\n';
 		}
 
 		return ret;

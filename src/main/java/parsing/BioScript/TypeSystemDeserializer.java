@@ -37,7 +37,7 @@ public class TypeSystemDeserializer extends Deserializer<TypeSystem> {
 
 		JsonObject temp;
 		for(JsonElement elem : vars) {
-			temp = elem.getAsJsonObject().get(DECLARATION).getAsJsonObject();
+			temp = elem.getAsJsonObject().get(VARIABLE_DECLARATION).getAsJsonObject();
 
 			if(temp.get(TYPE).getAsString().equalsIgnoreCase(CHEMICAL)) {
 				types.get(CHEMICAL).add(temp);

@@ -54,14 +54,14 @@ public abstract class Deserializer<T> implements JsonDeserializer<T> {
 
 	protected static final String VARIABLES = "VARIABLES";
 	protected static final String VARIABLE = "VARIABLE";
-	protected static final String DECLARATION = "VARIABLE_DECLARATION";
+	protected static final String VARIABLE_DECLARATION = "VARIABLE_DECLARATION";
 	protected static final String VALUE = "VALUE";
 	protected static final String VOLUME = "VOLUME";
 
 
 	public Deserializer() {}
 
-	protected Property<Units.Volume> extractVolumeProperty(JsonObject volumeContainer) {
+	/*protected Property<Units.Volume> extractVolumeProperty(JsonObject volumeContainer) {
 		if (volumeContainer == null || !volumeContainer.has(VOLUME))
 			return null;
 
@@ -91,6 +91,6 @@ public abstract class Deserializer<T> implements JsonDeserializer<T> {
 
 
 		return null;
-	}
+	}*/
 
 }

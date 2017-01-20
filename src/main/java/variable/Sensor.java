@@ -47,7 +47,7 @@ public class Sensor implements Variable {
 	}
 
 	public String toString(String indentBuffer){
-		String ret=indentBuffer +"(Instance)"+ name + '\n' ;
+		String ret=indentBuffer +"(Sensor)"+ name + '\n' ;
 //		for (Substance s: substances.values())
 //			ret += s.toString(indentBuffer + '\t') +'\n';
 

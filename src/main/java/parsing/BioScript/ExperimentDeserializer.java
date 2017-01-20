@@ -36,9 +36,10 @@ public class ExperimentDeserializer extends Deserializer<Experiment> {
 		if(obj.has(INPUTS)) {
 			//logger.info("Starting inputs");
 			for(JsonElement e : obj.get(INPUTS).getAsJsonArray()) {
-				if(e.getAsJsonObject().has(DECLARATION)){
-					if (! e.getAsJsonObject().getAsJsonObject(DECLARATION).has(VARIABLE))
-						experiment.addInput((Instance) jsonDeserializationContext.deserialize(e, Instance.class));
+				if(e.getAsJsonObject().has(VARIABLE_DECLARATION)){
+					if (! e.getAsJsonObject().getAsJsonObject(VARIABLE_DECLARATION).has(VARIABLE))
+						if(e.getAsJsonObject().getAsJsonObject(VARIABLE_DECLARATION).has(TYPE) && e.getAsJsonObject().getAsJsonObject(VARIABLE_DECLARATION).get(TYPE).getAsString().equals("CHEMICAL"))
+							experiment.addInput((Instance) jsonDeserializationContext.deserialize(e, Instance.class));
 					else
 						experiment.addInput((Reference) jsonDeserializationContext.deserialize(e, Reference.class));
 				}

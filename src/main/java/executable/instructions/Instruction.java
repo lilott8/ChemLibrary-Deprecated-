@@ -98,7 +98,7 @@ public abstract class Instruction implements Executable {
 		if(this.inputs!=null &&this.inputs.size() > 0){
 			ret+= indentBuffer +'\t' + "Inputs: "+ '\n';
 			for(Variable v : this.inputs.values()){
-				ret+= indentBuffer + "\t\t" + v.getName() +'\n';
+				ret+= indentBuffer + "\t\t" + v.toString();
 			}
 		}
 
