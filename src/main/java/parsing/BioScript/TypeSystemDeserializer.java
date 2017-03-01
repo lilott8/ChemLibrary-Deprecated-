@@ -1,17 +1,13 @@
-package parsing;
+package parsing.BioScript;
 
 import com.google.gson.*;
-import executable.instructions.Instruction;
 import manager.TypeSystem;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import variable.Reference;
-import variable.Variable;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,7 +37,7 @@ public class TypeSystemDeserializer extends Deserializer<TypeSystem> {
 
 		JsonObject temp;
 		for(JsonElement elem : vars) {
-			temp = elem.getAsJsonObject().get(DECLARATION).getAsJsonObject();
+			temp = elem.getAsJsonObject().get(VARIABLE_DECLARATION).getAsJsonObject();
 
 			if(temp.get(TYPE).getAsString().equalsIgnoreCase(CHEMICAL)) {
 				types.get(CHEMICAL).add(temp);

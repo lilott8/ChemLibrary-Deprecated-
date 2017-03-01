@@ -1,6 +1,7 @@
 package executable;
 
 
+import executable.instructions.Instruction;
 import substance.Substance;
 import variable.Variable;
 
@@ -91,14 +92,25 @@ public class Experiment implements Executable {
 	}
 
 	public String toString() {
-		StringBuilder sb = new StringBuilder("Experiments: ");
+		return this.toString("");
 
-		sb.append("Name: ").append(this.name).append(System.lineSeparator());
-		sb.append("Id: ").append(this.id).append(System.lineSeparator());
-		sb.append("Inputs: ").append(this.inputs.toString()).append(System.lineSeparator());
-		sb.append("Instructions: ").append(this.instructions.toString()).append(System.lineSeparator());
-		sb.append("Outputs: ").append(this.outputs.toString()).append(System.lineSeparator());
+	}
+	public String toString(String indentbuffer){
+		String ret= indentbuffer + "Experiement : " + this.name + '\n';
+		if(inputs!= null && inputs.size() > 0) {
+			ret += indentbuffer + '\t' + "Inputs:" + '\n';
+			for (Variable v : inputs.values()) {
+				ret += v.toString(indentbuffer + "\t\t");
+			}
+		}
 
-		return sb.toString();
+		if(this.instructions != null && this.instructions.size() >0) {
+			ret+= indentbuffer+'\t' + "Instructions: " + '\n';
+			for (Executable e : this.instructions) {
+				ret+= e.toString(indentbuffer + "\t\t");
+			}
+		}
+
+		return ret;
 	}
 }

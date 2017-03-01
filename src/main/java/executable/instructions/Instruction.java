@@ -1,9 +1,11 @@
 package executable.instructions;
 
 import executable.Executable;
+import substance.Property;
 import substance.Substance;
 import variable.Variable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +19,7 @@ public abstract class Instruction implements Executable {
 	protected Class classification = this.getClass();
 	protected long id = -1;
 	protected Map<String, Variable> inputs = new HashMap<String, Variable>();
+	protected ArrayList<Property> properties = new ArrayList<Property>();
 	private Map<String, Variable> outputs = new HashMap<String, Variable>();
 
 	protected Instruction(long id, Class c) {
@@ -39,6 +42,8 @@ public abstract class Instruction implements Executable {
 		this.classification = classification;
 		this.id = id;
 	}
+
+	public void addProperty(Property p){ this.properties.add(p); }
 
 	public void addInstruction(Executable instruction) {}
 
@@ -68,6 +73,12 @@ public abstract class Instruction implements Executable {
 		this.outputs.put(variable.getName(), variable);
 	}
 
+	public void removeOutput(Variable variable) {
+		if (this.outputs.containsKey(variable.getName())){
+			this.outputs.remove(variable.getName());
+		}
+	}
+
 
 	public String getName() {
 		return this.name;
@@ -77,20 +88,36 @@ public abstract class Instruction implements Executable {
 		return this.id;
 	}
 
-	public String toString() {
-		StringBuilder sb = new StringBuilder("Instruction: ").append(this.classification.getName()).append("\n");
-		sb.append("Name: ").append(this.name).append("\n");
-		sb.append("Id: ").append(this.id).append("\n");
-		sb.append("Inputs: ").append("\n");
-		for(Map.Entry<String, Variable> entry : this.inputs.entrySet()) {
-			sb.append(entry.getValue().toString()).append("\n");
-		}
-		sb.append("Outputs: ").append("\n");
-		for(Map.Entry<String, Variable> entry : this.outputs.entrySet()) {
-			sb.append(entry.getValue().toString()).append("\n");
-		}
-		return sb.toString();
+	public String toString(){
+		return this.toString("");
 	}
+
+	public String toString(String indentBuffer) {
+		String ret = indentBuffer + this.name + "(" + this.id + ")" + '\n';
+
+		if(this.inputs!=null &&this.inputs.size() > 0){
+			ret+= indentBuffer +'\t' + "Inputs: "+ '\n';
+			for(Variable v : this.inputs.values()){
+				ret+= indentBuffer + "\t\t" + v.toString();
+			}
+		}
+
+		if(this.properties != null && this.properties.size() > 0) {
+            ret += indentBuffer + '\t' + "Properties: " + '\n';
+            for(Property p : this.properties)
+                ret += indentBuffer + "\t\t" + p.toString() + '\n';
+        }
+
+		if(this.outputs!=null &&this.outputs.size() > 0){
+			ret+= indentBuffer +'\t' + "Outputs: "+ '\n';
+			for(Variable v : this.outputs.values()){
+				ret+= v.toString(indentBuffer+"\t\t");
+			}
+		}
+
+		return ret;
+	}
+
 
 	public Map<String, Variable> getOutputs() {
 		return this.outputs;
@@ -99,4 +126,6 @@ public abstract class Instruction implements Executable {
 	public Map<String, Variable> getInputs() {
 		return this.inputs;
 	}
+
+	public ArrayList<Property> getProperties() { return this.properties; }
 }

@@ -1,9 +1,11 @@
 package substance;
 
+import java.io.Serializable;
+
 /**
  * Created by jason on 2016/08/18.
  */
-public class Units {
+public class Units implements Serializable {
 
 	public enum Volume {
 		pL, nL, uL, mL, cL, dL, L, daL, hL, kL

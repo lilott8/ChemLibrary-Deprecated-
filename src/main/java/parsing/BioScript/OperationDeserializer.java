@@ -1,21 +1,16 @@
-package parsing;
+package parsing.BioScript;
 
 import com.google.gson.*;
-import executable.Executable;
 import executable.conditionals.Branch;
 import executable.conditionals.Loop;
 import executable.instructions.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import substance.Substance;
+import substance.Property;
 import variable.Instance;
-import variable.Reference;
-import variable.Variable;
+import variable.Sensor;
 
-import java.lang.reflect.MalformedParameterizedTypeException;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by jason on 2016/09/29.
@@ -50,9 +45,33 @@ public class OperationDeserializer extends Deserializer<Instruction> {
 			instruction = new Store(id, name);
 		} else if(classification.toLowerCase().equals("dispense")) {
 			instruction = new Dispense(id, name);
+		} else if(classification.toLowerCase().equals("react")) {
+			instruction = new React(id, name);
 		} else if(classification.toLowerCase().equals("cfg_branch")) {
 			String evaluation = obj.get(CONDITION).getAsString();
 			instruction = new Branch(id, name, evaluation);
+
+			if(obj.has(TRUE_BRANCH)) {
+				for(JsonElement elem : obj.get(TRUE_BRANCH).getAsJsonArray()) {
+					((Branch)instruction).addTrueBranch(((Instruction) jsonDeserializationContext.deserialize(elem, Instruction.class)));
+				}
+			}
+
+			if(obj.has(FALSE_BRANCH)) {
+				for(JsonElement elem : obj.get(FALSE_BRANCH).getAsJsonArray()) {
+					((Branch)instruction).addElseBranch((Instruction) jsonDeserializationContext.deserialize(elem, Instruction.class));
+				}
+			}
+
+			if(obj.has(ELSEIF_BRANCH)) {
+				for(JsonElement elem : obj.get(ELSEIF_BRANCH).getAsJsonArray()) {
+					((Branch)instruction).addElseIfBranch((Instruction) jsonDeserializationContext.deserialize(elem, Instruction.class));
+				}
+			}
+			if(obj.has(NAME) && obj.get(NAME).getAsString().toLowerCase().equals("elseif")) {
+				for(JsonElement elem : obj.getAsJsonArray(OPERATIONS))
+					((Branch)instruction).addTrueBranch((Instruction) jsonDeserializationContext.deserialize(elem,Instruction.class));
+			}
 		} else if(classification.toLowerCase().equals("cfg_loop")) {
 			String evaluation;
 			if(obj.has(CONDITION)) {
@@ -66,6 +85,12 @@ public class OperationDeserializer extends Deserializer<Instruction> {
 			}
 			else evaluation = "No Expression";
 			instruction = new Loop(id, name, evaluation);
+
+			if(obj.has(OPERATIONS)) {
+				for (JsonElement elem : obj.getAsJsonArray(OPERATIONS)) {
+					((Loop) instruction).addTrueBranch((Instruction) jsonDeserializationContext.deserialize(elem, Instruction.class));
+				}
+			}
 		} else {
 			throw new UnsupportedOperationException("No other instructions have been created");
 		}
@@ -74,11 +99,19 @@ public class OperationDeserializer extends Deserializer<Instruction> {
 			for(JsonElement elem : obj.get(INPUTS).getAsJsonArray()) {
 				if (elem.getAsJsonObject().has(INPUT_TYPE)) {
 
-					if ((elem.getAsJsonObject().get(INPUT_TYPE).getAsString()).equals(VARIABLE)) {
-						instruction.addInput((Reference) jsonDeserializationContext.deserialize(elem, Reference.class));
-					}
-					else if ((elem.getAsJsonObject().get(INPUT_TYPE).getAsString()).equals(CHEMICAL)) {
+					//if ((elem.getAsJsonObject().get(INPUT_TYPE).getAsString()).equals(VARIABLE)) {
+					//	instruction.addInput((Reference) jsonDeserializationContext.deserialize(elem, Reference.class));
+					//}
+					//else if ((elem.getAsJsonObject().get(INPUT_TYPE).getAsString()).equals(CHEMICAL)) {
+					if (elem.getAsJsonObject().has(SENSOR_DECLARATION))
+						continue;
+
+					if(!(elem.getAsJsonObject().get(INPUT_TYPE).getAsString()).equals(PROPERTY))
 						instruction.addInput((Instance) jsonDeserializationContext.deserialize(elem, Instance.class));
+					else {
+						Property p = jsonDeserializationContext.deserialize(elem, Property.class);
+						if (p != null)
+							instruction.addProperty(p);
 					}
 				}
 				else {
@@ -88,32 +121,20 @@ public class OperationDeserializer extends Deserializer<Instruction> {
 			}
 		}
 
+
 		if(obj.has(OUTPUTS)) {
 			for(JsonElement elem : obj.get(OUTPUTS).getAsJsonArray()) {
-				if(elem.getAsJsonObject().has(DECLARATION))
-					instruction.addOutput((Instance) jsonDeserializationContext.deserialize(elem, Instance.class));
-				else if(elem.getAsJsonObject().has(VARIABLE))
-					instruction.addOutput((Reference) jsonDeserializationContext.deserialize(elem, Reference.class));
+				if (elem.getAsJsonObject().has(SENSOR_DECLARATION)) {
+					instruction.addOutput((Sensor) jsonDeserializationContext.deserialize(elem, Sensor.class));
+				}
+				else if(!elem.getAsJsonObject().has(PROPERTY)) {
+						instruction.addOutput((Instance) jsonDeserializationContext.deserialize(elem, Instance.class));
+				}
+
 			}
 		}
 
-		if(obj.has(TRUE_BRANCH)) {
-			for(JsonElement elem : obj.get(TRUE_BRANCH).getAsJsonArray()) {
-				((Branch)instruction).addTrueBranch(((Instruction) jsonDeserializationContext.deserialize(elem, Instruction.class)));
-			}
-		}
 
-		if(obj.has(FALSE_BRANCH)) {
-			for(JsonElement elem : obj.get(FALSE_BRANCH).getAsJsonArray()) {
-				((Branch)instruction).addElseBranch((Instruction) jsonDeserializationContext.deserialize(elem, Instruction.class));
-			}
-		}
-
-		if(obj.has(ELSEIF_BRANCH)) {
-			for(JsonElement elem : obj.get(ELSEIF_BRANCH).getAsJsonArray()) {
-				((Branch)instruction).addElseIfBranch((Instruction) jsonDeserializationContext.deserialize(elem, Instruction.class));
-			}
-		}
 
 		return instruction;
 	}

@@ -9,19 +9,15 @@ import java.util.Map;
 /**
  * Created by jason on 2016/09/29.
  */
-public class Reference implements Variable {
+public class Sensor implements Variable {
 
 	private String id;
 	private String name;
-	private Map<String, Substance> substances = new HashMap<String, Substance>();
 
 
-	public Reference(String id, String name, List<Substance> ref) {
+	public Sensor(String id, String name) {
 		this.id = id;
 		this. name = name;
-		for(Substance s : ref) {
-			this.substances.put(s.getName(), s);
-		}
 	}
 
 	public String getName() {
@@ -35,16 +31,15 @@ public class Reference implements Variable {
 	public void setID(String ID) { this.id = ID; }
 
 	public Map<String, Substance> getSubstance() {
-		return this.substances;
+		return null;
 	}
 
 	public Variable getReference() {
 		return this;
 	}
 
-	public boolean setReference( Map<String, Substance> substances ) {
-		this.substances = substances;
-		return true;
+	public boolean setReference(Map<String, Substance> v) {
+		return false;
 	}
 
 	public String toString(){
@@ -52,11 +47,10 @@ public class Reference implements Variable {
 	}
 
 	public String toString(String indentBuffer){
-		String ret=indentBuffer +"(Reference)"+ name + '\n' ;
-		for (Substance s: substances.values())
-			ret += s.toString(indentBuffer + '\t') +'\n';
+		String ret=indentBuffer +"(Sensor)"+ name + '\n' ;
+//		for (Substance s: substances.values())
+//			ret += s.toString(indentBuffer + '\t') +'\n';
 
 		return ret;
 	}
 }
-

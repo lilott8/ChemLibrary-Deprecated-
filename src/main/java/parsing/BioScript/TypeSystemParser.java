@@ -1,4 +1,4 @@
-package parsing;
+package parsing.BioScript;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -11,7 +11,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import substance.Chemical;
 import substance.Substance;
-import variable.Variable;
 
 import java.io.File;
 import java.io.FileNotFoundException;

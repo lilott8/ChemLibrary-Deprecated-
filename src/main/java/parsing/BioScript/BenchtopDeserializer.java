@@ -1,4 +1,4 @@
-package parsing;
+package parsing.BioScript;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
@@ -7,16 +7,13 @@ import com.google.gson.JsonParseException;
 import executable.Executable;
 import executable.Experiment;
 import executable.Subroutine;
-import executable.instructions.Instruction;
 import manager.Benchtop;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import substance.Substance;
 import variable.Instance;
 import variable.Variable;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 
 /**
  * Created by jason on 2016/09/29.
@@ -34,17 +31,18 @@ public class BenchtopDeserializer extends Deserializer<Benchtop> {
 
 		if(obj.has(INPUTS)) {
 			for(JsonElement elem : obj.get(INPUTS).getAsJsonArray()) {
-				Variable s = jsonDeserializationContext.deserialize(elem, Instance.class);
-				if(s != null) {
-					Benchtop.INSTANCE.addInput(s);
-				}
+					Variable s = jsonDeserializationContext.deserialize(elem, Instance.class);
+					if(s != null) {
+						Benchtop.INSTANCE.addInput(s);
+					}
 			}
 		} else {
 			logger.error("There are no benchtop inputs defined");
 		}
 		if(obj.has(EXPERIMENTS)) {
 			for(JsonElement elem : obj.get(EXPERIMENTS).getAsJsonArray()) {
-				Benchtop.INSTANCE.addExperiment((Experiment) jsonDeserializationContext.deserialize(elem, Experiment.class));
+				Experiment experi =(Experiment) jsonDeserializationContext.deserialize(elem, Experiment.class);
+				Benchtop.INSTANCE.addExperiment(experi);
 			}
 
 		} else {
