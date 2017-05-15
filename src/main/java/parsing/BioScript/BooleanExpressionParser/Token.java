@@ -1,4 +1,4 @@
-package BooleanExpressionParser;
+package parsing.BioScript.BooleanExpressionParser;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -38,12 +38,12 @@ class Token  {
     // Constructor
     Token(String value){
         this.value = value;
-        this.potentialTokens = new LinkedList<>();
+        this.potentialTokens = new LinkedList<String>();
         this.locked = Boolean.FALSE;
         check_tokens();
     }
     Token(){
-        this.potentialTokens = new LinkedList<>();
+        this.potentialTokens = new LinkedList<String>();
         this.value = "";
         this.locked = Boolean.TRUE;
         this.potentialTokens.add("ROOT");
@@ -51,7 +51,7 @@ class Token  {
 
     // Functions
     private void check_tokens(){
-        Queue<String> newTokens = new LinkedList<>();
+        Queue<String> newTokens = new LinkedList<String>();
         for (PatternPair i : validTokens){
             if (this.value.matches(i.getPattern())){
                 newTokens.add(i.getToken());

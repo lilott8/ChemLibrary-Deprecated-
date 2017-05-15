@@ -1,4 +1,4 @@
-package BooleanExpressionParser;
+package parsing.BioScript.BooleanExpressionParser;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -9,26 +9,26 @@ import java.util.List;
 public class BooleanParser {
     // Constants
     private static final CFGPair[] types = {
-        new CFGPair("expr", new LinkedList<>(Collections.singletonList("EXPR"))),
-        new CFGPair("node", new LinkedList<>(Arrays.asList("IDENTIFIER", "TRUE", "FALSE"))),
-        new CFGPair("relation_op", new LinkedList<>(Arrays.asList("LT", "LTE", "GT", "GTE", "EQ", "NEQ"))),
-        new CFGPair("logical_op", new LinkedList<>(Arrays.asList("AND","OR"))),
-        new CFGPair("not", new LinkedList<>(Collections.singletonList("NOT"))),
-        new CFGPair("l_paren", new LinkedList<>(Collections.singletonList("L_PAREN"))),
-        new CFGPair("r_paren", new LinkedList<>(Collections.singletonList("R_PAREN")))
+        new CFGPair("expr", new LinkedList<String>(Collections.singletonList("EXPR"))),
+        new CFGPair("node", new LinkedList<String>(Arrays.asList("IDENTIFIER", "TRUE", "FALSE"))),
+        new CFGPair("relation_op", new LinkedList<String>(Arrays.asList("LT", "LTE", "GT", "GTE", "EQ", "NEQ"))),
+        new CFGPair("logical_op", new LinkedList<String>(Arrays.asList("AND","OR"))),
+        new CFGPair("not", new LinkedList<String>(Collections.singletonList("NOT"))),
+        new CFGPair("l_paren", new LinkedList<String>(Collections.singletonList("L_PAREN"))),
+        new CFGPair("r_paren", new LinkedList<String>(Collections.singletonList("R_PAREN")))
     };
     private static final CFGPair[] cfg = {
-        new CFGPair("not", new LinkedList<>(Arrays.asList("not", "expr"))),
-        new CFGPair("conn", new LinkedList<>(Arrays.asList("node", "relation_op", "node"))),
-        new CFGPair("conn", new LinkedList<>(Arrays.asList("expr", "logical_op", "expr"))),
-        new CFGPair("paren", new LinkedList<>(Arrays.asList("l_paren", "node", "r_paren"))),
-        new CFGPair("paren", new LinkedList<>(Arrays.asList("l_paren", "expr", "r_paren"))),
+        new CFGPair("not", new LinkedList<String>(Arrays.asList("not", "expr"))),
+        new CFGPair("conn", new LinkedList<String>(Arrays.asList("node", "relation_op", "node"))),
+        new CFGPair("conn", new LinkedList<String>(Arrays.asList("expr", "logical_op", "expr"))),
+        new CFGPair("paren", new LinkedList<String>(Arrays.asList("l_paren", "node", "r_paren"))),
+        new CFGPair("paren", new LinkedList<String>(Arrays.asList("l_paren", "expr", "r_paren"))),
     };
 
     //Variables
-    private LinkedList<Token> input = new LinkedList<>();
-    private LinkedList<BooleanExpr> stack = new LinkedList<>();
-    private LinkedList<BooleanExpr> buffer = new LinkedList<>();
+    private LinkedList<Token> input = new LinkedList<Token>();
+    private LinkedList<BooleanExpr> stack = new LinkedList<BooleanExpr>();
+    private LinkedList<BooleanExpr> buffer = new LinkedList<BooleanExpr>();
     private BooleanExpr root = null;
     private String expr;
 
@@ -63,7 +63,7 @@ public class BooleanParser {
                 count--;
             }
             // Collect the tokens by Type
-            LinkedList<String> buffer_types = new LinkedList<>();
+            LinkedList<String> buffer_types = new LinkedList<String>();
             for (BooleanExpr b : this.buffer){
                 for (CFGPair p : types){
                     for (String s : p.getPattern()){

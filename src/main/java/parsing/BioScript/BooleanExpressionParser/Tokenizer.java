@@ -1,11 +1,11 @@
-package BooleanExpressionParser;
+package parsing.BioScript.BooleanExpressionParser;
 
 import java.util.LinkedList;
 
 @SuppressWarnings("unused")
 public class Tokenizer {
     private String expr;
-    private LinkedList<Token> tokenList = new LinkedList<>();
+    private LinkedList<Token> tokenList = new LinkedList<Token>();
 
     Tokenizer(String boolExpr) {
         this.expr = boolExpr + ";";
@@ -30,7 +30,7 @@ public class Tokenizer {
     }
 
     private void cleanList(){
-        LinkedList<Token> tempList = new LinkedList<>();
+        LinkedList<Token> tempList = new LinkedList<Token>();
         String[] toRemove = {
                 "SPACE",
                 "ROOT",
