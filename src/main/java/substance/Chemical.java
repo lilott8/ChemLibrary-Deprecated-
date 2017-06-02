@@ -25,6 +25,8 @@ public class Chemical implements Serializable{
 		this.volume = property;
 	}
 
+	public Property getVolume() { return this.volume; }
+
 	public String getName() {
 		return this.name;
 	}
