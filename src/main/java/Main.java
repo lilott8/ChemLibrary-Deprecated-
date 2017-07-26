@@ -13,7 +13,7 @@ public class Main {
 	public static void main(String... args) throws Exception {
 		logger.info("Nothing to see here...");
 
-		BenchtopParser.parse(Main.class.getClassLoader().getResource("json_tests/test2.json").getPath());
+		BenchtopParser.parse(Main.class.getClassLoader().getResource("json_tests/test1.json").getPath());
 		logger.info(Benchtop.INSTANCE.toString());
 	}
 }
