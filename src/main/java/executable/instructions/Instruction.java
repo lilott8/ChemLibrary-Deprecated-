@@ -128,4 +128,8 @@ public abstract class Instruction implements Executable {
 	}
 
 	public ArrayList<Property> getProperties() { return this.properties; }
+
+	public String getClassification() {
+		return this.classification.getName();
+	}
 }
