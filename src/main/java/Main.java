@@ -14,7 +14,7 @@ public class Main {
 	public static void main(String... args) throws Exception {
 		logger.info("Nothing to see here...");
 
-		BenchtopParser.parse(Main.class.getClassLoader().getResource("json_tests/chemtype1.json").getPath());
+		BenchtopParser.parse(Main.class.getClassLoader().getResource("json_tests/fentanyl.json").getPath());
 		logger.info(Benchtop.INSTANCE.toString());
 	}
 }

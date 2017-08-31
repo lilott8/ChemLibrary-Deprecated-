@@ -55,8 +55,10 @@ public class InstanceDeserializer extends Deserializer<Instance> {
                 ChemName = obj.getAsJsonObject(VARIABLE).get("NAME").getAsString();
 
             Property p = null;
-            if(obj.getAsJsonObject(VARIABLE).has(VOLUME)) {
-                p = jsonDeserializationContext.deserialize(obj.getAsJsonObject(VARIABLE), Property.class);
+            if (obj.has(VARIABLE)) {
+                if (obj.getAsJsonObject(VARIABLE).has(VOLUME)) {
+                    p = jsonDeserializationContext.deserialize(obj.getAsJsonObject(VARIABLE), Property.class);
+                }
             }
 
             //substances.add(new Substance(-1, ChemName, volume, ChemType));
