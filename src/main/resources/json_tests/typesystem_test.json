@@ -1,0 +1,74 @@
+{
+  "typesystem": {
+    "variable_map": [
+      {
+        "temp1": {
+          "id": 1,
+          "name": "ammonium carbamate",
+          "volume": {
+            "value": 30,
+            "units": "ml"
+          }
+        }
+      },
+      {
+        "temp2": "temp1"
+      },
+      {
+        "urea": {
+          "id": 2,
+          "name": "urea",
+          "volume": {
+            "value": 20,
+            "units": "ml"
+          }
+        }
+      },
+      {
+        "awesome": {
+          "id": 3,
+          "name": "sodium hydroxide",
+          "volume": {
+            "value": 10,
+            "units": "ml"
+          }
+        }
+      }
+    ],
+    "operations": [
+      {
+        "operation": {
+          "name": "one",
+          "id": 1,
+          "classification": "mix",
+          "inputs": [
+            "temp1",
+            "awesome"
+          ]
+        }
+      },
+      {
+        "operation": {
+          "name": "two",
+          "id": 2,
+          "classification": "heat",
+          "inputs": [
+            "urea",
+            "temp2"
+          ]
+        }
+      },
+      {
+        "operation": {
+          "name": "three",
+          "id": 3,
+          "classification": "mix",
+          "inputs": [
+            "awesome",
+            "temp2"
+          ]
+        }
+      }
+    ]
+  }
+}
