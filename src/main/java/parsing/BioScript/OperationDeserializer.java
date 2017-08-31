@@ -134,7 +134,6 @@ public class OperationDeserializer extends Deserializer<Instruction> {
 			}
 		}
 
-
 		if(obj.has(OUTPUTS)) {
 			for(JsonElement elem : obj.get(OUTPUTS).getAsJsonArray()) {
 				if (elem.getAsJsonObject().has(SENSOR_DECLARATION)) {
@@ -146,8 +145,6 @@ public class OperationDeserializer extends Deserializer<Instruction> {
 
 			}
 		}
-
-
 
 		return instruction;
 	}
