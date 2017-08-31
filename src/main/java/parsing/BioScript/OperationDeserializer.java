@@ -104,6 +104,8 @@ public class OperationDeserializer extends Deserializer<Instruction> {
 					((Loop) instruction).addTrueBranch((Instruction) jsonDeserializationContext.deserialize(elem, Instruction.class));
 				}
 			}
+		} else if(classification.toLowerCase().equals("variable")) {
+			instruction = new Dispense(id, name);
 		} else {
             throw new UnsupportedOperationException(String.format("%s not supported: No other instructions have been created", classification.toLowerCase()));
         }

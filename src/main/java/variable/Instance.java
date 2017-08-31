@@ -28,6 +28,12 @@ public class Instance implements Variable {
 		this.isStationary = false;
 		chemical = null;
 	}
+	public Instance(String id, String name, boolean stationary) {
+		this.id = id;
+		this. name = name;
+		this.isStationary = stationary;
+		chemical = null;
+	}
 	public Instance(String id, String name, Chemical chemical) {
 		this.id = id;
 		this. name = name;

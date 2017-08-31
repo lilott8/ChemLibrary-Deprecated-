@@ -25,7 +25,9 @@ public class InstanceDeserializer extends Deserializer<Instance> {
         // {"INPUT_TYPE":"VARIABLE","VARIABLE":{"NAME":"PCRMix"}}
         // {"INPUT_TYPE":"VARIABLE","CHEMICAL":{"VARIABLE":{"NAME":"PCRMasterMix"},"VOLUME":{"VALUE":"50","UNITS":"UL"}}}
         if(obj != null) {
-
+            if (obj.has("STATIONARY")) {
+                return new Instance(obj.get("ID").getAsString(), obj.get("NAME").getAsString(), true);
+            }
             return new Instance(obj.get("ID").getAsString(), obj.get("NAME").getAsString());
         }
         obj = jsonElement.getAsJsonObject();
@@ -52,10 +54,20 @@ public class InstanceDeserializer extends Deserializer<Instance> {
             else if(obj.has(VARIABLE))
                 ChemName = obj.getAsJsonObject(VARIABLE).get("NAME").getAsString();
 
+            Property p = null;
+            if(obj.getAsJsonObject(VARIABLE).has(VOLUME)) {
+                p = jsonDeserializationContext.deserialize(obj.getAsJsonObject(VARIABLE), Property.class);
+            }
+
             //substances.add(new Substance(-1, ChemName, volume, ChemType));
-            Instance instance = new Instance(ChemName,ChemName);
+            Instance instance;
+            if ( p != null)
+                instance = new Instance(ChemName, ChemName, new Chemical(ChemName, p));
+            else
+                instance = new Instance(ChemName,ChemName);
             if(obj.has(STATIONARY))
                 instance.setIsStationary(true);
+
             return instance;
         }
 
