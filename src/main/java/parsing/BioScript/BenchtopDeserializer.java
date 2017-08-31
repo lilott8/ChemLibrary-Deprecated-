@@ -25,7 +25,17 @@ public class BenchtopDeserializer extends Deserializer<Benchtop> {
 	public Benchtop deserialize(JsonElement jsonElement, Type type,
 	                            JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
 
-		JsonObject obj = jsonElement.getAsJsonObject().get(BENCHTOP).getAsJsonObject();
+		JsonObject obj = null;
+
+		//Receive input from a benchtop or individual experiments
+		if (jsonElement.getAsJsonObject().has("BENCHTOP")) {
+			obj = jsonElement.getAsJsonObject().get(BENCHTOP).getAsJsonObject();
+		} else {  //wraps an experiment in a benchtop
+			Benchtop.INSTANCE.setId(-1);
+			Experiment experi = (Experiment) jsonDeserializationContext.deserialize(jsonElement.getAsJsonObject(), Experiment.class);
+			Benchtop.INSTANCE.addExperiment(experi);
+			return Benchtop.INSTANCE;
+		}
 
 		Benchtop.INSTANCE.setId(obj.has(ID) ? obj.get(ID).getAsInt() : -1);
 
