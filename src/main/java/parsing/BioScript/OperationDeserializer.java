@@ -1,16 +1,29 @@
 package parsing.BioScript;
 
-import com.google.gson.*;
-import executable.conditionals.Branch;
-import executable.conditionals.Loop;
-import executable.instructions.*;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.lang.reflect.Type;
+
+import executable.conditionals.Branch;
+import executable.conditionals.Loop;
+import executable.instructions.Combine;
+import executable.instructions.Detect;
+import executable.instructions.Dispense;
+import executable.instructions.Heat;
+import executable.instructions.Instruction;
+import executable.instructions.Output;
+import executable.instructions.React;
+import executable.instructions.Split;
+import executable.instructions.Store;
 import substance.Property;
 import variable.Instance;
 import variable.Sensor;
-
-import java.lang.reflect.Type;
 
 /**
  * Created by jason on 2016/09/29.
@@ -92,8 +105,8 @@ public class OperationDeserializer extends Deserializer<Instruction> {
 				}
 			}
 		} else {
-			throw new UnsupportedOperationException(String.format("%d not supported: No other instructions have been created", classification.toLowerCase()));
-		}
+            throw new UnsupportedOperationException(String.format("%s not supported: No other instructions have been created", classification.toLowerCase()));
+        }
 
 		if(obj.has(INPUTS)) {
 			for(JsonElement elem : obj.get(INPUTS).getAsJsonArray()) {
