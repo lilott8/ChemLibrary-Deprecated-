@@ -3,21 +3,22 @@ package api;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.google.gson.JsonParseException;
-import executable.Subroutine;
-import executable.instructions.Instruction;
-import org.junit.Test;
+import com.google.gson.JsonParser;
+
 import org.junit.Before;
-import java.lang.NullPointerException;
+import org.junit.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+
 import executable.Experiment;
-import parsing.ExperimentDeserializer;
-import parsing.OperationDeserializer;
-import parsing.SubroutineDeserializer;
+import executable.Subroutine;
+import executable.instructions.Instruction;
+import parsing.BioScript.ExperimentDeserializer;
+import parsing.BioScript.OperationDeserializer;
+import parsing.BioScript.SubroutineDeserializer;
 
 /**
  * Created by eldgb on 05-Oct-16.

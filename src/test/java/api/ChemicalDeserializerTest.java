@@ -1,20 +1,20 @@
 package api;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.google.gson.JsonParseException;
-import executable.instructions.Instruction;
-import org.junit.Test;
-import org.junit.Before;
-import parsing.ChemicalDeserializer;
-import substance.Chemical;
+import com.google.gson.JsonParser;
 
-import java.lang.NullPointerException;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+
+import parsing.BioScript.ChemicalDeserializer;
+import substance.Chemical;
 
 
 
