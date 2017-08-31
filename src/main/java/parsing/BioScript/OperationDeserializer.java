@@ -92,7 +92,7 @@ public class OperationDeserializer extends Deserializer<Instruction> {
 				}
 			}
 		} else {
-			throw new UnsupportedOperationException("No other instructions have been created");
+			throw new UnsupportedOperationException(String.format("%d not supported: No other instructions have been created", classification.toLowerCase()));
 		}
 
 		if(obj.has(INPUTS)) {
