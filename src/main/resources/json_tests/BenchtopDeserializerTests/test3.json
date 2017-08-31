@@ -1,0 +1,61 @@
+{
+  "purpose": "Testing a complete benchtop which has inputs and experiments that cause explosion",
+  "benchtop": {
+    "inputs": [
+      {
+        "chemical": {
+          "name": "water",
+          "volume": {
+              "value": 100,
+              "units": "L"
+            }
+        }
+      },
+      {
+        "chemical": {
+          "name": "butanone",
+          "volume": {
+            "value": 100,
+            "units": "L"
+          }
+        }
+      },
+      {
+        "compound": {
+          "name": "compound1",
+          "chemical_list": [
+            {
+              "chemical": {
+                "name": "compound_chemical_1",
+                "volume": {
+                  "value": 100,
+                  "units": "mL"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "sensor": {
+          "name": "tester"
+        }
+      }
+    ],
+
+    "subroutines": [
+      {
+        "name": "Subroutine 1",
+        "inputs": [
+          {}
+        ],
+        "instructions": [
+          {}
+        ],
+        "outputs": [
+          {}
+        ]
+      }
+    ]
+  }
+}

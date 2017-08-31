@@ -1,0 +1,53 @@
+{  "experiment": {
+    "name": "test blow up of ketones!",
+    "inputs": [
+      {
+        "chemical": {
+          "name": "water",
+          "volume": {
+            "value": 10,
+            "units": "mL"
+          }
+        }
+      },
+      {
+        "chemical": {
+          "name": "butanone",
+          "volume": {
+            "value": 10,
+            "units": "mL"
+          }
+        }
+      }
+    ],
+    "instructions": [
+      {
+        "operation": {
+          "name": "add",
+          "classification": "mix",
+          "id": 1,
+          "inputs": [
+            {
+              "chemical": {
+                "name": "water",
+                "volume": {
+                  "value": 10,
+                  "units": "mL"
+                }
+              }
+            },
+            {
+              "chemical": {
+                "name": "butanone",
+                "volume": {
+                  "value": 10,
+                  "units": "mL"
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

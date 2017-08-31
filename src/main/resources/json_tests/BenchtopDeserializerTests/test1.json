@@ -1,0 +1,116 @@
+{
+  "purpose": "Testing a complete benchtop which has inputs and experiments that cause explosion",
+  "benchtop": {
+    "inputs": [
+      {
+        "chemical": {
+          "name": "water",
+          "volume": {
+              "value": 100,
+              "units": "L"
+            }
+        }
+      },
+      {
+        "chemical": {
+          "name": "butanone",
+          "volume": {
+            "value": 100,
+            "units": "L"
+          }
+        }
+      },
+      {
+        "compound": {
+          "name": "compound1",
+          "chemical_list": [
+            {
+              "chemical": {
+                "name": "compound_chemical_1",
+                "volume": {
+                  "value": 100,
+                  "units": "mL"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "sensor": {
+          "name": "tester"
+        }
+      }
+    ],
+    "experiments": [
+      {
+        "experiment": {
+          "name": "test blow up of ketones!",
+          "inputs": [
+            {
+              "chemical": {
+                "name": "water",
+                "volume": {
+                  "value": 10,
+                  "units": "mL"
+                }
+              }
+            },
+            {
+              "chemical": {
+                "name": "butanone",
+                "volume": {
+                  "value": 10,
+                  "units": "mL"
+                }
+              }
+            }
+          ],
+          "instructions": [
+            {
+              "operation": {
+                "name": "add",
+                "classification": "mix",
+                "id": 1,
+                "inputs": [
+                  {
+                    "chemical": {
+                      "name": "water",
+                      "volume": {
+                        "value": 10,
+                        "units": "mL"
+                      }
+                    }
+                  },
+                  {
+                    "chemical": {
+                      "name": "butanone",
+                      "volume": {
+                        "value": 10,
+                        "units": "mL"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "subroutines": [
+      {
+        "name": "Subroutine 1",
+        "inputs": [
+          {}
+        ],
+        "instructions": [
+          {}
+        ],
+        "outputs": [
+          {}
+        ]
+      }
+    ]
+  }
+}
