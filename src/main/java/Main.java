@@ -6,9 +6,6 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import manager.Benchtop;
-import parsing.BioScript.BenchtopParser;
-
 /**
  * Created by jason on 2016/09/21.
  */
@@ -21,8 +18,8 @@ public class Main {
 
 		// BenchtopParser.parseFromFile(Main.class.getClassLoader().getResource("json_tests/neurotransmitter_sensing.json").getPath());
 		// BenchtopParser.parseFromString(readFile(Main.class.getClassLoader().getResource("json_tests/temptest.json").getPath(), Charset.defaultCharset()));
-		BenchtopParser.parseFromString(readFile(Main.class.getClassLoader().getResource("json_tests/functions.json").getPath(), Charset.defaultCharset()));
-		logger.info(Benchtop.INSTANCE.toString());
+		// BenchtopParser.parseFromString(readFile(Main.class.getClassLoader().getResource("json_tests/functions.json").getPath(), Charset.defaultCharset()));
+		// logger.info(Benchtop.INSTANCE.toString());
 	}
 
 	static String readFile(String path, Charset encoding) throws IOException {
