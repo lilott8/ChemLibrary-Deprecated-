@@ -17,8 +17,10 @@ import executable.instructions.Detect;
 import executable.instructions.Dispense;
 import executable.instructions.Heat;
 import executable.instructions.Instruction;
+import executable.instructions.Math;
 import executable.instructions.Output;
 import executable.instructions.React;
+import executable.instructions.Return;
 import executable.instructions.Split;
 import executable.instructions.Store;
 import substance.Property;
@@ -30,7 +32,7 @@ import variable.Sensor;
  */
 public class OperationDeserializer extends Deserializer<Instruction> {
 
-	public static final Logger logger = LogManager.getLogger(OperationDeserializer.class);
+    public static final Logger logger = LogManager.getLogger(OperationDeserializer.class.getSimpleName());
 
 	public Instruction deserialize(JsonElement jsonElement, Type type,
 	                               JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
@@ -43,6 +45,7 @@ public class OperationDeserializer extends Deserializer<Instruction> {
 		String IDString = (obj.get(SubstanceDeserializer.ID).getAsString());
 
 		Long id = Long.parseLong(IDString);
+
 		Instruction instruction;
 		if(classification.toLowerCase().equals("mix")) {
 			instruction = new Combine(id, name);
@@ -58,55 +61,59 @@ public class OperationDeserializer extends Deserializer<Instruction> {
 			instruction = new Store(id, name);
 		} else if(classification.toLowerCase().equals("dispense")) {
 			instruction = new Dispense(id, name);
-		} else if(classification.toLowerCase().equals("react")) {
-			instruction = new React(id, name);
-		} else if(classification.toLowerCase().equals("cfg_branch")) {
-			String evaluation = obj.get(CONDITION).getAsString();
-			instruction = new Branch(id, name, evaluation);
+        } else if(classification.toLowerCase().equals("react")) {
+            instruction = new React(id, name);
+        } else if (classification.toLowerCase().equalsIgnoreCase("return")) {
+            instruction = new Return(id, name);
+        } else if (classification.toLowerCase().equalsIgnoreCase("math")) {
+            instruction = new Math(id, name);
+        } else if(classification.toLowerCase().equals("cfg_branch")) {
+            String evaluation = obj.get(CONDITION).getAsString();
+            instruction = new Branch(id, name, evaluation);
 
-			if(obj.has(TRUE_BRANCH)) {
-				for(JsonElement elem : obj.get(TRUE_BRANCH).getAsJsonArray()) {
-					((Branch)instruction).addTrueBranch(((Instruction) jsonDeserializationContext.deserialize(elem, Instruction.class)));
-				}
-			}
+            // logger.error(obj.get(TRUE_BRANCH));
 
-			if(obj.has(FALSE_BRANCH)) {
-				for(JsonElement elem : obj.get(FALSE_BRANCH).getAsJsonArray()) {
-					((Branch)instruction).addElseBranch((Instruction) jsonDeserializationContext.deserialize(elem, Instruction.class));
-				}
-			}
+            if(obj.has(TRUE_BRANCH)) {
+                for (JsonElement elem : obj.get(TRUE_BRANCH).getAsJsonArray()) {
+                    ((Branch) instruction).addTrueBranch((Instruction) jsonDeserializationContext.deserialize(elem, Instruction.class));
+                }
+            }
 
-			if(obj.has(ELSEIF_BRANCH)) {
-				for(JsonElement elem : obj.get(ELSEIF_BRANCH).getAsJsonArray()) {
-					((Branch)instruction).addElseIfBranch((Instruction) jsonDeserializationContext.deserialize(elem, Instruction.class));
-				}
-			}
-			if(obj.has(NAME) && obj.get(NAME).getAsString().toLowerCase().equals("elseif")) {
-				for(JsonElement elem : obj.getAsJsonArray(OPERATIONS))
-					((Branch)instruction).addTrueBranch((Instruction) jsonDeserializationContext.deserialize(elem,Instruction.class));
-			}
-		} else if(classification.toLowerCase().equals("cfg_loop")) {
-			String evaluation;
-			if(obj.has(CONDITION)) {
-				evaluation = obj.get(CONDITION).getAsString();
-			}
-			else if(obj.has(LOOP_NUM)) {
-				StringBuilder number = new StringBuilder();
-				number.append(LOOP_NUM + ": ");
-				number.append(obj.get(LOOP_NUM).getAsString());
-				evaluation = number.toString();
-			}
-			else evaluation = "No Expression";
-			instruction = new Loop(id, name, evaluation);
+            if(obj.has(FALSE_BRANCH)) {
+                for(JsonElement elem : obj.get(FALSE_BRANCH).getAsJsonArray()) {
+                    ((Branch)instruction).addElseBranch((Instruction) jsonDeserializationContext.deserialize(elem, Instruction.class));
+                }
+            }
 
-			if(obj.has(OPERATIONS)) {
-				for (JsonElement elem : obj.getAsJsonArray(OPERATIONS)) {
-					((Loop) instruction).addTrueBranch((Instruction) jsonDeserializationContext.deserialize(elem, Instruction.class));
-				}
-			}
-		} else if(classification.toLowerCase().equals("variable")) {
-			instruction = new Dispense(id, name);
-		} else {
+            if(obj.has(ELSEIF_BRANCH)) {
+                for(JsonElement elem : obj.get(ELSEIF_BRANCH).getAsJsonArray()) {
+                    ((Branch)instruction).addElseIfBranch((Instruction) jsonDeserializationContext.deserialize(elem, Instruction.class));
+                }
+            }
+            if(obj.has(NAME) && obj.get(NAME).getAsString().toLowerCase().equals("elseif")) {
+                for(JsonElement elem : obj.getAsJsonArray(OPERATIONS))
+                    ((Branch)instruction).addTrueBranch((Instruction) jsonDeserializationContext.deserialize(elem,Instruction.class));
+            }
+        } else if(classification.toLowerCase().equals("cfg_loop")) {
+            String evaluation;
+            if(obj.has(CONDITION)) {
+                evaluation = obj.get(CONDITION).getAsString();
+            } else if(obj.has(LOOP_NUM)) {
+                StringBuilder number = new StringBuilder();
+                number.append(LOOP_NUM + ": ");
+                number.append(obj.get(LOOP_NUM).getAsString());
+                evaluation = number.toString();
+            } else evaluation = "No Expression";
+            instruction = new Loop(id, name, evaluation);
+
+            if(obj.has(OPERATIONS)) {
+                for (JsonElement elem : obj.getAsJsonArray(OPERATIONS)) {
+                    ((Loop) instruction).addTrueBranch((Instruction) jsonDeserializationContext.deserialize(elem, Instruction.class));
+                }
+            }
+        } else if(classification.toLowerCase().equals("variable")) {
+            instruction = new Dispense(id, name);
+        } else {
             throw new UnsupportedOperationException(String.format("%s not supported: No other instructions have been created", classification.toLowerCase()));
         }
 
@@ -137,10 +144,10 @@ public class OperationDeserializer extends Deserializer<Instruction> {
 		}
 
 		if(obj.has(OUTPUTS)) {
-			for(JsonElement elem : obj.get(OUTPUTS).getAsJsonArray()) {
-				if (elem.getAsJsonObject().has(SENSOR_DECLARATION)) {
-					instruction.addOutput((Sensor) jsonDeserializationContext.deserialize(elem, Sensor.class));
-				}
+            for (JsonElement elem : obj.get(OUTPUTS).getAsJsonArray()) {
+                if (elem.getAsJsonObject().has(SENSOR_DECLARATION)) {
+                    instruction.addOutput((Sensor) jsonDeserializationContext.deserialize(elem, Sensor.class));
+                }
 				else if(!elem.getAsJsonObject().has(PROPERTY)) {
 						instruction.addOutput((Instance) jsonDeserializationContext.deserialize(elem, Instance.class));
 				}

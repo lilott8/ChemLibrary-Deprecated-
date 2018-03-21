@@ -4,15 +4,17 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.lang.reflect.Type;
+
 import executable.Experiment;
 import executable.Subroutine;
 import executable.instructions.Instruction;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import variable.Instance;
 import variable.Reference;
-
-import java.lang.reflect.Type;
 
 /**
  * Created by jason on 2016/09/29.
@@ -34,7 +36,6 @@ public class ExperimentDeserializer extends Deserializer<Experiment> {
 		experiment = new Experiment(id, name);
 
 		if(obj.has(INPUTS)) {
-			//logger.info("Starting inputs");
 			for(JsonElement e : obj.get(INPUTS).getAsJsonArray()) {
 				if(e.getAsJsonObject().has(VARIABLE_DECLARATION)){
 					if (! e.getAsJsonObject().getAsJsonObject(VARIABLE_DECLARATION).has(VARIABLE))

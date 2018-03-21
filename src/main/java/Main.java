@@ -1,6 +1,11 @@
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import manager.Benchtop;
 import parsing.BioScript.BenchtopParser;
 
@@ -14,7 +19,15 @@ public class Main {
 	public static void main(String... args) throws Exception {
 		logger.info("Nothing to see here...");
 
-		BenchtopParser.parse(Main.class.getClassLoader().getResource("json_tests/fentanyl.json").getPath());
+		// BenchtopParser.parseFromFile(Main.class.getClassLoader().getResource("json_tests/neurotransmitter_sensing.json").getPath());
+		// BenchtopParser.parseFromString(readFile(Main.class.getClassLoader().getResource("json_tests/temptest.json").getPath(), Charset.defaultCharset()));
+		BenchtopParser.parseFromString(readFile(Main.class.getClassLoader().getResource("json_tests/functions.json").getPath(), Charset.defaultCharset()));
 		logger.info(Benchtop.INSTANCE.toString());
 	}
+
+	static String readFile(String path, Charset encoding) throws IOException {
+		byte[] encoded = Files.readAllBytes(Paths.get(path));
+		return new String(encoded, encoding);
+	}
+
 }

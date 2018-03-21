@@ -1,0 +1,87 @@
+{
+  "EXPERIMENT": {
+    "NAME": "SplitTest",
+    "INPUTS": [
+      {
+        "VARIABLE_DECLARATION": {
+          "ID": "source",
+          "NAME": "source",
+          "TYPE": "CHEMICAL"
+        }
+      }
+    ],
+    "INSTRUCTIONS": [
+      {
+        "OPERATION": {
+          "NAME": "VARIABLE_DECLARATION",
+          "ID": "5554671902334534558",
+          "CLASSIFICATION": "VARIABLE",
+          "INPUTS": [
+            {
+              "INPUT_TYPE": "VARIABLE",
+              "VARIABLE": {
+                "NAME": "source",
+                "VOLUME": {
+                  "VALUE": "100",
+                  "UNITS": "UL"
+                }
+              }
+            }
+          ],
+          "OUTPUTS": [
+            {
+              "VARIABLE_DECLARATION": {
+                "ID": "splitMe",
+                "NAME": "splitMe",
+                "TYPE": "CHEMICAL"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "OPERATION": {
+          "NAME": "SPLIT",
+          "ID": "676269772088697027",
+          "CLASSIFICATION": "SPLIT",
+          "INPUTS:": [
+            {
+              "INPUT_TYPE": "VARIABLE",
+              "VARIABLE": {
+                "NAME": "splitMe"
+              }
+            },
+            {
+              "INPUT_TYPE": "PROPERTY",
+              "PROPERTY": {
+                "TYPE": "SPLIT_NUM",
+                "VALUE": "3",
+                "UNITS": ""
+              }
+            }
+          ],
+          "OUTPUTS": [
+            {
+              "VARIABLE": {
+                "ID": "dest2",
+                "NAME": "dest2",
+                "TYPE": "CHEMICAL",
+                "VOLUME": {
+                }
+              }
+            },
+            {
+              "VARIABLE": {
+                "ID": "dest1",
+                "NAME": "dest1",
+                "TYPE": "CHEMICAL",
+                "VOLUME": {
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
