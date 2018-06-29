@@ -4,14 +4,11 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import executable.Executable;
-import executable.Subroutine;
-import executable.instructions.Instruction;
-import substance.Property;
-import substance.Units;
-import variable.Variable;
 
 import java.lang.reflect.Type;
+
+import substance.Property;
+import substance.Units;
 
 /**
  * Created by jason on 2016/09/29.
@@ -23,13 +20,13 @@ public class PropertyDeserializer extends Deserializer<Property> {
 
 		JsonObject obj = jsonElement.getAsJsonObject();
 
-		int value = -1;
+		float value = -1;
 		String units = "";
 		if(obj.has(TIME)) {
 			JsonObject time = obj.get(TIME).getAsJsonObject();
 			if(time.has(VALUE)){
 				String temp = time.get(VALUE).getAsString();
-				value = Integer.parseInt(temp);
+				value = Float.parseFloat(temp);
 			}
 			if(time.has(UNITS)){
 				units = time.get(UNITS).getAsString();
@@ -51,7 +48,7 @@ public class PropertyDeserializer extends Deserializer<Property> {
 			JsonObject time = obj.get(TEMPERATURE).getAsJsonObject();
 			if(time.has(VALUE)){
 				String temp = time.get(VALUE).getAsString();
-				value = Integer.parseInt(temp);
+				value = Float.parseFloat(temp);
 			}
 			if(time.has(UNITS)){
 				units = time.get(UNITS).getAsString();
@@ -67,7 +64,7 @@ public class PropertyDeserializer extends Deserializer<Property> {
 			JsonObject time = obj.get(VOLUME).getAsJsonObject();
 			if(time.has(VALUE)){
 				String temp = time.get(VALUE).getAsString();
-				value = Integer.parseInt(temp);
+				value = Float.parseFloat(temp);
 			}
 			if(time.has(UNITS)){
 				units = time.get(UNITS).getAsString();
