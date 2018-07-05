@@ -1,0 +1,106 @@
+{
+  "EXPERIMENT": {
+    "NAME": "DEFAULT",
+    "INPUTS": [
+      {
+        "SENSOR_DECLARATION": {
+          "ID": "test",
+          "NAME": "test",
+          "TYPE": "SENSOR",
+          "INFERRED TYPES": [
+            -1
+          ]
+        }
+      },
+      {
+        "VARIABLE_DECLARATION": {
+          "ID": "test2",
+          "NAME": "test2",
+          "TYPE": "STATIONARY",
+          "INFERRED TYPES": [
+            99
+          ]
+        }
+      },
+      {
+        "VARIABLE_DECLARATION": {
+          "ID": "chemical1",
+          "NAME": "chemical1",
+          "TYPE": "CHEMICAL",
+          "INFERRED TYPES": [
+            99
+          ]
+        }
+      },
+      {
+        "VARIABLE_DECLARATION": {
+          "ID": "chemical2",
+          "NAME": "chemical2",
+          "TYPE": "CHEMICAL",
+          "INFERRED TYPES": [
+            99
+          ]
+        }
+      },
+      {
+        "VARIABLE_DECLARATION": {
+          "ID": "x",
+          "NAME": "x",
+          "TYPE": "CHEMICAL",
+          "INFERRED TYPES": [
+            99
+          ]
+        }
+      },
+      {
+        "VARIABLE_DECLARATION": {
+          "ID": "y",
+          "NAME": "y",
+          "TYPE": "CHEMICAL",
+          "INFERRED TYPES": [
+            99
+          ]
+        }
+      }
+    ],
+    "INSTRUCTIONS": [
+      {
+        "OPERATION": {
+          "ID": 18,
+          "NAME": "MIX",
+          "CLASSIFICATION": "MIX",
+          "INPUTS": [
+            {
+              "INPUT_TYPE": "VARIABLE",
+              "CHEMICAL": {
+                "VARIABLE": {
+                  "NAME": "b"
+                }
+              }
+            },
+            {
+              "INPUT_TYPE": "VARIABLE",
+              "CHEMICAL": {
+                "VARIABLE": {
+                  "NAME": "b"
+                }
+              }
+            }
+          ],
+          "OUTPUTS": [
+            {
+              "VARIABLE_DECLARATION": {
+                "ID": "a",
+                "NAME": "a",
+                "TYPE": "VARIABLE",
+                "INFERRED TYPES": [
+                  99
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -16,7 +16,7 @@ public class Main {
 	public static void main(String... args) throws Exception {
 		logger.info("Nothing to see here...");
 
-		// BenchtopParser.parseFromFile(Main.class.getClassLoader().getResource("json_tests/neurotransmitter_sensing.json").getPath());
+		// BenchtopParser.parseFromFile(Main.class.getClassLoader().getResource("json_tests/alpha.json").getPath());
 		// BenchtopParser.parseFromString(readFile(Main.class.getClassLoader().getResource("json_tests/temptest.json").getPath(), Charset.defaultCharset()));
 		// BenchtopParser.parseFromString(readFile(Main.class.getClassLoader().getResource("json_tests/functions.json").getPath(), Charset.defaultCharset()));
 		// logger.info(Benchtop.INSTANCE.toString());

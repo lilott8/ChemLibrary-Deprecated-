@@ -1,14 +1,13 @@
 package executable.instructions;
 
-import executable.Executable;
-import substance.Property;
-import substance.Substance;
-import variable.Variable;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import executable.Executable;
+import substance.Property;
+import variable.Variable;
 
 /**
  * Created by jason on 2016/08/15.
@@ -21,6 +20,7 @@ public abstract class Instruction implements Executable {
 	protected Map<String, Variable> inputs = new HashMap<String, Variable>();
 	protected ArrayList<Property> properties = new ArrayList<Property>();
 	private Map<String, Variable> outputs = new HashMap<String, Variable>();
+    protected List<Variable> inputList = new ArrayList<>();
 
 	protected Instruction(long id, Class c) {
 		this.id = id;
@@ -51,6 +51,7 @@ public abstract class Instruction implements Executable {
 
 	public void addInput(Variable input) {
 		this.inputs.put(input.getName(), input);
+        this.inputList.add(input);
 	}
 
 	public void addInputs(List<Variable> inputs) {
@@ -61,6 +62,9 @@ public abstract class Instruction implements Executable {
 
 	public void addInputs(Map<String, Variable> inputs) {
 		this.inputs.putAll(inputs);
+        for (Map.Entry<String, Variable> entry : inputs.entrySet()) {
+            this.inputList.add(entry.getValue());
+        }
 	}
 
 	public void addOutputs(List<Variable> outputs) {
@@ -118,13 +122,27 @@ public abstract class Instruction implements Executable {
 		return ret;
 	}
 
+    @Override
+    public Variable getVariableByName(String input) {
+        Variable result = null;
+        for (Variable v : this.inputList) {
+            if (input.equalsIgnoreCase(v.getName())) {
+                result = v;
+            }
+        }
+        return result;
+    }
 
 	public Map<String, Variable> getOutputs() {
 		return this.outputs;
 	}
 
-	public Map<String, Variable> getInputs() {
-		return this.inputs;
+    //public Map<String, Variable> getInputs() {
+    //	return this.inputs;
+    //}
+
+    public List<Variable> getInputsAsList() {
+        return this.inputList;
 	}
 
 	public ArrayList<Property> getProperties() { return this.properties; }

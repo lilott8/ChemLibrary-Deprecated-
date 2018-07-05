@@ -1,14 +1,13 @@
 package executable;
 
 
-import executable.instructions.Instruction;
-import substance.Substance;
-import variable.Variable;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import substance.Substance;
+import variable.Variable;
 
 /**
  * Created by jason on 2016/08/25.
@@ -20,6 +19,7 @@ public class Experiment implements Executable {
 	private Map<String, Variable> inputs = new HashMap<String, Variable>();
 	private List<Executable> instructions = new ArrayList<Executable>();
 	private Map<String, Variable> outputs = new HashMap<String, Variable>();
+	private List<Variable> inputsAsList = new ArrayList<>();
 
 	public Experiment(long id) {
 		this.id = id;
@@ -45,12 +45,15 @@ public class Experiment implements Executable {
 
 	public void addInputs(Map<String, Variable> inputs) {
 		this.inputs.putAll(inputs);
+		for (Map.Entry<String, Variable> entry : inputs.entrySet()) {
+			this.inputsAsList.add(entry.getValue());
+		}
 	}
 
-	public void addInput(Variable v) {
-		this.inputs.put(v.getName(), v);
+	public void addInput(Variable input) {
+		this.inputs.put(input.getName(), input);
+		this.inputsAsList.add(input);
 	}
-
 	public void addOutputs(Map<String, Variable> v) {
 		this.outputs.putAll(v);
 	}
@@ -81,6 +84,11 @@ public class Experiment implements Executable {
 		return this.outputs;
 	}
 
+	@Override
+	public List<Variable> getInputsAsList() {
+		return this.inputsAsList;
+	}
+
 	public void execute(Substance... variables) {
 		this.execute();
 	}
@@ -89,6 +97,17 @@ public class Experiment implements Executable {
 		for(Executable e : this.instructions) {
 			e.execute();
 		}
+	}
+
+	@Override
+	public Variable getVariableByName(String input) {
+		Variable result = null;
+		for (Variable v : this.inputsAsList) {
+			if (input.equalsIgnoreCase(v.getName())) {
+				result = v;
+			}
+		}
+		return result;
 	}
 
 	public String toString() {
