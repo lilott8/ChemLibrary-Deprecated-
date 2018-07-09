@@ -137,9 +137,9 @@ public abstract class Instruction implements Executable {
 		return this.outputs;
 	}
 
-    //public Map<String, Variable> getInputs() {
-    //	return this.inputs;
-    //}
+	public Map<String, Variable> getInputs() {
+		return this.inputs;
+	}
 
     public List<Variable> getInputsAsList() {
         return this.inputList;
